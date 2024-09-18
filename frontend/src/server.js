@@ -25,7 +25,7 @@ connection.connect((err) => {
 
 // Route to create an account
 app.post('/create-account', (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, password } = req.body;
   
     // Basic validation (you can add more if needed)
     if (!username || !password) {
