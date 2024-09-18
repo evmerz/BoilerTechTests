@@ -1,0 +1,39 @@
+#intro-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  width: 90%;
+}
+
+#intro-text {
+  width: 90%;
+  margin: auto;
+}
+
+@media screen and (min-width: 768px) {
+  #intro {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
+    justify-content: center;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 5px;
+  }
+
+  #intro-text {
+    margin: auto;
+    margin-left: 5%;
+  }
+
+  #background-blob {
+    width: 100%;
+    background-size: 80%; 
+    /* margin-right: -5%; */
+  }
+
+  #background-blob img {
+    width: 80%;
+  }
+
+}
