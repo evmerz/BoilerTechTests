@@ -1,12 +1,15 @@
 const mysql = require('mysql');
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
 
 // Parse JSON request bodies
 app.use(express.json());
+app.use(cors());
+app.use(express.static('public'));
 
 const connection = mysql.createConnection({
   host: 'database-1.cvmku4284fk0.us-east-2.rds.amazonaws.com',
