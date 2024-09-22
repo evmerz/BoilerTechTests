@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Coding Terminal</title>
+    <!-- CodeMirror CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+    <!-- Theme (optional, but looks more like a terminal) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/dracula.min.css">
+</head>
+<body>
+
+    <h1>Python Coding Terminal</h1>
+    <form id="code-form">
+        <textarea id="code" name="code"></textarea>
+        <button type="submit">Run Code</button>
+    </form>
+
+    <!-- Output section -->
+    <pre id="output"></pre>
+
+    <!-- CodeMirror JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+    <!-- Python mode -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
+
+    <script>
+        // Initialize CodeMirror on the textarea
+        var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+            lineNumbers: true,
+            mode: 'python',
+            theme: 'dracula',
+            indentUnit: 4,
+            matchBrackets: true,
+            autoCloseBrackets: true,
+        });
+
+        // Form submission event
+        document.getElementById('code-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Get the code from the editor
+            var code = editor.getValue();
+
+            // Display the code (this will later be replaced with backend execution)
+            document.getElementById('output').innerText = 'You wrote:\n' + code;
+        });
+    </script>
+</body>
+</html>
