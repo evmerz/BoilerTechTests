@@ -118,6 +118,20 @@ def concat_strings(str1, str2):
                     { input: [2, 1], expected: 1 },
                     { input: [-6, 1], expected: -7 }
                 ]
+            },
+            {
+            
+                prompt: "Write a function that removes consecutive duplicate characters from a string.",
+                functionSignature: "def remove_consecutive_duplicates(s):",
+                functionName: "remove_consecutive_duplicates",
+                testCases: [
+                    { input: ["aabbcc"], expected: "abc" },
+                    { input: ["aaabbbccc"], expected: "abc" },
+                    { input: ["abccba"], expected: "abcba" },
+                    { input: [""], expected: "" },
+                    { input: ["abc"], expected: "abc" },
+                    { input: ["aabbccddeeff"], expected: "abcdef" }
+                ]
             }
         ];
 
@@ -179,7 +193,7 @@ document.getElementById('next').addEventListener('click', () => {
 
         # Test cases
         test_cases = ${JSON.stringify(currentQuestion.testCases)}
-        results = []
+        results = ""
 
         # Loop through the test cases
         for test in test_cases:
@@ -190,14 +204,15 @@ document.getElementById('next').addEventListener('click', () => {
             if function_name in globals():
                 func = globals()[function_name]
                 result = func(*input_args)
-                results.append(f"test: {input_args}, result: {result}, expected: {expected}, pass: {result == expected}")
+                results = results + (f"test: {input_args}, result: {result}, expected: {expected}, pass: {result == expected}")
+                results = results + '\\n'
             else:
-                results.append(f"Function {function_name} not found.")
+                results = results + (f"Function {function_name} not found.")
 
         # Get the output from the redirected stdout
         output = sys.stdout.getvalue()
         sys.stdout = old_stdout  # Restore standard output
-        output + '\\n' + str(results)  # Include test results
+        output + str(results)  # Include test results
     `);
     document.getElementById('output').textContent = output || "";
 } catch (error) {
