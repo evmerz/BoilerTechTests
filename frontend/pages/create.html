@@ -64,6 +64,7 @@
 <body>
     <div class="container">
         <h2>Create Account</h2>
+        <div id="user-id" style="position: absolute; top: 10px; left: 10px;">User ID: <span id="user-id-value"></span></div>
         <form id="create-account-form">
             <input type="text" id="username" name="username" placeholder="Username" required />
             <input type="password" id="password" name="password" placeholder="Password" required />
@@ -74,6 +75,11 @@
     </div>
 
     <script>
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            document.getElementById('user-id-value').textContent = userId;
+        }
+
         document.getElementById('create-account-form').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the form from refreshing the page
 
@@ -96,7 +102,7 @@
             .then(data => {
                 document.getElementById('response-message').textContent = data.message;
                 // Optionally, redirect to the login page after successful account creation
-                setTimeout(() => window.location.href = 'index.html', 2000);
+                setTimeout(() => window.location.href = '../../index.html', 2000);
             })
             .catch(error => {
                 document.getElementById('response-message').textContent = 'Error: ' + error.message;
