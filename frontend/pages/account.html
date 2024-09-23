@@ -61,25 +61,30 @@
 
     <script>
         document.getElementById('create-account-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from refreshing the page
-   
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-   
-            const url = `http://boilertechtests.com/api/create-account?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+    event.preventDefault(); // Prevent the form from refreshing the page
 
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
-            fetch(url, {
-                method: 'GET',
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('response-message').textContent = data.message;
-            })
-            .catch(error => {
-                document.getElementById('response-message').textContent = 'Error: ' + error.message;
-            });
-        });
+    const url = `http://boilertechtests.com/api/create-account?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+
+    fetch(url, {
+        method: 'GET',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(response.statusText); // Throw an error if response is not OK
+        }
+        return response.json();
+    })
+    .then(data => {
+        document.getElementById('response-message').textContent = data.message;
+    })
+    .catch(error => {
+        document.getElementById('response-message').textContent = 'Error: ' + error.message;
+    });
+});
+
     </script>
    
 </body>
