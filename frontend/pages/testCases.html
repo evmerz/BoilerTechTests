@@ -47,7 +47,7 @@
 </head>
 <body>
 
-    <h1>Python Terminal</h1>
+    <h1 id="header">Python Terminal</h1>
     <div id="question">Question will be displayed here.</div>
     <div>
         <textarea id="code" placeholder="Write your Python code here...">
@@ -142,6 +142,7 @@ def concat_strings(str1, str2):
             document.getElementById('question').textContent = currentQuestion.prompt;
             editor.setValue(currentQuestion.functionSignature + '\n    # Your code goes here\n    pass');
             document.getElementById('output').textContent = "";
+            document.getElementById('header').textContent = "Question " + (currentQuestionIndex + 1);
         }
 
         document.getElementById('prev').addEventListener('click', () => {
