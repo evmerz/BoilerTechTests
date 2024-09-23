@@ -12,7 +12,7 @@
 
   display: flex;
 
-  background-color: var(--light-green);
+  background-color: var(--site-background);
 }
 
 #logo-container {
@@ -26,7 +26,7 @@
 #logo-text {
   font-family: 'Josefin Sans', Arial, Helvetica, sans-serif;
   font-size: 1.5em;
-  color: var(--green);
+  color: var(--site-foreground);
   transition: transform .5s;
   transform-origin: left;
   cursor: pointer;
@@ -80,7 +80,7 @@
   position: fixed;
   width: 50%;
   height: 100%;
-  background-color: var(--green);
+  background-color: var(--site-foreground);
   right: -50%;
   transition: all 0.25s ease-in-out;
 }
@@ -140,7 +140,7 @@
   width: 2em;
   height: 0.25em;
   /* background: rgb(0, 59, 163);; */
-  background-color: var(--green);
+  background-color: var(--site-foreground);
   display: block;
   transition: inherit;
 }
@@ -217,7 +217,7 @@
 
     font-family: 'Josefin Sans';
     /* display: inline-block; */
-    color: var(--green);
+    color: var(--site-foreground);
     text-decoration: none;
     padding: 5px 10px 5px 10px;
     text-align: center;
@@ -234,8 +234,8 @@
   .hoverable-text:hover {
     transform: translate(-2px, -2px) scale(1.1);
     transform-origin: center;
-    box-shadow: 2px 2px 0px var(--green);
-    border: 1px solid var(--green);
+    box-shadow: 2px 2px 0px var(--site-foreground);
+    border: 1px solid var(--site-foreground);
   }
 
   .hoverable-svg {

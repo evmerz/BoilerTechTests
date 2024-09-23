@@ -11,24 +11,35 @@ body.active {
 }
 
 :root {
-  --green: rgb(75, 115, 95);
-  --light-green: rgb(238, 248, 247);
-  --light-green-dark: rgb(230, 240, 239);
-  --dark-green: rgb(53, 82, 67);
+  --site-foreground: rgb(38, 38, 38);
+  --site-background: rgb(245, 239, 227);
+  --site-background-dark: rgb(239, 230, 211);
+  --outline-color: rgb(38, 38, 38);
   --orange: rgb(191, 115, 95);
   --mobile-width: 768px;
 }
 
-#container {
+.button {
+  color: var(--site-background);
+  background-color: var(--site-foreground);
+  font-family: 'Josefin Sans';
+  font-size: 1.1em;
+  padding: 10px;
+  border: none;
+  border-radius: 2px;
+  text-decoration: none;
+}
+
+.container {
   width: 98%;
   height: 100%;
-  background-color: var(--light-green);
+  background-color: var(--site-background);
   margin-left: auto;
   margin-right: auto;
   padding: 10px;
 }
 
-#sub-container {
+.sub-container {
   width: 90%;
   margin: auto;
 }
@@ -50,7 +61,7 @@ body.active {
   margin-top: 25px;
   margin-bottom: 25px;
   padding: 5px;
-  background-color: var(--light-green-dark);
+  background-color: var(--site-background-dark);
 
   display: flex;
   justify-content: left;
@@ -67,8 +78,8 @@ body.active {
 .project-panel:hover {
   transform: translate(-4px, -4px) scale(1.01);
   transform-origin: center;
-  filter: drop-shadow(4px 4px 0px var(--dark-green));
-  border-color: var(--dark-green);
+  filter: drop-shadow(4px 4px 0px var(--outline-color));
+  border-color: var(--outline-color);
 }
 
 .project-panel img {
@@ -92,23 +103,23 @@ body.active {
 
 h1 {
   font-family: 'Fraunces', Georgia, 'Times New Roman', Times, serif;
-  color: var(--green);
+  color: var(--site-foreground);
 }
 
 
 h2 {
   font-family: 'Fraunces', Georgia, 'Times New Roman', Times, serif;
-  color: var(--green);
+  color: var(--site-foreground);
 }
 
 h3 {
   font-family: 'Josefin Sans';
-  color: var(--green);
+  color: var(--site-foreground);
   font-weight: 300;
 }
 
 p {
-  color: var(--green);
+  color: var(--site-foreground);
   font-family: 'Josefin Sans';
   font-weight: 300;
   font-size: 1.1em;
