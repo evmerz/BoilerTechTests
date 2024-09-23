@@ -62,15 +62,13 @@
     <script>
         document.getElementById('create-account-form').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the form from refreshing the page
-
+   
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-
-
-            // Updated URL pointing to the backend server running on port 5000
-            const url = `boilertechtests.com/frontend/pages/account.html//create-account?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
-
-
+   
+            // Make sure the fetch request points to your backend API running on port 5000
+            const url = `http://boilertechtests.com:5000/create-account?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+   
             fetch(url, {
                 method: 'GET',
             })
@@ -83,5 +81,6 @@
             });
         });
     </script>
+   
 </body>
 </html>
