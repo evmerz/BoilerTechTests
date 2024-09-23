@@ -3,11 +3,9 @@ const mysql = require('mysql2');
 const cors = require('cors');
 
 const app = express();
-const port = 5000;
+const port = 3000;
 
-app.use(cors({
-    origin: 'http://boilertechtests.com' // Replace with your frontend URL
-}));
+app.use(cors());
 
 app.use(express.json());
 
