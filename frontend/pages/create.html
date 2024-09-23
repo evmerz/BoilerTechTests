@@ -96,7 +96,7 @@
             .then(data => {
                 document.getElementById('response-message').textContent = data.message;
                 // Optionally, redirect to the login page after successful account creation
-                setTimeout(() => window.location.href = 'about.html', 2000);
+                setTimeout(() => window.location.href = 'index.html', 2000);
             })
             .catch(error => {
                 document.getElementById('response-message').textContent = 'Error: ' + error.message;
