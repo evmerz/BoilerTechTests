@@ -47,7 +47,7 @@ app.get('/create-account', (req, res) => {
         if (!isPasswordStrong(password)) {
             return res.status(400).json({ message: 'Password must be at least 8 characters long, contain uppercase and lowercase letters, a number, and a special character.' });
         }
-        
+
         // If username exists, return an error message
         if (results.length > 0) {
             return res.status(409).json({ message: 'Username already exists, please choose a different one.' });
@@ -63,6 +63,27 @@ app.get('/create-account', (req, res) => {
         });
     });
 });
+
+app.get('/login', (req, res) => {
+    const username = req.query.username;
+    const password = req.query.password;
+  
+    if (!username || !password) {
+      return res.status(400).json({ message: 'Username and password are required' });
+    }
+  
+    const query = 'SELECT * FROM users WHERE username = ? AND password = ?';
+    db.query(query, [username, password], (err, results) => {
+      if (err) {
+        return res.status(500).json({ message: 'Error querying the database' });
+      }
+      if (results.length > 0) {
+        return res.status(200).json({ message: 'Login successful' });
+      } else {
+        return res.status(401).json({ message: 'Invalid username or password' });
+      }
+    });
+  });
 
   
   app.listen(port, '0.0.0.0', () => {
