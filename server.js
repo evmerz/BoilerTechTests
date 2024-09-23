@@ -20,6 +20,11 @@ db.connect(err => {
     if (err) throw err;
     console.log('Connected to MySQL database');
   });
+
+const isPasswordStrong = (password) => {
+    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/;
+    return strongPasswordRegex.test(password);
+};
   
   // GET request to create a new account
   // GET request to create a new account
@@ -38,6 +43,11 @@ app.get('/create-account', (req, res) => {
             return res.status(500).json({ message: 'Error checking username' });
         }
 
+        // Check password strength
+        if (!isPasswordStrong(password)) {
+            return res.status(400).json({ message: 'Password must be at least 8 characters long, contain uppercase and lowercase letters, a number, and a special character.' });
+        }
+        
         // If username exists, return an error message
         if (results.length > 0) {
             return res.status(409).json({ message: 'Username already exists, please choose a different one.' });
