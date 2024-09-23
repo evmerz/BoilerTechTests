@@ -141,6 +141,7 @@ def concat_strings(str1, str2):
             const currentQuestion = questions[currentQuestionIndex];
             document.getElementById('question').textContent = currentQuestion.prompt;
             editor.setValue(currentQuestion.functionSignature + '\n    # Your code goes here\n    pass');
+            document.getElementById('output').textContent = "";
         }
 
         document.getElementById('prev').addEventListener('click', () => {
