@@ -5,10 +5,13 @@ const cors = require('cors');
 const app = express();
 const port = 5000;
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://boilertechtests.com' // Replace with your frontend URL
+}));
+
 app.use(express.json());
 
-const db = mysql.createConnection({
+const db = mysql.createConnection({ 
   host: 'database-1.cvmku4284fk0.us-east-2.rds.amazonaws.com',
   user: 'admin',
   password: 'Boilerpass0!',
