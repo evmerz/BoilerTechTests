@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Terminal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/eclipse.min.css">
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f5f5f5;
+            color: #333;
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+        #question {
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #000;
+        }
+        .CodeMirror {
+            height: 150px;
+            background-color: #ffffff;
+            color: #333;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #61dafb;
+            color: #282c34;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        #output {
+            margin-top: 20px;
+            background-color: #ffffff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            white-space: pre-wrap;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Python Terminal</h1>
+    <div id="question">Question will be displayed here.</div>
+    <div>
+        <textarea id="code" placeholder="Write your Python code here...">
+def concat_strings(str1, str2):
+    # Your code goes here
+    pass
+        </textarea>
+    </div>
+    
+    <button id="run">Run Code</button>
+    <div id="output"></div>
+    
+    <div>
+        <button id="prev">Previous Question</button>
+        <button id="next">Next Question</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.18.1/full/pyodide.js"></script>
+
+    <script>
+        // Load Pyodide
+        let pyodide;
+        async function loadPyodideAndPackages() {
+            pyodide = await loadPyodide({
+                indexURL: "https://cdn.jsdelivr.net/pyodide/v0.18.1/full/"
+            });
+            document.getElementById('run').disabled = false; // Enable the button when ready
+        }
+        loadPyodideAndPackages();
+    
+        // Disable the run button initially
+        document.getElementById('run').disabled = true;
+
+        // Initialize CodeMirror
+        const editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+            lineNumbers: true,
+            mode: "python",
+            theme: "eclipse"
+        });
+
+        // Collection of questions with test cases
+        const questions = [
+            {
+                prompt: "Write a function that concatenates two strings.",
+                functionSignature: "def concat_strings(str1, str2):",
+                testCases: [
+                    { input: ["hello", " world"], expected: "hello world" },
+                    { input: ["foo", "bar"], expected: "foobar" }
+                ]
+            },
+            {
+                prompt: "Write a function that adds two numbers.",
+                functionSignature: "def add_numbers(a, b):",
+                testCases: [
+                    { input: [1, 2], expected: 3 },
+                    { input: [-1, 1], expected: 0 }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        function displayQuestion() {
+            const currentQuestion = questions[currentQuestionIndex];
+            document.getElementById('question').textContent = currentQuestion.prompt;
+            editor.setValue(currentQuestion.functionSignature + '\n    # Your code goes here\n    pass');
+        }
+
+        document.getElementById('prev').addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion();
+            }
+        });
+
+        document.getElementById('next').addEventListener('click', () => {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion();
+            }
+        });
+
+        // Initially display the first question
+        displayQuestion();
+
+        // Run code function
+        document.getElementById('run').addEventListener('click', async () => {
+            const code = editor.getValue().trim();
+            const currentQuestion = questions[currentQuestionIndex];
+
+            try {
+                let output = await pyodide.runPython(`
+                    import sys
+                    from io import StringIO
+
+                    # Redirect standard output
+                    old_stdout = sys.stdout
+                    sys.stdout = StringIO()
+
+                    # Prepare the user code
+                    user_code = '''${code.replace(/'/g, "\\'").replace(/\n/g, '\\n')}'''
+                    
+                    # Run the user code
+                    exec(user_code)
+
+                    # Test cases
+                    test_cases = ${JSON.stringify(currentQuestion.testCases)}
+                    results = []
+
+                    for test in test_cases:
+                        input_args = test['input']
+                        expected = test['expected']
+                        result = concat_strings(*input_args) if 'concat_strings' in locals() else add_numbers(*input_args)
+                        results.append("test: ")
+                        results.append((input_args, result, expected, result == expected))
+
+                    # Get the output
+                    output = sys.stdout.getvalue()
+                    sys.stdout = old_stdout  # Restore standard output
+                    output + '\\n' + str(results)  # Include test results
+                `);
+                document.getElementById('output').textContent = output || "";
+            } catch (error) {
+                document.getElementById('output').textContent = error;
+            }
+        });
+    </script>
+</body>
+</html>
