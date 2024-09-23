@@ -1,0 +1,14 @@
+{
+  "classes": [
+    {
+      "id": "cs240",
+      "name": "CS 240",
+      "caption": "C programming, in hell!"
+    },
+    {
+      "id": "cs180",
+      "name": "CS 180",
+      "caption": "The only moderately fun CS class (Java)"
+    }
+  ]
+}
