@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Terminal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/eclipse.min.css"> <!-- Lighter theme -->
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f5f5f5; /* Light background */
+            color: #333; /* Dark text */
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+        #question {
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #000; /* Dark text for question */
+        }
+        .CodeMirror {
+            height: 150px;
+            background-color: #ffffff; /* White background for CodeMirror */
+            color: #333; /* Dark text */
+            border: 1px solid #ccc; /* Light border */
+        }
+        button {
+            background-color: #61dafb;
+            color: #282c34;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        #output {
+            margin-top: 20px;
+            background-color: #ffffff; /* White background for output */
+            padding: 10px;
+            border: 1px solid #ccc; /* Light border */
+            white-space: pre-wrap;
+            color: #333; /* Dark text for output */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Python Terminal</h1>
+    <div id="question">Question will be displayed here.</div>
+    <textarea id="code" placeholder="Write your Python code here..."></textarea>
+    <button id="run">Run Code</button>
+    <div id="output"></div>
+    
+    <div>
+        <button id="prev">Previous Question</button>
+        <button id="next">Next Question</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.18.1/full/pyodide.js"></script>
+
+    <script>
+        // Load Pyodide
+        let pyodide;
+        async function loadPyodideAndPackages() {
+            pyodide = await loadPyodide({
+                indexURL: "https://cdn.jsdelivr.net/pyodide/v0.18.1/full/"
+            });
+            document.getElementById('run').disabled = false; // Enable the button when ready
+        }
+        loadPyodideAndPackages();
+    
+        // Disable the run button initially
+        document.getElementById('run').disabled = true;
+
+        // Initialize CodeMirror
+        const editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+            lineNumbers: true,
+            mode: "python",
+            theme: "eclipse" // Use the lighter theme
+        });
+
+        // Run code function
+        document.getElementById('run').addEventListener('click', async () => {
+            const code = editor.getValue().trim(); // Get the value from CodeMirror and trim whitespace
+            try {
+                // Capture print output
+                let output = await pyodide.runPython(`
+                    import sys
+                    from io import StringIO
+                    
+                    # Redirect standard output
+                    old_stdout = sys.stdout
+                    sys.stdout = StringIO()
+
+                    # Prepare the user code
+                    user_code = '''${code.replace(/'/g, "\\'").replace(/\n/g, '\\n')}'''
+                    
+                    # Run the user code
+                    exec(user_code)
+                    
+                    # Get the output
+                    output = sys.stdout.getvalue()
+                    sys.stdout = old_stdout  # Restore standard output
+                    output
+                `);
+                document.getElementById('output').textContent = output || ""; // Ensure output is set
+            } catch (error) {
+                document.getElementById('output').textContent = error;
+            }
+        });
+    </script>
+</body>
+</html>
