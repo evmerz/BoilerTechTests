@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="../styles/navigation.css">
+    <link rel="stylesheet" href="../styles/home.css">
+    <link rel="stylesheet" href="../styles/global.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+          rel="stylesheet">
+
+    <title>Practice - BoilerTechTests</title>
+</head>
+
+<body>
+
+    <div id="top-border"></div>
+
+    <!-- Navbar -->
+    <div id="navbar">
+        <div id="logo-container">
+            <h2 id="logo-text">
+                <a style="text-decoration: none; color: inherit;" href="javascript:delay('../../index.html', 500)">
+                    &#128642;B<span id="logo-hide">oiler</span>T<span id="logo-hide">ech</span>T<span id="logo-hide">ests</span>
+                </a>
+            </h2>
+        </div>
+
+        <!-- spacer -->
+        <div id="nav-spacer" style="flex: 1;"></div>
+
+        <div id="link-container">
+            <a href="../../index.html" class="hoverable-text">home</a>
+            <a href="practice.html" class="hoverable-text">practice</a>
+            <a href="../../index.html" class="hoverable-text">awards</a>
+            <a href="../../index.html" class="hoverable-text">tutoring</a>
+            <a href="pythonTerminal.html" class="hoverable-text">terminal</a>
+            <a href="about.html" class="hoverable-text">about</a>
+            <a href="login.html" class="hoverable-svg">
+                <img src="../images/account_circle.svg">
+            </a>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="shadow"></div>
+
+    <div id="sidebar">
+        <div id="toggle" onclick="show()">
+            <span></span>
+            <span style="margin-top: 0.25em;"></span>
+            <span style="margin-top: 0.25em;"></span>
+        </div>
+
+        <div id="link-container">
+            <div class="sidebar-text"><a class="underlineable" href="javascript:delay('../../index.html', 500)">home</a></div>
+            <div class="sidebar-text"><a class="underlineable" href="javascript:delay('practice.html', 500)">practice</a></div>
+            <div class="sidebar-text"><a class="underlineable" href="javascript:delay('../../index.html', 500)">awards</a></div>
+            <div class="sidebar-text"><a class="underlineable" href="javascript:delay('../../index.html', 500)">tutoring</a></div>
+            <div class="sidebar-text"><a class="underlineable" href="javascript:delay('../../index.html', 500)">how to</a></div>
+            <div class="sidebar-text"><a class="underlineable" href="javascript:delay('../../index.html', 500)">about</a></div>
+
+            <div id="logos">
+                <a href="login.html"><img src="../images/account_circle_white.svg"></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div id="spacer"></div>
+
+        <div id="intro">
+            <h1>Practice Your Skills Here</h1>
+            <p>Select a subject to practice from the list below!</p>
+        </div>
+
+        <div id="classes" class="sub-container">
+            <hr style="margin-top: 50px; color: var(--site-foreground)">
+            <div class="header-panel" style="margin-top: 50px;">
+                <h2>Practice Topics</h2>
+            </div>
+
+            <div class="content-panel" panel-id="practice" style="margin-top: 0;">
+                <div class="class-boxes">
+                    <!-- First Box linked to the quiz -->
+                    <a href="/frontend/pages/quiz.html" class="project-panel">
+                        <span>Quiz 1</span>
+                    </a>
+                    <!-- Remaining boxes (no links yet) -->
+                    <div class="project-panel"><span>Quiz 2</span></div>
+                    <div class="project-panel"><span>Quiz 3</span></div>
+                    <div class="project-panel"><span>Quiz 4</span></div>
+                    <div class="project-panel"><span>Quiz 5</span></div>
+                    <div class="project-panel"><span>Quiz 6</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
+            crossorigin="anonymous"></script>
+    <script src="../scripts/navigation.js"></script>
+    <script src="../scripts/project-load.js"></script>
+
+</body>
+
+</html>
