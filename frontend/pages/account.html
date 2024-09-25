@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            background-color: white;
+            padding: 2rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+            width: 300px;
+        }
+
+        .container h2 {
+            margin-bottom: 1.5rem;
+        }
+
+        .container p {
+            font-size: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        .hidden-password {
+            letter-spacing: 0.3rem;
+        }
+
+        button {
+            padding: 1rem;
+            width: 100%;
+            background-color: #cf9bdf;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        button:hover {
+            background-color: #b87dca;
+        }
+
+        #logout-btn {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Your Account</h2>
+        <p><strong>Username:</strong> <span id="username"></span></p>
+        <p><strong>Password:</strong> <span id="password" class="hidden-password"></span></p>
+        <p><strong>User ID:</strong> <span id="userId"></span></p>
+
+        <button id="logout-btn">Log Out</button>
+    </div>
+
+    <script>
+        // Function to retrieve user info from localStorage
+        function displayAccountInfo() {
+            const username = localStorage.getItem('username');
+            const password = localStorage.getItem('password'); // Not safe for production
+            const userId = localStorage.getItem('userId');
+
+            if (!username || !userId || !password) {
+                alert("User not logged in.");
+                window.location.href = 'login.html';
+                return;
+            }
+
+            document.getElementById('username').textContent = username;
+            document.getElementById('password').textContent = '********'; // Hide password
+            document.getElementById('userId').textContent = userId;
+        }
+
+        // Display account info on page load
+        displayAccountInfo();
+
+        // Log out button logic
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            localStorage.removeItem('username');
+            localStorage.removeItem('password');
+            localStorage.removeItem('userId');
+            window.location.href = '../../index.html'; // Redirect to login page
+        });
+    </script>
+</body>
+</html>
