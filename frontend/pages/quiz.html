@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+    <title>Interactive Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        #quiz-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .question {
+            margin-bottom: 15px;
+        }
+
+        .option {
+            display: block;
+            margin: 5px 0;
+        }
+
+        #submit-quiz {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #submit-quiz:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Interactive Quiz</h1>
+    <div id="quiz-container">
+        <!-- Quiz will be dynamically generated here -->
+    </div>
+    <button id="submit-quiz">Submit</button>
+    <div id="result"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const quizData = [
+                {
+                    question: 'What is the capital of France?',
+                    options: ['Berlin', 'Madrid', 'Paris', 'Rome'],
+                    answer: 'Paris'
+                }
+                // You can add more questions here if needed
+            ];
+
+            function getRandomQuestion() {
+                const randomIndex = Math.floor(Math.random() * quizData.length);
+                return quizData[randomIndex];
+            }
+
+            function renderQuiz() {
+                const questionData = getRandomQuestion();
+                const quizContainer = document.getElementById('quiz-container');
+                
+                const questionElement = document.createElement('div');
+                questionElement.classList.add('question');
+                questionElement.innerHTML = `
+                    <p>${questionData.question}</p>
+                    ${questionData.options.map((option, i) => `
+                        <label class="option">
+                            <input type="radio" name="quiz-question" value="${option}">
+                            ${option}
+                        </label>
+                    `).join('')}
+                `;
+                quizContainer.appendChild(questionElement);
+            }
+
+            function getResults() {
+                const questionData = getRandomQuestion();
+                const selectedOption = document.querySelector('input[name="quiz-question"]:checked');
+                const resultElement = document.getElementById('result');
+
+                if (selectedOption) {
+                    const isCorrect = selectedOption.value === questionData.answer;
+                    resultElement.innerHTML = isCorrect ? 'Correct!' : 'Wrong. The correct answer was ' + questionData.answer + '.';
+                } else {
+                    resultElement.innerHTML = 'Please select an answer.';
+                }
+            }
+
+            document.getElementById('submit-quiz').addEventListener('click', getResults);
+
+            renderQuiz();
+        });
+    </script>
+</body>
+</html>
