@@ -27,5 +27,148 @@
     <!-- Button to link to the interactive multiple-choice quiz -->
     <a href="/frontend/pages/quiz.html" class="quiz-button">Go to Quiz</a>
 </body>
+=======
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="frontend/styles/navigation.css">
+	<link rel="stylesheet" href="frontend/styles/home.css">
+	<link rel="stylesheet" href="frontend/styles/global.css">
+
+	<!-- <link rel="icon" type="image/x-icon" href="/images/website_favicon_c.png"> -->
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
+		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+		rel="stylesheet">
+
+	<title>BoilerTechTests</title>
+</head>
+
+<body>
+
+	<div id="top-border"></div>
+
+	<div id="navbar">
+		<div id="logo-container">
+			<h2 id="logo-text">
+				<a style="text-decoration: none; color: inherit;" href="javascript:delay('index.html', 500)">
+					&#128642;B<span id="logo-hide">oiler</span>T<span id="logo-hide">ech</span>T<span id="logo-hide">ests</span>
+				</a>
+			</h2>
+		</div>
+
+		<!-- spacer -->
+		<div id="nav-spacer" style="flex: 1;"></div>
+
+		<div id="link-container">
+			<a href="index.html" class="hoverable-text">home</a>
+			<a href="index.html" class="hoverable-text">practice</a>
+			<a href="index.html" class="hoverable-text">awards</a>
+			<a href="index.html" class="hoverable-text">tutoring</a>
+			<a href="frontend/pages/terminal.html" class="hoverable-text">terminal</a>
+			<a href="frontend/pages/about.html" class="hoverable-text">about</a>
+
+			<a href="frontend/pages/login.html" class="hoverable-svg">
+				<img src="frontend/images/account_circle.svg">
+			</a>
+			<!-- <a href="https://www.linkedin.com/in/j-connor-colbert/" class="hoverable-svg">
+				<img src="images/linkedin-logo-green.svg">
+			</a>
+			<a href="mailto: jconnorcolbert@gmail.com" class="hoverable-svg">
+				<img src="images/email-icon-green.svg">
+			</a> -->
+		</div>
+
+	</div>
+
+	<div id="shadow"></div>
+
+	<div id="sidebar">
+		<div id="toggle" onclick="show()">
+			<span></span>
+			<span style="margin-top: 0.25em;"></span>
+			<span style="margin-top: 0.25em;"></span>
+		</div>
+
+		<div id="link-container">
+			<div class="sidebar-text"><a class="underlineable" href="javascript:delay('index.html', 500)">home</a></div>
+			<div class="sidebar-text"><a class="underlineable" href="javascript:delay('index.html', 500)">practice</a></div>
+			<div class="sidebar-text"><a class="underlineable" href="javascript:delay('index.html', 500)">awards</a></div>
+			<div class="sidebar-text"><a class="underlineable" href="javascript:delay('index.html', 500)">tutoring</a></div>
+			<div class="sidebar-text"><a class="underlineable" href="javascript:delay('index.html', 500)">how to</a></div>
+			<div class="sidebar-text"><a class="underlineable" href="javascript:delay('index.html', 500)">about</a></div>
+
+			<div id="logos">
+				<a href="frontend/pages/login.html"><img src="frontend/images/account_circle_white.svg"></a>
+				<!-- <a href="https://www.linkedin.com/in/j-connor-colbert/"><img src="images/linkedin-logo-white.svg"></a>
+				<a href="mailto: jconnorcolbert@gmail.com"><img src="images/email-icon-white.svg"></a> -->
+			</div>
+		</div>
+	</div>
+
+	<!-- The main container of the website (exists for styling) -->
+	<div class="container">
+		<div id="spacer"></div>
+
+		<div id="intro">
+			<img id="intro-img" class="fade-in" src="https://1000logos.net/wp-content/uploads/2024/05/Purdue-Boilermakers-Logo-1994.png" />
+
+			<div id="intro-text">
+				<h1 class="fade-in" style="--delay: 0.2s;">Welcome to BoilerTechTests!</h1>
+
+				<h3 class="fade-in" style="--delay: 0.25s">
+					Here you can learn development techniques and strategies taught in <b style="font-weight: 1200;">Purdue computer science</b> classes!
+				</h3>
+
+				<a href="#classes" class="fade-in button" style="--delay: 0.3s">
+					Start Studying
+				</a>
+			</div>
+		</div>
+
+		<br>
+
+		<div id="classes" class="sub-container">
+			<hr class="fade-in" style="margin-top: 50px; color: var(--site-foreground)">
+
+			<div class="header-panel" style="margin-top: 100px; margin-bottom: 0;">
+
+				<h2 class="fade-in">Class List</h2>
+
+				<p class="fade-in">
+					Select what class you'd like to study! You can pin ones you use the most.
+				</p>
+
+			</div>
+
+			<div class="content-panel" panel-id="homepage" style="margin-top: 0;"></div>
+
+
+		</div>
+
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+		integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
+		crossorigin="anonymous"></script>
+	<script src="frontend/scripts/navigation.js"></script>
+	<script src="frontend/scripts/project-load.js"></script>
+
+	<script>
+		loadProjectData().then(() => {
+			loadProject("cs240", "homepage");
+			loadProject("cs180", "homepage");
+		});
+	</script>
+
+</body>
+
 </html>
 
