@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>Interactive Quiz</title>
+    <title>Interactive Quiz on C Programming</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -44,68 +44,162 @@
             background-color: #0056b3;
         }
 
-        #result {
-            font-size: 18px;
-            margin-top: 20px;
+        #back-button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #6c757d;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #back-button:hover {
+            background-color: #5a6268;
+        }
+
+        /* Styling for correct and incorrect answers */
+        .correct {
+            color: green;
+            font-weight: bold;
+        }
+
+        .incorrect {
+            color: red;
+            font-weight: bold;
+        }
+
+        /* Styling to indicate quiz lock */
+        .locked {
+            color: #6c757d;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>Interactive Quiz</h1>
-    <div id="quiz-container">
-        <!-- Quiz will be dynamically generated here -->
-    </div>
+    <h1 id="quiz-title">If-Else Statement Quiz STARTED</h1>
+    <button id="back-button">Back to Practice</button>
+    <div id="quiz-container"></div>
     <button id="submit-quiz">Submit</button>
-    <div id="result"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const quizData = [
                 {
-                    question: 'What is the capital of France?',
-                    options: ['Berlin', 'Madrid', 'Paris', 'Rome'],
-                    answer: 'Paris'
+                    question: 'What will the following code output?\nif (5 > 10) { printf("A"); } else { printf("B"); }',
+                    options: ['A', 'B', 'Error', 'Nothing'],
+                    answer: 'B'
+                },
+                {
+                    question: 'Which of the following is true about the if-else statement in C?',
+                    options: ['Else is mandatory after if', 'If can have multiple else blocks', 'If evaluates a condition', 'Else can evaluate a condition'],
+                    answer: 'If evaluates a condition'
+                },
+                {
+                    question: 'What will the following code output?\nint x = 10; if (x == 10) printf("True"); else printf("False");',
+                    options: ['True', 'False', 'Error', 'Nothing'],
+                    answer: 'True'
+                },
+                {
+                    question: 'Which of the following is a valid if-else syntax in C?',
+                    options: [
+                        'if (condition) statement1; else statement2;',
+                        'if condition statement1 else statement2',
+                        'if (condition) statement1 else statement2',
+                        'if (condition) statement1; statement2 else'
+                    ],
+                    answer: 'if (condition) statement1; else statement2;'
+                },
+                {
+                    question: 'What will happen if you omit the "else" block after an "if" statement?',
+                    options: [
+                        'It will cause a compilation error',
+                        'It will always execute the else block',
+                        'Nothing will happen if the condition is false',
+                        'It will always execute the if block'
+                    ],
+                    answer: 'Nothing will happen if the condition is false'
                 }
-                // You can add more questions here if needed
             ];
 
-            function getRandomQuestion() {
-                const randomIndex = Math.floor(Math.random() * quizData.length);
-                return quizData[randomIndex];
+            function shuffle(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
             }
 
             function renderQuiz() {
-                const questionData = getRandomQuestion();
                 const quizContainer = document.getElementById('quiz-container');
-                
-                const questionElement = document.createElement('div');
-                questionElement.classList.add('question');
-                questionElement.innerHTML = `
-                    <p>${questionData.question}</p>
-                    ${questionData.options.map((option, i) => `
-                        <label class="option">
-                            <input type="radio" name="quiz-question" value="${option}">
-                            ${option}
-                        </label>
-                    `).join('')}
-                `;
-                quizContainer.appendChild(questionElement);
+                quizContainer.innerHTML = '';
+
+                quizData.forEach((questionData, index) => {
+                    const questionElement = document.createElement('div');
+                    questionElement.classList.add('question');
+
+                    shuffle(questionData.options);  // Shuffle options each time
+
+                    questionElement.innerHTML = 
+                        `<p>${index + 1}. ${questionData.question}</p>` +
+                        questionData.options.map(option => 
+                            `<label class="option">
+                                <input type="radio" name="quiz-question-${index}" value="${option}">
+                                ${option}
+                            </label>`
+                        ).join('') +
+                        `<input type="hidden" id="correct-answer-${index}" value="${questionData.answer}">`;
+                    quizContainer.appendChild(questionElement);
+                });
             }
 
-            function getResults() {
-                const questionData = getRandomQuestion();
-                const selectedOption = document.querySelector('input[name="quiz-question"]:checked');
-                const resultElement = document.getElementById('result');
+            function gradeQuiz() {
+                const quizContainer = document.getElementById('quiz-container');
+                const questions = quizContainer.getElementsByClassName('question');
 
-                if (selectedOption) {
-                    const isCorrect = selectedOption.value === questionData.answer;
-                    resultElement.innerHTML = isCorrect ? 'Correct!' : 'Wrong. The correct answer was ' + questionData.answer + '.';
-                } else {
-                    resultElement.innerHTML = 'Please select an answer.';
+                for (let i = 0; i < questions.length; i++) {
+                    const selectedOption = document.querySelector(`input[name="quiz-question-${i}"]:checked`);
+                    const correctAnswer = document.getElementById(`correct-answer-${i}`).value;
+
+                    if (selectedOption) {
+                        const userAnswer = selectedOption.value;
+                        const optionLabels = questions[i].getElementsByTagName('label');
+
+                        // Check and mark each option
+                        for (let label of optionLabels) {
+                            const input = label.getElementsByTagName('input')[0];
+                            if (input.value === correctAnswer) {
+                                label.classList.add('correct');
+                            } else if (input.value === userAnswer) {
+                                label.classList.add('incorrect');
+                            }
+                            input.disabled = true; // Disable all options after submission
+                        }
+                    } else {
+                        // If no option was selected
+                        questions[i].innerHTML += '<p class="incorrect">No answer selected!</p>';
+                    }
                 }
+
+                // Add lock message
+                const lockMessage = document.createElement('p');
+                lockMessage.classList.add('locked');
+                lockMessage.textContent = 'The quiz is now locked. You cannot change your answers.';
+                quizContainer.appendChild(lockMessage);
             }
 
-            document.getElementById('submit-quiz').addEventListener('click', getResults);
+            document.getElementById('submit-quiz').addEventListener('click', function(event) {
+                event.preventDefault();  // Prevent the form submission
+                gradeQuiz();  // Grade the quiz
+                document.getElementById('quiz-title').innerText = 'QUIZ SUBMITTED'; // Change title
+                document.getElementById('submit-quiz').style.display = 'none'; // Remove submit button
+                window.scrollTo(0, 0); // Scroll to the top of the page
+            });
+
+            document.getElementById('back-button').addEventListener('click', function() {
+                window.location.href = 'practice.html'; // Replace with your practice page URL
+            });
 
             renderQuiz();
         });

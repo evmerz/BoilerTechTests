@@ -17,6 +17,64 @@
           rel="stylesheet">
 
     <title>Practice - BoilerTechTests</title>
+
+    <style>
+        /* Styling for the gray box behind the button */
+        .black-box {
+            background-color: lightgray; /* Light gray box background */
+            padding: 20px 10px;
+            border-radius: 8px;
+            display: inline-block;
+            width: 150px;
+            height: 200px;
+            position: relative;
+            color: black; /* Text color for the label */
+            font-family: 'Josefin Sans', sans-serif;
+            margin: 20px; /* Added spacing between boxes */
+        }
+
+        /* Label for the gray box */
+        .black-box-label {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        /* Styling for the tan button */
+        .project-panel {
+            display: inline-block;
+            margin: 0 auto;
+            padding: 15px;
+            text-align: center;
+            background-color: #f0c674; /* Tan button color */
+            border: none;
+            color: black;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            min-width: 100px;
+            font-family: 'Josefin Sans', sans-serif;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: transform 0.2s ease; /* Smoother transition */
+        }
+
+        /* Subtle hover effect for the button */
+        .project-panel:hover {
+            transform: translate(-50%, -5px); /* Reduced hover movement */
+            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow change */
+        }
+
+        /* Class boxes container for layout */
+        .class-boxes {
+            display: flex;
+            flex-wrap: wrap;  /* Wrap to new line if too wide */
+            justify-content: center;
+        }
+    </style>
 </head>
 
 <body>
@@ -49,30 +107,6 @@
         </div>
     </div>
 
-    <!-- Sidebar -->
-    <div id="shadow"></div>
-
-    <div id="sidebar">
-        <div id="toggle" onclick="show()">
-            <span></span>
-            <span style="margin-top: 0.25em;"></span>
-            <span style="margin-top: 0.25em;"></span>
-        </div>
-
-        <div id="link-container">
-            <div class="sidebar-text"><a class="underlineable" href="javascript:delay('../../index.html', 500)">home</a></div>
-            <div class="sidebar-text"><a class="underlineable" href="javascript:delay('practice.html', 500)">practice</a></div>
-            <div class="sidebar-text"><a class="underlineable" href="javascript:delay('../../index.html', 500)">awards</a></div>
-            <div class="sidebar-text"><a class="underlineable" href="javascript:delay('../../index.html', 500)">tutoring</a></div>
-            <div class="sidebar-text"><a class="underlineable" href="javascript:delay('../../index.html', 500)">how to</a></div>
-            <div class="sidebar-text"><a class="underlineable" href="javascript:delay('../../index.html', 500)">about</a></div>
-
-            <div id="logos">
-                <a href="login.html"><img src="../images/account_circle_white.svg"></a>
-            </div>
-        </div>
-    </div>
-
     <!-- Main Content -->
     <div class="container">
         <div id="spacer"></div>
@@ -90,16 +124,34 @@
 
             <div class="content-panel" panel-id="practice" style="margin-top: 0;">
                 <div class="class-boxes">
-                    <!-- First Box linked to the quiz -->
-                    <a href="/frontend/pages/quiz.html" class="project-panel">
-                        <span>Quiz 1</span>
-                    </a>
-                    <!-- Remaining boxes (no links yet) -->
-                    <div class="project-panel"><span>Quiz 2</span></div>
-                    <div class="project-panel"><span>Quiz 3</span></div>
-                    <div class="project-panel"><span>Quiz 4</span></div>
-                    <div class="project-panel"><span>Quiz 5</span></div>
-                    <div class="project-panel"><span>Quiz 6</span></div>
+                    <!-- First gray box wrapping the tan button with label -->
+                    <div class="black-box">
+                        <div class="black-box-label">Quiz 1</div>
+                        <a href="/frontend/pages/quiz.html" class="project-panel">
+                            <span>Quiz 1</span>
+                        </a>
+                    </div>
+                    <!-- Second gray box wrapping the tan button with label -->
+                    <div class="black-box">
+                        <div class="black-box-label">Quiz 2</div>
+                        <a href="/frontend/pages/quiz.html" class="project-panel">
+                            <span>Quiz 2</span>
+                        </a>
+                    </div>
+                    <!-- Third gray box wrapping the tan button with label -->
+                    <div class="black-box">
+                        <div class="black-box-label">Quiz 3</div>
+                        <a href="/frontend/pages/quiz.html" class="project-panel">
+                            <span>Quiz 3</span>
+                        </a>
+                    </div>
+                    <!-- Fourth gray box wrapping the tan button with label -->
+                    <div class="black-box">
+                        <div class="black-box-label">Quiz 4</div>
+                        <a href="/frontend/pages/quiz.html" class="project-panel">
+                            <span>Quiz 4</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
