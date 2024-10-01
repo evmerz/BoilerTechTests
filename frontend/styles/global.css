@@ -33,7 +33,7 @@ body.active {
 
 .button:hover {
   background-color: var(--site-foreground-light);
-  transition: background-color 0.1s;
+  /* transition: background-color 0.2s; */
 }
 
 .container {
