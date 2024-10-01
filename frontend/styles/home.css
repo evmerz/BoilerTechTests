@@ -12,18 +12,21 @@
 }
 
 #intro {
-  display: block;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column-reverse;
+
 }
 
 @media screen and (min-width: 1100px) {
   #intro {
-    box-sizing: border-box;
     display: grid;
     flex-direction: row-reverse;
     align-items: flex-end;
     justify-content: center;
     grid-template-columns: 1fr 1fr;
     column-gap: 5px;
+    padding-left: 5%;
   }
 
   #intro-text {
