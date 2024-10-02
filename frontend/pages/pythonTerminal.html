@@ -51,13 +51,13 @@
     <div id="question">Question will be displayed here.</div>
     <div>
         <textarea id="code" placeholder="Write your Python code here...">
-def concat_strings(str1, str2):
-    # Your code goes here
-    pass
+    # Your Python code goes here
+
         </textarea>
     </div>
     
-    <button id="run">Run Code</button>
+    <button id="run">Submit</button>
+
     <div id="output"></div>
     
     <div>
@@ -93,7 +93,7 @@ def concat_strings(str1, str2):
         // Collection of questions with test cases
         const questions = [
             {
-                prompt: "Write a function that concatenates two strings.",
+                prompt: "Write a Python function that concatenates two strings.",
                 functionSignature: "def concat_strings(str1, str2):",
                 functionName: "concat_strings",
                 testCases: [
@@ -102,7 +102,7 @@ def concat_strings(str1, str2):
                 ]
             },
             {
-                prompt: "Write a function that adds two numbers.",
+                prompt: "Write a Python function that adds two numbers.",
                 functionSignature: "def add_numbers(a, b):",
                 functionName: "add_numbers",
                 testCases: [
@@ -111,7 +111,7 @@ def concat_strings(str1, str2):
                 ]
             },
             {
-                prompt: "Write a function that subtracts one number from another.",
+                prompt: "Write a Python function that subtracts one number from another.",
                 functionSignature: "def subtract_numbers(a, b):",
                 functionName: "subtract_numbers",
                 testCases: [
@@ -121,7 +121,7 @@ def concat_strings(str1, str2):
             },
             {
             
-                prompt: "Write a function that removes consecutive duplicate characters from a string.",
+                prompt: "Write a Python function that removes consecutive duplicate characters from a string.",
                 functionSignature: "def remove_consecutive_duplicates(s):",
                 functionName: "remove_consecutive_duplicates",
                 testCases: [
@@ -140,7 +140,7 @@ def concat_strings(str1, str2):
         function displayQuestion() {
             const currentQuestion = questions[currentQuestionIndex];
             document.getElementById('question').textContent = currentQuestion.prompt;
-            editor.setValue(currentQuestion.functionSignature + '\n    # Your code goes here\n    pass');
+            editor.setValue(currentQuestion.functionSignature + '\n    # Your Python code goes here\n');
             document.getElementById('output').textContent = "";
             document.getElementById('header').textContent = "Question " + (currentQuestionIndex + 1);
         }
