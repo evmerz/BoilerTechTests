@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+    <title>Quiz Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        #result-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .question {
+            margin-bottom: 15px;
+        }
+
+        .correct {
+            color: green;
+            font-weight: bold;
+        }
+
+        .incorrect {
+            color: red;
+            font-weight: bold;
+        }
+
+        .correct-answer {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <h1>Quiz Results</h1>
+    <div id="result-container"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const resultContainer = document.getElementById('result-container');
+            const formData = new FormData(document.forms[0]);
+
+            const totalQuestions = 5;
+            let score = 0;
+
+            for (let i = 0; i < totalQuestions; i++) {
+                const userAnswer = urlParams.get(`quiz-question-${i}`);
+                const correctAnswer = urlParams.get(`correct-answer-${i}`);
+                
+                const questionElement = document.createElement('div');
+                questionElement.classList.add('question');
+
+                if (userAnswer === correctAnswer) {
+                    questionElement.innerHTML = `<p class="correct">Question ${i + 1}: Correct! Your answer: ${userAnswer}</p>`;
+                    score++;
+                } else {
+                    questionElement.innerHTML = `
+                        <p class="incorrect">Question ${i + 1}: Incorrect.</p>
+                        <p>Your answer: ${userAnswer || 'No answer selected'}</p>
+                        <p class="correct-answer">Correct answer: ${correctAnswer}</p>
+                    `;
+                }
+
+                resultContainer.appendChild(questionElement);
+            }
+
+            const scoreElement = document.createElement('div');
+            scoreElement.innerHTML = `<p>Your final score is: ${score} out of ${totalQuestions}</p>`;
+            resultContainer.appendChild(scoreElement);
+        });
+    </script>
+</body>
+</html>
