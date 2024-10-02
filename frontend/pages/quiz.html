@@ -76,13 +76,21 @@
             color: #6c757d;
             font-weight: bold;
         }
+
+        /* Disabled button */
+        #submit-quiz:disabled {
+            background-color: gray;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
-    <h1 id="quiz-title">If-Else Statement Quiz STARTED</h1>
+    <h1 id="quiz-title">If-Else Statement Quiz</h1>
     <button id="back-button">Back to Practice</button>
     <div id="quiz-container"></div>
-    <button id="submit-quiz">Submit</button>
+    <div id="answer-message" style="color: red; display: none;">You need to answer all questions before you can submit.</div>
+
+    <button id="submit-quiz" disabled>Submit</button>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -123,24 +131,24 @@
                     answer: 'Nothing will happen if the condition is false'
                 }
             ];
-
+    
             function shuffle(array) {
                 for (let i = array.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [array[i], array[j]] = [array[j], array[i]];
                 }
             }
-
+    
             function renderQuiz() {
                 const quizContainer = document.getElementById('quiz-container');
                 quizContainer.innerHTML = '';
-
+    
                 quizData.forEach((questionData, index) => {
                     const questionElement = document.createElement('div');
                     questionElement.classList.add('question');
-
+    
                     shuffle(questionData.options);  // Shuffle options each time
-
+    
                     questionElement.innerHTML = 
                         `<p>${index + 1}. ${questionData.question}</p>` +
                         questionData.options.map(option => 
@@ -153,56 +161,99 @@
                     quizContainer.appendChild(questionElement);
                 });
             }
-
+    
+            function allQuestionsAnswered() {
+                const totalQuestions = quizData.length;
+                let answeredQuestions = 0;
+    
+                for (let i = 0; i < totalQuestions; i++) {
+                    const selectedOption = document.querySelector(`input[name="quiz-question-${i}"]:checked`);
+                    if (selectedOption) {
+                        answeredQuestions++;
+                    }
+                }
+    
+                return answeredQuestions === totalQuestions;
+            }
+    
+            function enableSubmitButton() {
+                const submitButton = document.getElementById('submit-quiz');
+                const message = document.getElementById('answer-message');
+    
+                if (allQuestionsAnswered()) {
+                    submitButton.disabled = false;
+                    submitButton.style.backgroundColor = 'blue';  // Turn the button blue when enabled
+                    submitButton.style.cursor = 'pointer';  // Change cursor to pointer to indicate it's clickable
+                    message.style.display = 'none';  // Hide the message when all questions are answered
+                } else {
+                    submitButton.disabled = true;
+                    submitButton.style.backgroundColor = 'grey';  // Keep it grey when disabled
+                    submitButton.style.cursor = 'not-allowed';  // Cursor indicates the button is disabled
+                    message.style.display = 'block';  // Show the message when not all questions are answered
+                }
+            }
+    
             function gradeQuiz() {
                 const quizContainer = document.getElementById('quiz-container');
                 const questions = quizContainer.getElementsByClassName('question');
-
+    
                 for (let i = 0; i < questions.length; i++) {
                     const selectedOption = document.querySelector(`input[name="quiz-question-${i}"]:checked`);
                     const correctAnswer = document.getElementById(`correct-answer-${i}`).value;
-
+    
                     if (selectedOption) {
                         const userAnswer = selectedOption.value;
                         const optionLabels = questions[i].getElementsByTagName('label');
-
+    
                         // Check and mark each option
                         for (let label of optionLabels) {
-                            const input = label.getElementsByTagName('input')[0];
+                            const input = label.querySelector('input');
                             if (input.value === correctAnswer) {
                                 label.classList.add('correct');
-                            } else if (input.value === userAnswer) {
+                            } else if (input.checked) {
                                 label.classList.add('incorrect');
                             }
-                            input.disabled = true; // Disable all options after submission
                         }
-                    } else {
-                        // If no option was selected
-                        questions[i].innerHTML += '<p class="incorrect">No answer selected!</p>';
                     }
                 }
-
-                // Add lock message
-                const lockMessage = document.createElement('p');
-                lockMessage.classList.add('locked');
-                lockMessage.textContent = 'The quiz is now locked. You cannot change your answers.';
-                quizContainer.appendChild(lockMessage);
             }
-
-            document.getElementById('submit-quiz').addEventListener('click', function(event) {
-                event.preventDefault();  // Prevent the form submission
-                gradeQuiz();  // Grade the quiz
-                document.getElementById('quiz-title').innerText = 'QUIZ SUBMITTED'; // Change title
-                document.getElementById('submit-quiz').style.display = 'none'; // Remove submit button
-                window.scrollTo(0, 0); // Scroll to the top of the page
+    
+            // Add event listeners for every answer selection
+            document.addEventListener('change', function(event) {
+                if (event.target.matches('input[type="radio"]')) {
+                    enableSubmitButton();  // Enable the submit button when all questions are answered
+                }
             });
-
+    
+            document.getElementById('submit-quiz').addEventListener('click', function() {
+                if (!allQuestionsAnswered()) {
+                    alert('Please answer all questions before submitting the quiz.');
+                } else {
+                    gradeQuiz();
+    
+                    // Scroll to top of the page after submission
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+                    // Disable submit button to prevent multiple submissions
+                    const submitButton = document.getElementById('submit-quiz');
+                    submitButton.disabled = true;
+                    submitButton.style.backgroundColor = 'grey';  // Disable the button after submission
+                }
+            });
+    
             document.getElementById('back-button').addEventListener('click', function() {
-                window.location.href = 'practice.html'; // Replace with your practice page URL
+                window.location.href = "practice.html";  // Redirect back to practice page
             });
-
+    
+            // Render the quiz when the page loads
             renderQuiz();
+    
+            // Initially disable the submit button and show the message
+            enableSubmitButton();
         });
     </script>
+    
+    
+      
 </body>
 </html>
