@@ -86,6 +86,7 @@
         <button id="change-btn">Change</button>
         <p id="response-message"></p>
 
+
         <button id="logout-btn">Log Out</button>
     </div>
 
@@ -115,67 +116,57 @@
             localStorage.removeItem('username');
             localStorage.removeItem('password');
             localStorage.removeItem('userId');
-            window.location.href = '../../index.html'; // Redirect to login page
+            window.location.href = '../../index.html'; // Redirect to home page
         });
 
         // Change username and/or password
-        document.getElementById('change-btn').addEventListener('click', function() {
-            const userId = localStorage.getItem('userId');
-            const username = localStorage.getItem('username');
-            const password = localStorage.getItem('password');
+document.getElementById('change-btn').addEventListener('click', function() {
+    const userId = localStorage.getItem('userId');
+    const username = localStorage.getItem('username');
+    const password = localStorage.getItem('password');
 
-            const currentPassword = document.getElementById('currentPassword').value;
-            const newUsername = document.getElementById('newUsername').value;
-            const newPassword = document.getElementById('newPassword').value;
+    const newUsername = document.getElementById('newUsername').value;
+    const newPassword = document.getElementById('newPassword').value;
+    const currentPassword = document.getElementById('currentPassword').value; // Get current password
 
-            // Client-side validation
-            if (newPassword && !currentPassword) {
-                document.getElementById('response-message').textContent = 'Please enter current password to change password.';
-                return; // Exit early if validation fails
+    const url = `http://boilertechtests.com/api/update-account`;
+
+    const data = {
+        userId: userId,
+        newUsername: newUsername || undefined,
+        newPassword: newPassword || undefined,
+        currentPassword: currentPassword // Include current password for verification
+    };
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Set content type to JSON
+        },
+        body: JSON.stringify(data), // Send data as JSON
+    })
+    .then(response => response.json()) // Parse the response as JSON
+    .then(data => {
+        // Check if there's a message from the server and handle accordingly
+        document.getElementById('response-message').textContent = data.message || 'No changes made'; // Default message
+
+        if (data.success) {
+            // Update localStorage if changes are successful
+            if (newUsername) {
+                localStorage.setItem('username', newUsername);
+                document.getElementById('username').textContent = newUsername; // Update displayed username
             }
+            if (newPassword) {
+                localStorage.setItem('password', newPassword); // Not recommended for production
+            }
+        }
+    })
+    .catch(error => {
+        // Handle errors that are not from the JSON response
+        document.getElementById('response-message').textContent = error.message;
+    });
+});
 
-            const url = `http://boilertechtests.com/api/update-account`; // Correct URL without query params
-
-            const data = {
-                userId: userId,
-                newUsername: newUsername || undefined, // Allow empty to keep current username
-                newPassword: newPassword || undefined, // Allow empty to keep current password
-                // currentPassword: currentPassword || undefined // Uncomment if required on server
-            };
-
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json' // Set content type to JSON
-                },
-                body: JSON.stringify(data), // Send data as JSON
-            })
-            .then(response => {
-                return response.json().then(data => {
-                    if (!response.ok) {
-                        throw new Error(data.message || 'Unexpected error');
-                    }
-                    return data;
-                });
-            })
-            .then(data => {
-                document.getElementById('response-message').textContent = data.message;
-
-                if (data.success) {
-                    // Update localStorage if changes are successful
-                    if (newUsername) {
-                        localStorage.setItem('username', newUsername);
-                        document.getElementById('username').textContent = newUsername; // Update displayed username
-                    }
-                    if (newPassword) {
-                        localStorage.setItem('password', newPassword); // Not recommended for production
-                    }
-                }
-            })
-            .catch(error => {
-                document.getElementById('response-message').textContent = 'Error: ' + error.message;
-            });
-        });
     </script>
 </body>
 </html>

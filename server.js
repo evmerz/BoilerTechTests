@@ -102,9 +102,14 @@ router.get('/login', (req, res) => {
     });
 });
 
-// Update Account Route
-router.post('/update-account', (req, res) => {
-  const { userId, newUsername, newPassword } = req.body;
+// Endpoint to update username and/or password
+app.post('/update-account', (req, res) => {
+  const { userId, newUsername, newPassword, currentPassword } = req.body;
+
+  // Check if userId is provided
+  if (!userId) {
+      return res.status(400).json({ message: 'User ID is required.' });
+  }
 
   // Create an array for the query
   const updates = [];
@@ -118,52 +123,51 @@ router.post('/update-account', (req, res) => {
 
   // Check if newPassword is provided and not empty
   if (newPassword && newPassword.trim() !== '') {
+      if (!isPasswordStrong(newPassword)) {
+          return res.status(400).json({ message: 'Password must be at least 8 characters long, contain uppercase and lowercase letters, a number, and a special character.' });
+      }
       updates.push('password = ?');
       params.push(newPassword);
   }
 
-  // If no updates, respond with an error
+  // If no updates, just return an error
   if (updates.length === 0) {
-      return res.status(400).json({ message: 'No updates provided' });
+      return res.status(400).json({ message: 'No changes were made.' });
   }
 
-  // Check for username uniqueness if newUsername is provided
-  if (newUsername && newUsername.trim() !== '') {
-      const checkUsernameQuery = 'SELECT * FROM users WHERE username = ?';
-      db.query(checkUsernameQuery, [newUsername], (err, results) => {
+  // Check if newUsername already exists in the database
+  if (newUsername) {
+      const checkQuery = 'SELECT * FROM users WHERE username = ? AND id != ?';
+      db.query(checkQuery, [newUsername, userId], (err, results) => {
           if (err) {
-              return res.status(500).json({ message: 'Error checking username' });
+              return res.status(500).json({ message: 'Error checking username.' });
           }
 
-          // Check password strength
-          if (newPassword && !isPasswordStrong(newPassword)) {
-              return res.status(400).json({ message: 'Password must be at least 8 characters long, contain uppercase and lowercase letters, a number, and a special character.' });
-          }
-
+          // If username exists, return an error message
           if (results.length > 0) {
               return res.status(409).json({ message: 'Username already exists, please choose a different one.' });
           }
 
-          // Proceed to update since username is unique
-          const updateQuery = `UPDATE users SET ${updates.join(', ')} WHERE id = ?`;
+          // Construct the query
+          const query = `UPDATE users SET ${updates.join(', ')} WHERE id = ?`;
           params.push(userId);
 
-          db.query(updateQuery, params, (err, results) => {
+          db.query(query, params, (err, results) => {
               if (err) {
-                  return res.status(500).json({ message: 'Error updating account' });
+                  return res.status(500).json({ message: 'Error updating account.' });
               }
 
               res.json({ success: true, message: 'Account updated successfully' });
           });
       });
   } else {
-      // If no newUsername, proceed to update password only
-      const updateQuery = `UPDATE users SET ${updates.join(', ')} WHERE id = ?`;
+      // If there's no new username, just update the password
+      const query = `UPDATE users SET ${updates.join(', ')} WHERE id = ?`;
       params.push(userId);
 
-      db.query(updateQuery, params, (err, results) => {
+      db.query(query, params, (err, results) => {
           if (err) {
-              return res.status(500).json({ message: 'Error updating account' });
+              return res.status(500).json({ message: 'Error updating account.' });
           }
 
           res.json({ success: true, message: 'Account updated successfully' });
@@ -176,9 +180,6 @@ router.post('/update-account', (req, res) => {
 // =====================
 app.use('/api', router);
 
-// =====================
-// Start the Server
-// =====================
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Server running on port ${port}`);
-});
+  app.listen(port, '0.0.0.0', () => {
+    console.log(`Server running on port ${port}`);
+  });
