@@ -24,7 +24,7 @@ document.getElementById('login-form').addEventListener('submit', function (event
         localStorage.setItem('userId', data.userId);
         // Redirect to about.html after a short delay
         setTimeout(() => {
-          window.location.href = 'create.html';
+          window.location.href = '/create-account';
         }, 1000); // 1 second delay
       }
     })
