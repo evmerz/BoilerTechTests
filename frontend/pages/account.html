@@ -80,6 +80,7 @@
         <p><strong>User ID:</strong> <span id="userId"></span></p>
 
         <h3>Change Username/Password</h3>
+        <input type="password" id="currentPassword" placeholder="Current Password" />
         <input type="text" id="newUsername" placeholder="New Username" />
         <input type="password" id="newPassword" placeholder="New Password" />
         <button id="change-btn">Change</button>
@@ -123,15 +124,23 @@
             const username = localStorage.getItem('username');
             const password = localStorage.getItem('password');
 
+            const currentPassword = document.getElementById('currentPassword').value;
             const newUsername = document.getElementById('newUsername').value;
             const newPassword = document.getElementById('newPassword').value;
 
-            const url = `http://boilertechtests.com/api/update-account?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+            // Client-side validation
+            if (newPassword && !currentPassword) {
+                document.getElementById('response-message').textContent = 'Please enter current password to change password.';
+                return; // Exit early if validation fails
+            }
+
+            const url = `http://boilertechtests.com/api/update-account`; // Correct URL without query params
 
             const data = {
                 userId: userId,
                 newUsername: newUsername || undefined, // Allow empty to keep current username
-                newPassword: newPassword || undefined  // Allow empty to keep current password
+                newPassword: newPassword || undefined, // Allow empty to keep current password
+                // currentPassword: currentPassword || undefined // Uncomment if required on server
             };
 
             fetch(url, {
@@ -142,12 +151,12 @@
                 body: JSON.stringify(data), // Send data as JSON
             })
             .then(response => {
-                if (!response.ok) {
-                    return response.json().then(errorData => {
-                        throw new Error(errorData.message); // Use the message from the server
-                    });
-                }
-                return response.json();
+                return response.json().then(data => {
+                    if (!response.ok) {
+                        throw new Error(data.message || 'Unexpected error');
+                    }
+                    return data;
+                });
             })
             .then(data => {
                 document.getElementById('response-message').textContent = data.message;
