@@ -218,6 +218,12 @@
                 }
             }
     
+            function lockQuiz() {
+                const quizContainer = document.getElementById('quiz-container');
+                const inputs = quizContainer.querySelectorAll('input[type="radio"]');
+                inputs.forEach(input => input.disabled = true);  // Disable all radio buttons
+            }
+    
             // Add event listeners for every answer selection
             document.addEventListener('change', function(event) {
                 if (event.target.matches('input[type="radio"]')) {
@@ -230,6 +236,7 @@
                     alert('Please answer all questions before submitting the quiz.');
                 } else {
                     gradeQuiz();
+                    lockQuiz();  // Lock the quiz after submission
     
                     // Scroll to top of the page after submission
                     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -252,8 +259,5 @@
             enableSubmitButton();
         });
     </script>
-    
-    
-      
 </body>
 </html>
