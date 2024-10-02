@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="../styles/navigation.css">
+    <link rel="stylesheet" href="../styles/home.css">
+    <link rel="stylesheet" href="../styles/global.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+          rel="stylesheet">
+
+    <title>Practice - BoilerTechTests</title>
+
+    <style>
+        /* Styling for the gray box behind the button */
+        .black-box {
+            background-color: lightgray; /* Light gray box background */
+            padding: 20px 10px;
+            border-radius: 8px;
+            display: inline-block;
+            width: 150px;
+            height: 200px;
+            position: relative;
+            color: black; /* Text color for the label */
+            font-family: 'Josefin Sans', sans-serif;
+            margin: 20px; /* Added spacing between boxes */
+        }
+
+        /* Label for the gray box */
+        .black-box-label {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        /* Styling for the tan button */
+        .project-panel {
+            display: inline-block;
+            margin: 0 auto;
+            padding: 15px;
+            text-align: center;
+            background-color: #f0c674; /* Tan button color */
+            border: none;
+            color: black;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            min-width: 100px;
+            font-family: 'Josefin Sans', sans-serif;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: transform 0.2s ease; /* Smoother transition */
+        }
+
+        /* Subtle hover effect for the button */
+        .project-panel:hover {
+            transform: translate(-50%, -5px); /* Reduced hover movement */
+            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow change */
+        }
+
+        /* Class boxes container for layout */
+        .class-boxes {
+            display: flex;
+            flex-wrap: wrap;  /* Wrap to new line if too wide */
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="top-border"></div>
+
+    <!-- Navbar -->
+    <div id="navbar">
+        <div id="logo-container">
+            <h2 id="logo-text">
+                <a style="text-decoration: none; color: inherit;" href="javascript:delay('../../index.html', 500)">
+                    &#128642;B<span id="logo-hide">oiler</span>T<span id="logo-hide">ech</span>T<span id="logo-hide">ests</span>
+                </a>
+            </h2>
+        </div>
+
+        <!-- spacer -->
+        <div id="nav-spacer" style="flex: 1;"></div>
+
+        <div id="link-container">
+            <a href="../../index.html" class="hoverable-text">home</a>
+            <a href="practice.html" class="hoverable-text">practice</a>
+            <a href="../../index.html" class="hoverable-text">awards</a>
+            <a href="../../index.html" class="hoverable-text">tutoring</a>
+            <a href="pythonTerminal.html" class="hoverable-text">terminal</a>
+            <a href="about.html" class="hoverable-text">about</a>
+            <a href="login.html" class="hoverable-svg">
+                <img src="../images/account_circle.svg">
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div id="spacer"></div>
+
+        <div id="intro">
+            <h1>Practice Your Skills Here</h1>
+            <p>Select a subject to practice from the list below!</p>
+        </div>
+
+        <div id="classes" class="sub-container">
+            <hr style="margin-top: 50px; color: var(--site-foreground)">
+            <div class="header-panel" style="margin-top: 50px;">
+                <h2>Practice Topics</h2>
+            </div>
+
+            <div class="content-panel" panel-id="practice" style="margin-top: 0;">
+                <div class="class-boxes">
+                    <!-- First gray box wrapping the tan button with label -->
+                    <div class="black-box">
+                        <div class="black-box-label">Quiz 1</div>
+                        <a href="/frontend/pages/quiz.html" class="project-panel">
+                            <span>Quiz 1</span>
+                        </a>
+                    </div>
+                    <!-- Second gray box wrapping the tan button with label -->
+                    <div class="black-box">
+                        <div class="black-box-label">Quiz 2</div>
+                        <a href="/frontend/pages/quiz.html" class="project-panel">
+                            <span>Quiz 2</span>
+                        </a>
+                    </div>
+                    <!-- Third gray box wrapping the tan button with label -->
+                    <div class="black-box">
+                        <div class="black-box-label">Quiz 3</div>
+                        <a href="/frontend/pages/quiz.html" class="project-panel">
+                            <span>Quiz 3</span>
+                        </a>
+                    </div>
+                    <!-- Fourth gray box wrapping the tan button with label -->
+                    <div class="black-box">
+                        <div class="black-box-label">Quiz 4</div>
+                        <a href="/frontend/pages/quiz.html" class="project-panel">
+                            <span>Quiz 4</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
+            crossorigin="anonymous"></script>
+    <script src="../scripts/navigation.js"></script>
+    <script src="../scripts/project-load.js"></script>
+
+</body>
+
+</html>
