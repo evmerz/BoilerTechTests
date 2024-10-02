@@ -238,6 +238,12 @@
     border: 1px solid var(--site-foreground);
   }
 
+  #inactive-link {
+    pointer-events: none;
+    cursor: default;
+    color: gray !important;
+  }
+
   .hoverable-svg {
     transition: all .1s ease-in-out;
   }

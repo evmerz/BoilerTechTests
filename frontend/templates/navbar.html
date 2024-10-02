@@ -14,21 +14,15 @@
 
   <div id="link-container">
     <a href="/home" class="hoverable-text">home</a>
-    <a href="/home" class="hoverable-text">practice</a>
-    <a href="/home" class="hoverable-text">awards</a>
-    <a href="/home" class="hoverable-text">tutoring</a>
+    <a href="/home" id="inactive-link">practice</a>
+    <a href="/home" id="inactive-link">awards</a>
+    <a href="/home" id="inactive-link">tutoring</a>
     <a href="/terminal" class="hoverable-text">terminal</a>
     <a href="/about" class="hoverable-text">about</a>
 
     <a href="/login" class="hoverable-svg">
       <img src="/frontend/images/account_circle.svg">
     </a>
-    <!-- <a href="https://www.linkedin.com/in/j-connor-colbert/" class="hoverable-svg">
-				<img src="images/linkedin-logo-green.svg">
-			</a>
-			<a href="mailto: jconnorcolbert@gmail.com" class="hoverable-svg">
-				<img src="images/email-icon-green.svg">
-			</a> -->
   </div>
 
 </div>
@@ -43,18 +37,16 @@
   </div>
 
   <div id="link-container">
-    <div class="sidebar-text"><a class="underlineable" href="javascript:delay('index.html', 500)">home</a></div>
-    <div class="sidebar-text"><a class="underlineable" href="javascript:delay('index.html', 500)">practice</a></div>
-    <div class="sidebar-text"><a class="underlineable" href="javascript:delay('index.html', 500)">awards</a></div>
-    <div class="sidebar-text"><a class="underlineable" href="javascript:delay('index.html', 500)">tutoring</a></div>
+    <div class="sidebar-text"><a class="underlineable" href="javascript:delay('/home', 500)">home</a></div>
+    <div class="sidebar-text"><a class="underlineable" href="javascript:delay('/home', 500)">practice</a></div>
+    <div class="sidebar-text"><a class="underlineable" href="javascript:delay('/home', 500)">awards</a></div>
+    <div class="sidebar-text"><a class="underlineable" href="javascript:delay('/home', 500)">tutoring</a></div>
     <div class="sidebar-text"><a class="underlineable"
-        href="javascript:delay('frontend/pages/pythonTerminal.html', 500)">terminal</a></div>
-    <div class="sidebar-text"><a class="underlineable" href="javascript:delay('index.html', 500)">about</a></div>
+        href="javascript:delay('/terminal', 500)">terminal</a></div>
+    <div class="sidebar-text"><a class="underlineable" href="javascript:delay('/about', 500)">about</a></div>
 
     <div id="logos">
-      <a href="frontend/pages/login.html"><img src="frontend/images/account_circle_white.svg"></a>
-      <!-- <a href="https://www.linkedin.com/in/j-connor-colbert/"><img src="images/linkedin-logo-white.svg"></a>
-				<a href="mailto: jconnorcolbert@gmail.com"><img src="images/email-icon-white.svg"></a> -->
+      <a href="/login"><img src="/frontend/images/account_circle_white.svg"></a>
     </div>
   </div>
 </div>
