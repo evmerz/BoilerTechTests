@@ -81,19 +81,17 @@
 
 		<!-- ======== Always use sub-containers for the actual content to maintain proper spacing ======== -->
 		<div class="sub-container" >
-			<!-- <div class="header-panel" style="margin-top: 0; margin-bottom: 0;">
-				<h2 class="fade-in">Header Text (that fades in)</h2>
-				<p class="fade-in" style="--delay: 0.1s">omg subtext (with a delay)</p>
-			</div> -->
-
 			
 			<div id="login-container">
 				<form id="login-form">
-					<h2>Login</h2>
-					<input type="text" id="username" name="username" placeholder="Username" required />
-					<input type="password" id="password" name="password" placeholder="Password" required />
-					<button class="button" style="width: 50%;" type="submit">Log In</button>
-					<p>
+					<h2 class="fade-in">Login</h2>
+					<div class="fade-in" style="--delay: 0.1s;">
+						<input type="text" id="username" name="username" placeholder="Username" required />
+						<input type="password" id="password" name="password" placeholder="Password" required />
+					</div>
+					<button class="button fade-in" style="width: 50%; --delay: 0.15s;" type="submit">Log In</button>
+
+					<p class="fade-in" style="--delay: 0.3s">
 						Don't have an account?
 						<a href="create.html" style="text-decoration: none;">Create Account</a>
 					</p>
@@ -101,8 +99,6 @@
 				</form>
 			</div>
 		</div>
-	</div>
-
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"

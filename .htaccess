@@ -1,0 +1,6 @@
+RewriteEngine On
+
+RewriteRule ^home$ /index.html
+RewriteRule ^terminal$ /frontend/pages/pythonTerminal.html
+RewriteRule ^login$ /frontend/pages/login.html
+RewriteRule ^about$ /frontend/pages/about.html

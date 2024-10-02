@@ -1,6 +1,7 @@
 body {
   position: static;
   overflow-x: hidden;
+  background-color: var(--site-foreground);
 }
 
 body.active {

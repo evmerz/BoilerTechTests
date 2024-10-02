@@ -84,21 +84,21 @@
 
 		<!-- ======== Always use sub-containers for the actual content to maintain proper spacing ======== -->
 		<div class="sub-container">
-			<h1 id="header">Python Terminal</h1>
-			<p id="question">Question will be displayed here.</p>
-			<div>
+			<h1 id="header" class="fade-in">Python Terminal</h1>
+			<p id="question" class="fade-in" style="--delay: 0.1s">Question will be displayed here.</p>
+			<div class="fade-in" style="--delay: 0.1s">
 				<textarea id="code" placeholder="Write your Python code here...">
-    			# Your Python code goes here
-        </textarea>
+						# Your Python code goes here
+				</textarea>
 			</div>
 
-			<button class="button" id="run">Submit</button>
+			<button class="button fade-in" style="--delay: 0.2s" id="run">Submit</button>
 
-			<div id="output"></div>
+			<div id="output" class="fade-in" style="--delay: 0.2s"></div>
 
 			<div>
-				<button class="button" id="prev">Previous Question</button>
-				<button class="button" id="next">Next Question</button>
+				<button class="button fade-in" style="--delay: 0.3s" id="prev">Previous Question</button>
+				<button class="button fade-in" style="--delay: 0.4s" id="next">Next Question</button>
 			</div>
 		</div>
 	</div>
