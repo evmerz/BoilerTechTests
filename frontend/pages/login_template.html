@@ -7,6 +7,7 @@
 
 	<link rel="stylesheet" href="../styles/navigation.css">
 	<link rel="stylesheet" href="../styles/global.css">
+	<link rel="stylesheet" href="../styles/login.css">
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,10 +17,10 @@
 	<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
 		rel="stylesheet">
 
-	<title>BoilerTechTests</title>
+	<title>Login - BoilerTechTests</title>
 </head>
 
-<body>
+<body style="overflow: hidden; height: 100vh">
 	<div id="top-border"></div>
 
 	<div id="navbar">
@@ -63,7 +64,8 @@
 			<div class="sidebar-text"><a class="underlineable" href="javascript:delay('/index.html', 500)">practice</a></div>
 			<div class="sidebar-text"><a class="underlineable" href="javascript:delay('/index.html', 500)">awards</a></div>
 			<div class="sidebar-text"><a class="underlineable" href="javascript:delay('/index.html', 500)">tutoring</a></div>
-			<div class="sidebar-text"><a class="underlineable" href="javascript:delay('../pages/pythonTerminal.html', 500)">terminal</a></div>
+			<div class="sidebar-text"><a class="underlineable"
+					href="javascript:delay('../pages/pythonTerminal.html', 500)">terminal</a></div>
 			<div class="sidebar-text"><a class="underlineable" href="javascript:delay('/index.html', 500)">about</a></div>
 
 			<div id="logos">
@@ -74,16 +76,32 @@
 
 	<!-- ================================ MAIN CONTAINER FOR WEBSITE ================================ -->
 	<div class="container">
-    <!-- Include spacers wherever you deem necessary -->
-		<!-- <div id="spacer"></div> -->
+		<!-- Include spacers wherever you deem necessary -->
+		<div id="spacer"></div>
 
-    <!-- ======== Always use sub-containers for the actual content to maintain proper spacing ======== -->
-		<div class="sub-container">
-      <div class="header-panel" style="margin-top: 0; margin-bottom: 0;"></div>
-        <h2 class="fade-in">Header Text (that fades in)</h2>
-        <p class="fade-in" style="--delay: 0.1s">omg subtext (with a delay)</p>
-      </div>
+		<!-- ======== Always use sub-containers for the actual content to maintain proper spacing ======== -->
+		<div class="sub-container" >
+			<!-- <div class="header-panel" style="margin-top: 0; margin-bottom: 0;">
+				<h2 class="fade-in">Header Text (that fades in)</h2>
+				<p class="fade-in" style="--delay: 0.1s">omg subtext (with a delay)</p>
+			</div> -->
+
+			
+			<div id="login-container">
+				<form id="login-form">
+					<h2>Login</h2>
+					<input type="text" id="username" name="username" placeholder="Username" required />
+					<input type="password" id="password" name="password" placeholder="Password" required />
+					<button class="button" style="width: 50%;" type="submit">Log In</button>
+					<p>
+						Don't have an account?
+						<a href="create.html" style="text-decoration: none;">Create Account</a>
+					</p>
+					<p id="response-message"></p>
+				</form>
+			</div>
 		</div>
+	</div>
 
 	</div>
 
@@ -91,6 +109,43 @@
 		integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
 		crossorigin="anonymous"></script>
 	<script src="../scripts/navigation.js"></script>
+
+	<script>
+		document.getElementById('login-form').addEventListener('submit', function (event) {
+			event.preventDefault(); // Prevent the form from refreshing the page
+
+			const username = document.getElementById('username').value;
+			const password = document.getElementById('password').value;
+
+			const url = `http://boilertechtests.com/api/login?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+
+			fetch(url, {
+				method: 'GET',
+			})
+				.then(response => {
+					if (!response.ok) {
+						return response.json().then(errorData => {
+							throw new Error(errorData.message);
+						});
+					}
+					return response.json();
+				})
+				.then(data => {
+					document.getElementById('response-message').textContent = data.message;
+					if (data.message === "Login successful") {
+						// Store user ID in local storage
+						localStorage.setItem('userId', data.userId);
+						// Redirect to about.html after a short delay
+						setTimeout(() => {
+							window.location.href = 'create.html';
+						}, 1000); // 1 second delay
+					}
+				})
+				.catch(error => {
+					document.getElementById('response-message').textContent = 'Error: ' + error.message;
+				});
+		});
+	</script>
 
 </body>
 
