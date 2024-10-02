@@ -1,6 +1,7 @@
 body {
   position: static;
   overflow-x: hidden;
+  background-color: var(--site-foreground);
 }
 
 body.active {
@@ -33,7 +34,7 @@ body.active {
 
 .button:hover {
   background-color: var(--site-foreground-light);
-  transition: background-color 0.1s;
+  /* transition: background-color 0.2s; */
 }
 
 .container {

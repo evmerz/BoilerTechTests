@@ -1,227 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python Terminal</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/eclipse.min.css">
-    <style>
-        body {
-            font-family: 'Courier New', Courier, monospace;
-            background-color: #f5f5f5;
-            color: #333;
-            padding: 20px;
-            max-width: 800px;
-            margin: auto;
-        }
-        #question {
-            margin-bottom: 20px;
-            font-size: 18px;
-            color: #000;
-        }
-        .CodeMirror {
-            height: 150px;
-            background-color: #ffffff;
-            color: #333;
-            border: 1px solid #ccc;
-        }
-        button {
-            background-color: #61dafb;
-            color: #282c34;
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-right: 10px;
-        }
-        #output {
-            margin-top: 20px;
-            background-color: #ffffff;
-            padding: 10px;
-            border: 1px solid #ccc;
-            white-space: pre-wrap;
-            color: #333;
-        }
-    </style>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="/frontend/styles/navigation.css">
+	<link rel="stylesheet" href="/frontend/styles/global.css">
+	<link rel="stylesheet" href="/frontend/styles/terminal.css">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
+		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+		rel="stylesheet">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/eclipse.min.css">
+
+	<title>Terminal - BoilerTechTests</title>
 </head>
-<body>
 
-    <h1 id="header">Python Terminal</h1>
-    <div id="question">Question will be displayed here.</div>
-    <div>
-        <textarea id="code" placeholder="Write your Python code here...">
-    # Your Python code goes here
+<body style="height: 100vh;">
+	
+	<div id="navbar-load"></div>
 
-        </textarea>
-    </div>
-    
-    <button id="run">Submit</button>
+	<!-- ================================ MAIN CONTAINER FOR WEBSITE ================================ -->
+	<div class="container">
+		<!-- Include spacers wherever you deem necessary -->
+		<!-- <div id="spacer"></div> -->
 
-    <div id="output"></div>
-    
-    <div>
-        <button id="prev">Previous Question</button>
-        <button id="next">Next Question</button>
-    </div>
+		<!-- ======== Always use sub-containers for the actual content to maintain proper spacing ======== -->
+		<div class="sub-container">
+			<h1 id="header" class="fade-in">Python Terminal</h1>
+			<p id="question" class="fade-in" style="--delay: 0.1s">Question will be displayed here.</p>
+			<div class="fade-in" style="--delay: 0.1s">
+				<textarea id="code" placeholder="Write your Python code here...">
+						# Your Python code goes here
+				</textarea>
+			</div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.18.1/full/pyodide.js"></script>
+			<button class="button fade-in" style="--delay: 0.2s" id="run">Submit</button>
 
-    <script>
-        // Load Pyodide
-        let pyodide;
-        async function loadPyodideAndPackages() {
-            pyodide = await loadPyodide({
-                indexURL: "https://cdn.jsdelivr.net/pyodide/v0.18.1/full/"
-            });
-            document.getElementById('run').disabled = false; // Enable the button when ready
-        }
-        loadPyodideAndPackages();
-    
-        // Disable the run button initially
-        document.getElementById('run').disabled = true;
+			<div id="output" class="fade-in" style="--delay: 0.2s"></div>
 
-        // Initialize CodeMirror
-        const editor = CodeMirror.fromTextArea(document.getElementById('code'), {
-            lineNumbers: true,
-            mode: "python",
-            theme: "eclipse"
-        });
+			<div>
+				<button class="button fade-in" style="--delay: 0.3s" id="prev">Previous Question</button>
+				<button class="button fade-in" style="--delay: 0.4s" id="next">Next Question</button>
+			</div>
+		</div>
+	</div>
 
-        // Collection of questions with test cases
-        const questions = [
-            {
-                prompt: "Write a Python function that concatenates two strings.",
-                functionSignature: "def concat_strings(str1, str2):",
-                functionName: "concat_strings",
-                testCases: [
-                    { input: ["hello", " world"], expected: "hello world" },
-                    { input: ["foo", "bar"], expected: "foobar" }
-                ]
-            },
-            {
-                prompt: "Write a Python function that adds two numbers.",
-                functionSignature: "def add_numbers(a, b):",
-                functionName: "add_numbers",
-                testCases: [
-                    { input: [1, 2], expected: 3 },
-                    { input: [-1, 1], expected: 0 }
-                ]
-            },
-            {
-                prompt: "Write a Python function that subtracts one number from another.",
-                functionSignature: "def subtract_numbers(a, b):",
-                functionName: "subtract_numbers",
-                testCases: [
-                    { input: [2, 1], expected: 1 },
-                    { input: [-6, 1], expected: -7 }
-                ]
-            },
-            {
-            
-                prompt: "Write a Python function that removes consecutive duplicate characters from a string.",
-                functionSignature: "def remove_consecutive_duplicates(s):",
-                functionName: "remove_consecutive_duplicates",
-                testCases: [
-                    { input: ["aabbcc"], expected: "abc" },
-                    { input: ["aaabbbccc"], expected: "abc" },
-                    { input: ["abccba"], expected: "abcba" },
-                    { input: [""], expected: "" },
-                    { input: ["abc"], expected: "abc" },
-                    { input: ["aabbccddeeff"], expected: "abcdef" }
-                ]
-            }
-        ];
+	</div>
 
-        let currentQuestionIndex = 0;
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+		integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
+		crossorigin="anonymous"></script>
+	<script src="/frontend/scripts/navigation.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/pyodide/v0.18.1/full/pyodide.js"></script>
+	<script src="/frontend/scripts/python-terminal.js"></script>
 
-        function displayQuestion() {
-            const currentQuestion = questions[currentQuestionIndex];
-            document.getElementById('question').textContent = currentQuestion.prompt;
-            editor.setValue(currentQuestion.functionSignature + '\n    # Your Python code goes here\n');
-            document.getElementById('output').textContent = "";
-            document.getElementById('header').textContent = "Question " + (currentQuestionIndex + 1);
-        }
-
-        document.getElementById('prev').addEventListener('click', () => {
-    // If we're at the first question, wrap around to the last question
-    if (currentQuestionIndex === 0) {
-        currentQuestionIndex = questions.length - 1;
-    } else {
-        // Otherwise, go to the previous question
-        currentQuestionIndex--;
-    }
-    displayQuestion();
-});
-
-document.getElementById('next').addEventListener('click', () => {
-    // If we're at the last question, wrap around to the first question
-    if (currentQuestionIndex === questions.length - 1) {
-        currentQuestionIndex = 0;
-    } else {
-        // Otherwise, go to the next question
-        currentQuestionIndex++;
-    }
-    displayQuestion();
-});
-
-        // Initially display the first question
-        displayQuestion();
-
-        // Run code function
-        document.getElementById('run').addEventListener('click', async () => {
-            const code = editor.getValue().trim();
-            const currentQuestion = questions[currentQuestionIndex];
-
-            try {
-    let output = await pyodide.runPython(`
-        import sys
-        from io import StringIO
-
-        # Redirect standard output
-        old_stdout = sys.stdout
-        sys.stdout = StringIO()
-
-        # Prepare the user code
-        user_code = '''${code.replace(/'/g, "\\'").replace(/\n/g, '\\n')}'''
-        
-        # Run the user code
-        exec(user_code)
-
-        # Get the function name dynamically from the current question
-        function_name = '${currentQuestion.functionName}'
-
-        # Test cases
-        test_cases = ${JSON.stringify(currentQuestion.testCases)}
-        results = ""
-
-        # Loop through the test cases
-        for test in test_cases:
-            input_args = test['input']
-            expected = test['expected']
-            
-            # Dynamically look up the function by its name and call it
-            if function_name in globals():
-                func = globals()[function_name]
-                result = func(*input_args)
-                results = results + (f"test: {input_args}, result: {result}, expected: {expected}, pass: {result == expected}")
-                results = results + '\\n'
-            else:
-                results = results + (f"Function {function_name} not found.")
-
-        # Get the output from the redirected stdout
-        output = sys.stdout.getvalue()
-        sys.stdout = old_stdout  # Restore standard output
-        output + str(results)  # Include test results
-    `);
-    document.getElementById('output').textContent = output || "";
-} catch (error) {
-    document.getElementById('output').textContent = error;
-}
-
-        });
-    </script>
 </body>
+
 </html>

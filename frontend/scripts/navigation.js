@@ -1,3 +1,5 @@
+$("#navbar-load").load("/frontend/templates/navbar.html");
+
 /**
  * Activates the website's sidebar.
  * 
