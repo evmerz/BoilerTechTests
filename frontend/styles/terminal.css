@@ -1,0 +1,30 @@
+#question {
+  margin-top: -20px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #000;
+}
+.CodeMirror {
+  height: 150px;
+  background-color: #ffffff;
+  color: #333;
+  border: 1px solid #ccc;
+}
+button {
+  background-color: #61dafb;
+  color: #282c34;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 10px;
+}
+#output {
+  margin-top: 20px;
+  background-color: #ffffff;
+  padding: 10px;
+  border: 1px solid #ccc;
+  white-space: pre-wrap;
+  color: #333;
+  font-family: 'Consolas';
+}
