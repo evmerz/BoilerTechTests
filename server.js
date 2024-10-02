@@ -8,6 +8,9 @@ const port = 5000;
 app.use(cors());
 
 app.use(express.json());
+const router = express.Router();
+
+app.use('/api', router);
 
 const db = mysql.createConnection({ 
   host: 'database-1.cvmku4284fk0.us-east-2.rds.amazonaws.com',
@@ -141,7 +144,6 @@ app.post('/update-account', (req, res) => {
         });
     });
 });
-
 
 
   app.listen(port, '0.0.0.0', () => {
