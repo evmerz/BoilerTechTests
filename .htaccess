@@ -1,7 +1,5 @@
 RewriteEngine On
 
-RewriteCond %{HTTPS} off
-
 RewriteRule ^home$ /index.html [L]
 RewriteRule ^terminal$ /frontend/pages/pythonTerminal.html [L]
 RewriteRule ^login$ /frontend/pages/login.html [L]
