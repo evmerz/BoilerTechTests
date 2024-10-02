@@ -80,12 +80,10 @@
         <p><strong>User ID:</strong> <span id="userId"></span></p>
 
         <h3>Change Username/Password</h3>
-        <input type="password" id="currentPassword" placeholder="Current Password" />
         <input type="text" id="newUsername" placeholder="New Username" />
         <input type="password" id="newPassword" placeholder="New Password" />
         <button id="change-btn">Change</button>
         <p id="response-message"></p>
-
 
         <button id="logout-btn">Log Out</button>
     </div>
@@ -116,39 +114,39 @@
             localStorage.removeItem('username');
             localStorage.removeItem('password');
             localStorage.removeItem('userId');
-            window.location.href = '../../index.html'; // Redirect to home page
+            window.location.href = 'login.html'; // Redirect to login page
         });
 
         // Change username and/or password
-document.getElementById('change-btn').addEventListener('click', function() {
-    const userId = localStorage.getItem('userId');
-    const username = localStorage.getItem('username');
-    const password = localStorage.getItem('password');
-
+        document.getElementById('change-btn').addEventListener('click', function() {
+    const userId = localStorage.getItem('userId'); // Get user ID
     const newUsername = document.getElementById('newUsername').value;
     const newPassword = document.getElementById('newPassword').value;
-    const currentPassword = document.getElementById('currentPassword').value; // Get current password
 
-    const url = `http://boilertechtests.com/api/update-account`;
-
-    const data = {
-        userId: userId,
-        newUsername: newUsername || undefined,
-        newPassword: newPassword || undefined,
-        currentPassword: currentPassword // Include current password for verification
-    };
+    const url = `http://boilertechtests.com/api/update-account?userId=${encodeURIComponent(userId)}&newUsername=${encodeURIComponent(newUsername)}&newPassword=${encodeURIComponent(newPassword)}`;
 
     fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json' // Set content type to JSON
-        },
-        body: JSON.stringify(data), // Send data as JSON
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        userId: localStorage.getItem('userId'), // Send the userId from localStorage
+        newUsername: newUsername,
+        newPassword: newPassword
     })
-    .then(response => response.json()) // Parse the response as JSON
+})
+
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(errorData => {
+                throw new Error(errorData.message);
+            });
+        }
+        return response.json();
+    })
     .then(data => {
-        // Check if there's a message from the server and handle accordingly
-        document.getElementById('response-message').textContent = data.message || 'No changes made'; // Default message
+        document.getElementById('response-message').textContent = data.message;
 
         if (data.success) {
             // Update localStorage if changes are successful
@@ -162,8 +160,7 @@ document.getElementById('change-btn').addEventListener('click', function() {
         }
     })
     .catch(error => {
-        // Handle errors that are not from the JSON response
-        document.getElementById('response-message').textContent = error.message;
+        document.getElementById('response-message').textContent = 'Error: ' + error.message;
     });
 });
 

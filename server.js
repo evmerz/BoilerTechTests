@@ -15,6 +15,10 @@ app.use(express.json());
 
 // Create an Express Router
 const router = express.Router();
+// =====================
+// Mount Router at /api
+// =====================
+app.use('/api', router);
 
 // Database Connection
 const db = mysql.createConnection({ 
@@ -103,12 +107,10 @@ router.get('/login', (req, res) => {
 });
 
 // Endpoint to update username and/or password
-app.post('/update-account', (req, res) => {
-  const { userId, newUsername, newPassword, currentPassword } = req.body;
-
-  // Check if userId is provided
+router.post('/update-account', (req, res) => {
+  const { userId, newUsername, newPassword } = req.body;
   if (!userId) {
-      return res.status(400).json({ message: 'User ID is required.' });
+      return res.status(400).json({ message: 'User ID is required' });
   }
 
   // Create an array for the query
@@ -123,62 +125,29 @@ app.post('/update-account', (req, res) => {
 
   // Check if newPassword is provided and not empty
   if (newPassword && newPassword.trim() !== '') {
-      if (!isPasswordStrong(newPassword)) {
-          return res.status(400).json({ message: 'Password must be at least 8 characters long, contain uppercase and lowercase letters, a number, and a special character.' });
-      }
       updates.push('password = ?');
       params.push(newPassword);
   }
 
-  // If no updates, just return an error
+  // If no updates, return an error
   if (updates.length === 0) {
-      return res.status(400).json({ message: 'No changes were made.' });
+      return res.status(400).json({ message: 'No updates provided' });
   }
 
-  // Check if newUsername already exists in the database
-  if (newUsername) {
-      const checkQuery = 'SELECT * FROM users WHERE username = ? AND id != ?';
-      db.query(checkQuery, [newUsername, userId], (err, results) => {
-          if (err) {
-              return res.status(500).json({ message: 'Error checking username.' });
-          }
+  // Construct the query
+  const query = `UPDATE users SET ${updates.join(', ')} WHERE id = ?`;
+  params.push(userId);
 
-          // If username exists, return an error message
-          if (results.length > 0) {
-              return res.status(409).json({ message: 'Username already exists, please choose a different one.' });
-          }
+  db.query(query, params, (err, results) => {
+      if (err) {
+          return res.status(500).json({ message: 'Error updating account' });
+      }
 
-          // Construct the query
-          const query = `UPDATE users SET ${updates.join(', ')} WHERE id = ?`;
-          params.push(userId);
-
-          db.query(query, params, (err, results) => {
-              if (err) {
-                  return res.status(500).json({ message: 'Error updating account.' });
-              }
-
-              res.json({ success: true, message: 'Account updated successfully' });
-          });
-      });
-  } else {
-      // If there's no new username, just update the password
-      const query = `UPDATE users SET ${updates.join(', ')} WHERE id = ?`;
-      params.push(userId);
-
-      db.query(query, params, (err, results) => {
-          if (err) {
-              return res.status(500).json({ message: 'Error updating account.' });
-          }
-
-          res.json({ success: true, message: 'Account updated successfully' });
-      });
-  }
+      res.json({ success: true, message: 'Account updated successfully' });
+  });
 });
 
-// =====================
-// Mount Router at /api
-// =====================
-app.use('/api', router);
+
 
   app.listen(port, '0.0.0.0', () => {
     console.log(`Server running on port ${port}`);
