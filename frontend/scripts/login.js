@@ -9,26 +9,28 @@ document.getElementById('login-form').addEventListener('submit', function (event
   fetch(url, {
     method: 'GET',
   })
-    .then(response => {
+  .then(response => {
       if (!response.ok) {
-        return response.json().then(errorData => {
-          throw new Error(errorData.message);
-        });
+          return response.json().then(errorData => {
+              throw new Error(errorData.message);
+          });
       }
       return response.json();
-    })
-    .then(data => {
+  })
+  .then(data => {
       document.getElementById('response-message').textContent = data.message;
       if (data.message === "Login successful") {
-        // Store user ID in local storage
-        localStorage.setItem('userId', data.userId);
-        // Redirect to about.html after a short delay
-        setTimeout(() => {
-          window.location.href = 'create.html';
-        }, 1000); // 1 second delay
+          // Store user ID in local storage
+          localStorage.setItem('userId', data.userId);
+          localStorage.setItem('username', username);
+          localStorage.setItem('password', password);
+          // Redirect to about.html after a short delay
+          setTimeout(() => {
+              window.location.href = 'account.html';
+          }, 1000); // 1 second delay
       }
-    })
+  })
     .catch(error => {
-      document.getElementById('response-message').textContent = 'Error: ' + error.message;
+        document.getElementById('response-message').textContent = 'Error: ' + error.message;
     });
-});
+  });
