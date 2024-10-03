@@ -119,24 +119,23 @@
 
         // Change username and/or password
         document.getElementById('change-btn').addEventListener('click', function() {
-    const userId = localStorage.getItem('userId'); // Get user ID
-    const newUsername = document.getElementById('newUsername').value;
-    const newPassword = document.getElementById('newPassword').value;
+        const userId = localStorage.getItem('userId'); // Get user ID
+        const newUsername = document.getElementById('newUsername').value;
+        const newPassword = document.getElementById('newPassword').value;
 
-    const url = `http://boilertechtests.com/api/update-account?userId=${encodeURIComponent(userId)}&newUsername=${encodeURIComponent(newUsername)}&newPassword=${encodeURIComponent(newPassword)}`;
+        const url = `http://localhost:5000/api/update-account`;
 
     fetch(url, {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-        userId: localStorage.getItem('userId'), // Send the userId from localStorage
-        newUsername: newUsername,
-        newPassword: newPassword
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            userId: userId,
+            newUsername: newUsername,
+            newPassword: newPassword
+        })
     })
-})
-
     .then(response => {
         if (!response.ok) {
             return response.json().then(errorData => {

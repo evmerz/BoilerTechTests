@@ -8,16 +8,9 @@ const port = 5000;
 // Allow requests from the specified origin
 app.use(cors());
 
-// Your existing routes here
-
-
+// mount express router to /api
 app.use(express.json());
-
-// Create an Express Router
 const router = express.Router();
-// =====================
-// Mount Router at /api
-// =====================
 app.use('/api', router);
 
 // Database Connection
@@ -41,10 +34,6 @@ const isPasswordStrong = (password) => {
     const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/;
     return strongPasswordRegex.test(password);
 };
-
-// =====================
-// Define Routes on Router
-// =====================
 
 // Create Account Route
 router.get('/create-account', (req, res) => {
@@ -108,7 +97,7 @@ router.get('/login', (req, res) => {
 
 // Endpoint to update username and/or password
 router.post('/update-account', (req, res) => {
-  const { userId, newUsername, newPassword } = req.body;
+    const { userId, newUsername, newPassword } = req.body;
   if (!userId) {
       return res.status(400).json({ message: 'User ID is required' });
   }
@@ -138,13 +127,15 @@ router.post('/update-account', (req, res) => {
   const query = `UPDATE users SET ${updates.join(', ')} WHERE id = ?`;
   params.push(userId);
 
-  db.query(query, params, (err, results) => {
+  db.query(query, params, (err, result) => {
       if (err) {
           return res.status(500).json({ message: 'Error updating account' });
       }
 
       res.json({ success: true, message: 'Account updated successfully' });
   });
+
+  // console.log("posted");
 });
 
 
