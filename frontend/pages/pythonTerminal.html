@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="/frontend/styles/navigation.css">
+	<link rel="stylesheet" href="/frontend/styles/global.css">
+	<link rel="stylesheet" href="/frontend/styles/terminal.css">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
+		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+		rel="stylesheet">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/eclipse.min.css">
+
+	<title>Terminal - BoilerTechTests</title>
+</head>
+
+<body style="height: 100vh;">
+	
+	<div id="navbar-load"></div>
+
+	<!-- ================================ MAIN CONTAINER FOR WEBSITE ================================ -->
+	<div class="container">
+		<!-- Include spacers wherever you deem necessary -->
+		<!-- <div id="spacer"></div> -->
+
+		<!-- ======== Always use sub-containers for the actual content to maintain proper spacing ======== -->
+		<div class="sub-container">
+			<h1 id="header" class="fade-in">Python Terminal</h1>
+			<p id="question" class="fade-in" style="--delay: 0.1s">Question will be displayed here.</p>
+			<div class="fade-in" style="--delay: 0.1s">
+				<textarea id="code" placeholder="Write your Python code here...">
+						# Your Python code goes here
+				</textarea>
+			</div>
+
+			<button class="button fade-in" style="--delay: 0.2s" id="run">Submit</button>
+
+			<div id="output" class="fade-in" style="--delay: 0.2s"></div>
+
+			<div>
+				<button class="button fade-in" style="--delay: 0.3s" id="prev">Previous Question</button>
+				<button class="button fade-in" style="--delay: 0.4s" id="next">Next Question</button>
+			</div>
+		</div>
+	</div>
+
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+		integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
+		crossorigin="anonymous"></script>
+	<script src="/frontend/scripts/navigation.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/pyodide/v0.18.1/full/pyodide.js"></script>
+	<script src="/frontend/scripts/python-terminal.js"></script>
+
+</body>
+
+</html>
