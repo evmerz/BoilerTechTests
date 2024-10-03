@@ -80,6 +80,7 @@
         <p><strong>User ID:</strong> <span id="userId"></span></p>
 
         <h3>Change Username/Password</h3>
+        <input type="password" id="currentPassword" placeholder="Current Password" required />
         <input type="text" id="newUsername" placeholder="New Username" />
         <input type="password" id="newPassword" placeholder="New Password" />
         <button id="change-btn">Change</button>
@@ -119,50 +120,56 @@
 
         // Change username and/or password
         document.getElementById('change-btn').addEventListener('click', function() {
-        const userId = localStorage.getItem('userId'); // Get user ID
-        const newUsername = document.getElementById('newUsername').value;
-        const newPassword = document.getElementById('newPassword').value;
+            const userId = localStorage.getItem('userId'); // Get user ID
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newUsername = document.getElementById('newUsername').value;
+            const newPassword = document.getElementById('newPassword').value;
 
-        const url = `http://localhost:5000/api/update-account`;
+            if (!currentPassword && newPassword) {
+                document.getElementById('response-message').textContent = 'Current password is required to change password.';
+                return;
+            }
 
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            userId: userId,
-            newUsername: newUsername,
-            newPassword: newPassword
-        })
-    })
-    .then(response => {
-        if (!response.ok) {
-            return response.json().then(errorData => {
-                throw new Error(errorData.message);
+            const url = `http://localhost:5000/api/update-account`;
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userId: userId,
+                    currentPassword: currentPassword, // Send current password for validation
+                    newUsername: newUsername,
+                    newPassword: newPassword
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errorData => {
+                        throw new Error(errorData.message);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('response-message').textContent = data.message;
+
+                if (data.success) {
+                    // Update localStorage if changes are successful
+                    if (newUsername) {
+                        localStorage.setItem('username', newUsername);
+                        document.getElementById('username').textContent = newUsername; // Update displayed username
+                    }
+                    if (newPassword) {
+                        localStorage.setItem('password', newPassword); // Not recommended for production
+                    }
+                }
+            })
+            .catch(error => {
+                document.getElementById('response-message').textContent = 'Error: ' + error.message;
             });
-        }
-        return response.json();
-    })
-    .then(data => {
-        document.getElementById('response-message').textContent = data.message;
-
-        if (data.success) {
-            // Update localStorage if changes are successful
-            if (newUsername) {
-                localStorage.setItem('username', newUsername);
-                document.getElementById('username').textContent = newUsername; // Update displayed username
-            }
-            if (newPassword) {
-                localStorage.setItem('password', newPassword); // Not recommended for production
-            }
-        }
-    })
-    .catch(error => {
-        document.getElementById('response-message').textContent = 'Error: ' + error.message;
-    });
-});
-
+        });
     </script>
 </body>
 </html>

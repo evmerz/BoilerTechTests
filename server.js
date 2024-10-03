@@ -97,46 +97,99 @@ router.get('/login', (req, res) => {
 
 // Endpoint to update username and/or password
 router.post('/update-account', (req, res) => {
-    const { userId, newUsername, newPassword } = req.body;
-  if (!userId) {
-      return res.status(400).json({ message: 'User ID is required' });
+  const { userId, newUsername, newPassword, currentPassword } = req.body;
+
+  if (!userId || (!newUsername && !newPassword)) {
+      return res.status(400).json({ message: 'New account credentials cannot be blank.' });
   }
 
-  // Create an array for the query
-  const updates = [];
+  // Fetch current credentials for the user
+  const getUserQuery = 'SELECT username, password FROM users WHERE id = ?';
+  db.query(getUserQuery, [userId], (err, results) => {
+      if (err) {
+          return res.status(500).json({ message: 'Error fetching user information' });
+      }
+
+      if (results.length === 0) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      const currentUser = results[0];
+      const currentUsername = currentUser.username;
+      const currentStoredPassword = currentUser.password;
+
+      // Check if new username or password matches the current one
+      if (newUsername && newUsername === currentUsername) {
+          return res.status(400).json({ message: 'New username cannot be the same as the current username' });
+      }
+
+      if (newPassword && newPassword === currentStoredPassword) {
+          return res.status(400).json({ message: 'New password cannot be the same as the current password' });
+      }
+
+      // If updating the password, check that current password matches the stored one
+      if (newPassword) {
+          if (!currentPassword) {
+              return res.status(400).json({ message: 'Current password is required to update password' });
+          }
+          if (currentPassword !== currentStoredPassword) {
+              return res.status(401).json({ message: 'Current password is incorrect' });
+          }
+          // Validate new password strength
+          if (!isPasswordStrong(newPassword)) {
+              return res.status(400).json({ message: 'Password must be at least 8 characters long, contain uppercase and lowercase letters, a number, and a special character.' });
+          }
+      }
+
+      // Check if new username already exists
+      if (newUsername) {
+          const checkUsernameQuery = 'SELECT * FROM users WHERE username = ?';
+          db.query(checkUsernameQuery, [newUsername], (err, results) => {
+              if (err) {
+                  return res.status(500).json({ message: 'Error checking username' });
+              }
+
+              if (results.length > 0) {
+                  return res.status(409).json({ message: 'Username already exists, please choose a different one.' });
+              }
+
+              // Proceed to update credentials if validation passed
+              updateCredentials(userId, newUsername, newPassword, res);
+          });
+      } else {
+          // If only updating password, no need to check username
+          updateCredentials(userId, newUsername, newPassword, res);
+      }
+  });
+});
+
+// Helper function to update credentials in the database
+function updateCredentials(userId, newUsername, newPassword, res) {
+  let query = 'UPDATE users SET ';
   const params = [];
 
-  // Check if newUsername is provided and not empty
-  if (newUsername && newUsername.trim() !== '') {
-      updates.push('username = ?');
+  if (newUsername) {
+      query += 'username = ?, ';
       params.push(newUsername);
   }
-
-  // Check if newPassword is provided and not empty
-  if (newPassword && newPassword.trim() !== '') {
-      updates.push('password = ?');
+  if (newPassword) {
+      query += 'password = ?, ';
       params.push(newPassword);
   }
 
-  // If no updates, return an error
-  if (updates.length === 0) {
-      return res.status(400).json({ message: 'No updates provided' });
-  }
-
-  // Construct the query
-  const query = `UPDATE users SET ${updates.join(', ')} WHERE id = ?`;
+  query = query.slice(0, -2); // Remove last comma and space
+  query += ' WHERE id = ?';
   params.push(userId);
 
-  db.query(query, params, (err, result) => {
+  db.query(query, params, (err) => {
       if (err) {
           return res.status(500).json({ message: 'Error updating account' });
       }
 
       res.json({ success: true, message: 'Account updated successfully' });
   });
+}
 
-  // console.log("posted");
-});
 
 
 
