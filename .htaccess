@@ -6,3 +6,5 @@ RewriteRule ^login$ /frontend/pages/login.html [L]
 RewriteRule ^about$ /frontend/pages/about.html [L]
 RewriteRule ^practice$ /frontend/pages/practice.html [L]
 RewriteRule ^quiz$ /frontend/pages/quiz.html [L]
+
+ErrorDocument 404 /frontend/pages/404.html
