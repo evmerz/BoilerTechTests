@@ -26,7 +26,7 @@ document.getElementById('login-form').addEventListener('submit', function (event
           localStorage.setItem('password', password);
           // Redirect to about.html after a short delay
           setTimeout(() => {
-              window.location.href = 'account.html';
+              window.location.href = '/account';
           }, 1000); // 1 second delay
       }
   })
