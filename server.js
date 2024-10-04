@@ -86,6 +86,7 @@ router.post('/create-account', (req, res) => {
 
 // Login Route
 router.post('/login', (req, res) => {
+    console.log("haha logging in!!");
   const { username, password } = req.body;
   
     if (!username || !password) {
