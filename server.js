@@ -72,9 +72,8 @@ router.post('/create-account', (req, res) => {
 });
 
 // Login Route
-router.get('/login', (req, res) => {
-    const username = req.query.username;
-    const password = req.query.password;
+router.post('/login', (req, res) => {
+  const { username, password } = req.body;
   
     if (!username || !password) {
       return res.status(400).json({ message: 'Username and password are required' });

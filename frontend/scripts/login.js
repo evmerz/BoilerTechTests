@@ -4,10 +4,18 @@ document.getElementById('login-form').addEventListener('submit', function (event
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
 
-  const url = `https://www.boilertechtests.com/api/login?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+  const url = `http://localhost:5000/api/login?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
 
   fetch(url, {
-    method: 'GET',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        userId: userId,
+        username: username,
+        password: password
+    })
   })
   .then(response => {
       if (!response.ok) {
