@@ -1,3 +1,5 @@
+const https = require('https');
+const fs = require('fs');
 const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
@@ -12,6 +14,17 @@ app.use(cors());
 app.use(express.json());
 const router = express.Router();
 app.use('/api', router);
+
+// Load SSL certificate and key
+const options = {
+    key: fs.readFileSync('path_to_private_key.pem'),
+    cert: fs.readFileSync('path_to_certificate.pem')
+  };  
+
+  // Create HTTPS server
+https.createServer(options, app).listen(443, () => {
+    console.log('Server running on https://localhost:443');
+  });
 
 // Database Connection
 const db = mysql.createConnection({ 
@@ -189,8 +202,6 @@ function updateCredentials(userId, newUsername, newPassword, res) {
 }
 
 
-
-
-  app.listen(port, '0.0.0.0', () => {
-    console.log(`Server running on port ${port}`);
-  });
+//   app.listen(port, '0.0.0.0', () => {
+//     console.log(`Server running on port ${port}`);
+//   });

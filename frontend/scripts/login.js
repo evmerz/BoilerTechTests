@@ -4,7 +4,7 @@ document.getElementById('login-form').addEventListener('submit', function (event
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
 
-  const url = `http://localhost:5000/api/login?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+  const url = `https://boilertechtests/api/login?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
 
   fetch(url, {
     method: 'POST',
