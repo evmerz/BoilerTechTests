@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Account Info</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            background-color: white;
+            padding: 2rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 1rem;
+            width: 100%;
+            background-color: #cf9bdf;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background-color: #b87dca;
+        }
+
+        .link {
+            margin-top: 1rem;
+        }
+
+        .link a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Change Account Info</h2>
+        <div id="user-id" style="position: absolute; top: 10px; left: 10px;">User ID: <span id="user-id-value"></span></div>
+        <form id="change-account-form">
+            <input type="text" id="username" name="username" placeholder="New Username" required />
+            <input type="password" id="password" name="password" placeholder="New Password" required />
+            <button type="submit">Change Info</button>
+        </form>
+        <p class="link">Want to go back? <a href="account.html">Return to Account</a></p>
+        <p id="response-message"></p>
+    </div>
+
+    <script>
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            document.getElementById('user-id-value').textContent = userId;
+        }
+
+        document.getElementById('change-account-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from refreshing the page
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const url = `http://boilertechtests.com/api/u=change?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+
+            fetch(url, {
+                method: 'POST', // Changed to POST since we are updating info
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errorData => {
+                        throw new Error(errorData.message); // Use the message from the server
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('response-message').textContent = data.message;
+                // Optionally, redirect to the account page after successful update
+                setTimeout(() => window.location.href = 'account.html', 2000);
+            })
+            .catch(error => {
+                document.getElementById('response-message').textContent = 'Error: ' + error.message;
+            });
+        });
+    </script>
+</body>
+</html>
