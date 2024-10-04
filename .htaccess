@@ -8,6 +8,7 @@ RewriteRule ^about$ /frontend/pages/about.html [L]
 RewriteRule ^practice$ /frontend/pages/practice.html [L]
 RewriteRule ^quiz$ /frontend/pages/quiz.html [L]
 RewriteRule ^account$ /frontend/pages/account.html [L] 
+RewriteRule ^create-account$ /frontend/pages/create.html [L]
 
 ErrorDocument 404 /frontend/pages/404.html
 RewriteRule ^404$ /frontend/pages/404.html [L]
