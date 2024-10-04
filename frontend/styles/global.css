@@ -35,6 +35,7 @@ body.active {
 
 .button:hover {
   background-color: var(--site-foreground-light);
+  cursor: pointer;
   /* transition: background-color 0.2s; */
 }
 
