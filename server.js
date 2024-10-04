@@ -11,7 +11,7 @@ app.use(cors());
 // mount express router to /api
 app.use(express.json());
 const router = express.Router();
-app.use('/api', router);
+
 
 // Database Connection
 const db = mysql.createConnection({ 
@@ -72,7 +72,7 @@ router.post('/create-account', (req, res) => {
 });
 
 // Login Route
-router.get('/login', (req, res) => {
+app.get('/login', (req, res) => {
     const username = req.query.username;
     const password = req.query.password;
   
