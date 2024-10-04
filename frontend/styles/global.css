@@ -14,6 +14,7 @@ body.active {
 :root {
   --site-foreground: rgb(38, 38, 38);
   --site-foreground-light: rgb(70, 70, 70);
+  --site-foreground-dark: rgb(25, 25, 25);
   --site-background: rgb(245, 239, 227);
   --site-background-dark: rgb(239, 230, 211);
   --outline-color: rgb(38, 38, 38);
