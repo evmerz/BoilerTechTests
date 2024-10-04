@@ -20,7 +20,7 @@
     <a href="/terminal" class="hoverable-text">code</a>
     <a href="/about" class="hoverable-text">about</a>
 
-    <a href="/login" class="hoverable-svg">
+    <a href="javascript:redirectToAccountOrLogin()" class="hoverable-svg">
       <img src="/frontend/images/account_circle.svg">
     </a>
   </div>
@@ -59,6 +59,7 @@
 
     // If both username and password are present, redirect to /account, else redirect to /login
     if (username && password) {
+      console.log("yes");
       window.location.href = '/account';
     } else {
       window.location.href = '/login';
