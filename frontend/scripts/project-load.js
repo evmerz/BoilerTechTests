@@ -6,7 +6,7 @@ var classData = [];
 function loadProjectData() {
     // if (projectData.length > 0) return Promise.resolve;
 
-    return fetch("frontend/content/class_data.json")
+    return fetch("/frontend/content/class_data.json")
         .then((response) => response.json())
         .then((json) => {
             for (let i = 0; i < json.classes.length; i++) {
