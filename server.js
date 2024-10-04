@@ -17,8 +17,8 @@ app.use('/api', router);
 
 // Load SSL certificate and key
 const options = {
-    key: fs.readFileSync('path_to_private_key.pem'),
-    cert: fs.readFileSync('path_to_certificate.pem')
+    key: fs.readFileSync('/etc/ssl/private/boilertechtests_com.key'),
+    cert: fs.readFileSync('/etc/ssl/certs/boilertechtests_com.crt')
   };  
 
   // Create HTTPS server
