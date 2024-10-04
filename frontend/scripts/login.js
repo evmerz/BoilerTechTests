@@ -4,17 +4,10 @@ document.getElementById('login-form').addEventListener('submit', function (event
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
 
-  const url = `https://boilertechtests.com/api/login?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+  const url = `https://www.boilertechtests.com/api/login?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
 
   fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-        username: username,
-        password: password
-    })
+    method: 'GET',
   })
   .then(response => {
       if (!response.ok) {
@@ -33,7 +26,7 @@ document.getElementById('login-form').addEventListener('submit', function (event
           localStorage.setItem('password', password);
           // Redirect to about.html after a short delay
           setTimeout(() => {
-              window.location.href = '/frontend/pages/account.html';
+              window.location.href = 'account.html';
           }, 1000); // 1 second delay
       }
   })

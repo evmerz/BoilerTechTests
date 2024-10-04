@@ -10,7 +10,7 @@ app.use(cors());
 
 // mount express router to /api
 app.use(express.json());
-const router = express.Router();
+// const router = express.Router();
 
 
 // Database Connection
@@ -36,7 +36,7 @@ const isPasswordStrong = (password) => {
 };
 
 // Create Account Route (Changed to POST)
-router.post('/create-account', (req, res) => {
+app.post('/create-account', (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
@@ -95,7 +95,7 @@ app.get('/login', (req, res) => {
 });
 
 // Endpoint to update username and/or password
-router.post('/update-account', (req, res) => {
+app.post('/update-account', (req, res) => {
   const { userId, newUsername, newPassword, currentPassword } = req.body;
 
   if (!userId || (!newUsername && !newPassword)) {
