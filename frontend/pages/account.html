@@ -1,92 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Details - BoilerTechTests</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-        }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        .container {
-            background-color: white;
-            padding: 2rem;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            text-align: center;
-            width: 300px;
-        }
+  <link rel="stylesheet" href="/frontend/styles/navigation.css">
+  <link rel="stylesheet" href="/frontend/styles/global.css">
+  <link rel="stylesheet" href="/frontend/styles/account.css">
 
-        .container h2 {
-            margin-bottom: 1.5rem;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+    rel="stylesheet">
 
-        .container p {
-            font-size: 1rem;
-            margin: 0.5rem 0;
-        }
-
-        .hidden-password {
-            letter-spacing: 0.3rem;
-        }
-
-        input {
-            width: 100%;
-            padding: 0.5rem;
-            margin: 0.5rem 0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        button {
-            padding: 1rem;
-            width: 100%;
-            background-color: #cf9bdf;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        button:hover {
-            background-color: #b87dca;
-        }
-
-        #logout-btn {
-            margin-top: 10px;
-        }
-
-        #response-message {
-            margin-top: 1rem;
-            color: red;
-        }
-    </style>
+  <title>Account Details - BoilerTechTests</title>
 </head>
+
 <body>
-    <div class="container">
-        <h2>Your Account</h2>
+  
+  <div id="navbar-load"></div>
+
+  <!-- ================================ MAIN CONTAINER FOR WEBSITE ================================ -->
+  <div class="container">
+    <!-- Include spacers wherever you deem necessary -->
+    <!-- <div id="spacer"></div> -->
+
+    <!-- ======== Always use sub-containers for the actual content to maintain proper spacing ======== -->
+    <div class="sub-container">
+      <h1>Your Account</h1>
         <p><strong>Username:</strong> <span id="username"></span></p>
         <p><strong>Password:</strong> <span id="password" class="hidden-password"></span></p>
         <p><strong>User ID:</strong> <span id="userId"></span></p>
+        <button id="logout-btn" class="button">Log Out</button>
 
-        <h3>Change Username/Password</h3>
-        <input type="password" id="currentPassword" placeholder="Current Password" required />
-        <input type="text" id="newUsername" placeholder="New Username" />
-        <input type="password" id="newPassword" placeholder="New Password" />
-        <button id="change-btn">Change</button>
-        <p id="response-message"></p>
-
-        <button id="logout-btn">Log Out</button>
     </div>
+
+    <div id="spacer"></div>
+
+    <div class="sub-container">
+      <h2>Change Username/Password</h2>
+        <div id="change-credentials">
+
+          <span>Current Password:</span> <br>
+          <input type="password" id="currentPassword" placeholder="Current Password" required />
+          <br><br>
+          
+          <span>New Username/Password:</span>
+          <div id="new-credential-container">
+            <input type="text" id="newUsername" placeholder="New Username" />
+            <span></span>
+            <input type="password" id="newPassword" placeholder="New Password" />
+          </div>
+        </div>
+        <br>
+        <button id="change-btn" class="button">Change</button>
+        <p id="response-message"></p>
+      </div>
+      <div id="spacer"></div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
+    crossorigin="anonymous"></script>
+  <script src="/frontend/scripts/navigation.js"></script>
+  <script src="/frontend/scripts/account.js"></script>
+
 </body>
+
 </html>
