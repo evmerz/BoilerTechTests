@@ -11,7 +11,7 @@ app.use(cors());
 // mount express router to /api
 app.use(express.json());
 const router = express.Router();
-
+app.use('/api', router);
 
 // Database Connection
 const db = mysql.createConnection({ 
@@ -35,45 +35,44 @@ const isPasswordStrong = (password) => {
     return strongPasswordRegex.test(password);
 };
 
-// Create Account Route
-router.get('/create-account', (req, res) => {
-    const username = req.query.username;
-    const password = req.query.password;
+// Create Account Route (Changed to POST)
+router.post('/create-account', (req, res) => {
+  const { username, password } = req.body;
 
-    if (!username || !password) {
-        return res.status(400).json({ message: 'Username and password are required' });
-    }
+  if (!username || !password) {
+      return res.status(400).json({ message: 'Username and password are required' });
+  }
 
-    // Check if the username already exists
-    const checkQuery = 'SELECT * FROM users WHERE username = ?';
-    db.query(checkQuery, [username], (err, results) => {
-        if (err) {
-            return res.status(500).json({ message: 'Error checking username' });
-        }
+  // Check if the username already exists
+  const checkQuery = 'SELECT * FROM users WHERE username = ?';
+  db.query(checkQuery, [username], (err, results) => {
+      if (err) {
+          return res.status(500).json({ message: 'Error checking username' });
+      }
 
-        // Check password strength
-        if (!isPasswordStrong(password)) {
-            return res.status(400).json({ message: 'Password must be at least 8 characters long, contain uppercase and lowercase letters, a number, and a special character.' });
-        }
+      // Check password strength
+      if (!isPasswordStrong(password)) {
+          return res.status(400).json({ message: 'Password must be at least 8 characters long, contain uppercase and lowercase letters, a number, and a special character.' });
+      }
 
-        // If username exists, return an error message
-        if (results.length > 0) {
-            return res.status(409).json({ message: 'Username already exists, please choose a different one.' });
-        }
+      // If username exists, return an error message
+      if (results.length > 0) {
+          return res.status(409).json({ message: 'Username already exists, please choose a different one.' });
+      }
 
-        // If username is unique, insert it into the database
-        const query = 'INSERT INTO users (username, password) VALUES (?, ?)';
-        db.query(query, [username, password], (err, result) => {
-            if (err) {
-                return res.status(500).json({ message: 'Error inserting data into the database' });
-            }
-            res.status(201).json({ message: 'Account created', userId: result.insertId });
-        });
-    });
+      // If username is unique, insert it into the database
+      const query = 'INSERT INTO users (username, password) VALUES (?, ?)';
+      db.query(query, [username, password], (err, result) => {
+          if (err) {
+              return res.status(500).json({ message: 'Error inserting data into the database' });
+          }
+          res.status(201).json({ message: 'Account created', userId: result.insertId });
+      });
+  });
 });
 
 // Login Route
-app.get('/login', (req, res) => {
+router.get('/login', (req, res) => {
     const username = req.query.username;
     const password = req.query.password;
   
