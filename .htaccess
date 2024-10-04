@@ -2,7 +2,7 @@ RewriteEngine On
 RewriteCond %{REQUEST_URI} !^/api/
 
 RewriteRule ^home$ /index.html [L]
-RewriteRule ^terminal$ /frontend/pages/terminal.html [L]
+RewriteRule ^code$ /frontend/pages/terminal.html [L]
 RewriteRule ^login$ /frontend/pages/login.html [L]
 RewriteRule ^about$ /frontend/pages/about.html [L]
 RewriteRule ^practice$ /frontend/pages/practice.html [L]
