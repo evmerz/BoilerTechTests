@@ -1,5 +1,3 @@
-const https = require('https');
-const fs = require('fs');
 const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
@@ -13,18 +11,7 @@ app.use(cors());
 // mount express router to /api
 app.use(express.json());
 const router = express.Router();
-app.use('/api', router);
 
-// Load SSL certificate and key
-const options = {
-    key: fs.readFileSync('/etc/ssl/private/boilertechtests_com.key'),
-    cert: fs.readFileSync('/etc/ssl/certs/boilertechtests_com.crt')
-  };  
-
-  // Create HTTPS server
-https.createServer(options, app).listen(port, () => {
-    console.log('Server running on port ${port}');
-  });
 
 // Database Connection
 const db = mysql.createConnection({ 
@@ -85,9 +72,9 @@ router.post('/create-account', (req, res) => {
 });
 
 // Login Route
-router.post('/login', (req, res) => {
-    console.log("haha logging in!!");
-  const { username, password } = req.body;
+app.get('/login', (req, res) => {
+    const username = req.query.username;
+    const password = req.query.password;
   
     if (!username || !password) {
       return res.status(400).json({ message: 'Username and password are required' });
@@ -203,6 +190,8 @@ function updateCredentials(userId, newUsername, newPassword, res) {
 }
 
 
-//   app.listen(port, '0.0.0.0', () => {
-//     console.log(`Server running on port ${port}`);
-//   });
+
+
+  app.listen(port, '0.0.0.0', () => {
+    console.log(`Server running on port ${port}`);
+  });
