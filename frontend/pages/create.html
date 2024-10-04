@@ -22,7 +22,6 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             text-align: center;
-            width: 300px;
         }
 
         input {
@@ -60,17 +59,12 @@
         .link a:hover {
             text-decoration: underline;
         }
-
-        #response-message {
-            margin-top: 1rem;
-            color: red;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Create Account</h2>
-        <!-- Removed User ID Display -->
+        <div id="user-id" style="position: absolute; top: 10px; left: 10px;">User ID: <span id="user-id-value"></span></div>
         <form id="create-account-form">
             <input type="text" id="username" name="username" placeholder="Username" required />
             <input type="password" id="password" name="password" placeholder="Password" required />
@@ -81,23 +75,21 @@
     </div>
 
     <script>
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            document.getElementById('user-id-value').textContent = userId;
+        }
+
         document.getElementById('create-account-form').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the form from refreshing the page
 
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            const url = `http://boilertechtests.com/api/create-account`;
+            const url = `http://boilertechtests.com/api/create-account?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
 
             fetch(url, {
-                method: 'POST', // Changed to POST
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    username: username,
-                    password: password
-                })
+                method: 'GET',
             })
             .then(response => {
                 if (!response.ok) {
@@ -108,13 +100,9 @@
                 return response.json();
             })
             .then(data => {
-                // Store user info in localStorage
-                localStorage.setItem('userId', data.userId);
-                localStorage.setItem('username', username);
-                localStorage.setItem('password', password); // Not recommended for production
-
-                // Redirect to account.html
-                window.location.href = 'account.html';
+                document.getElementById('response-message').textContent = data.message;
+                // Optionally, redirect to the login page after successful account creation
+                setTimeout(() => window.location.href = '../../index.html', 2000);
             })
             .catch(error => {
                 document.getElementById('response-message').textContent = 'Error: ' + error.message;
