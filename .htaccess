@@ -1,4 +1,5 @@
 RewriteEngine On
+RewriteCond %{REQUEST_URI} !^/api/
 
 RewriteRule ^home$ /index.html [L]
 RewriteRule ^terminal$ /frontend/pages/pythonTerminal.html [L]
@@ -6,6 +7,7 @@ RewriteRule ^login$ /frontend/pages/login.html [L]
 RewriteRule ^about$ /frontend/pages/about.html [L]
 RewriteRule ^practice$ /frontend/pages/practice.html [L]
 RewriteRule ^quiz$ /frontend/pages/quiz.html [L]
+RewriteRule ^account$ /frontend/pages/account.html [L] 
 
 ErrorDocument 404 /frontend/pages/404.html
 RewriteRule ^404$ /frontend/pages/404.html [L]
