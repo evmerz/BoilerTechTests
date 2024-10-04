@@ -22,8 +22,8 @@ const options = {
   };  
 
   // Create HTTPS server
-https.createServer(options, app).listen(443, () => {
-    console.log('Server running on https://localhost:443');
+https.createServer(options, app).listen(port, () => {
+    console.log('Server running on port ${port}');
   });
 
 // Database Connection
