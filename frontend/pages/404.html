@@ -1,38 +1,62 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Not Found</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-        }
-        h1 {
-            font-size: 50px;
-        }
-        p {
-            font-size: 20px;
-        }
-        a {
-            text-decoration: none;
-            color: #0066cc;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        img {
-            width: 300px;
-            height: auto;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="../styles/navigation.css">
+  <link rel="stylesheet" href="../styles/global.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+    rel="stylesheet">
+
+  <title>Page Not Found</title>
+
+  <style>
+    #err-img {
+        width: 300px;
+        height: auto;
+    }
+</style>
 </head>
-<body>
-    <h1>404</h1>
-    <p>Oops! The boilermaker special has crashed into this page and it no longer exists.</p>
-    <img id="intro-img" class="fade-in" src="https://1000logos.net/wp-content/uploads/2024/05/Purdue-Boilermakers-Logo-1994.png" />
-    <p><a href="/home">Return to Home</a></p>
+
+<body style="overflow: hidden;">
+
+  <div id="navbar-load"></div>
+
+  <!-- ================================ MAIN CONTAINER FOR WEBSITE ================================ -->
+  <div class="container">
+    <!-- Include spacers wherever you deem necessary -->
+    <!-- <div id="spacer"></div> -->
+
+    <!-- ======== Always use sub-containers for the actual content to maintain proper spacing ======== -->
+    <div class="sub-container" style="text-align: center;">
+      <h1>404</h1>
+      <p>Oops! The Boilermaker Special went off the rails into unknown territory.<br><br>This page does not exist!</p>
+      <img id="err-img" src="https://1000logos.net/wp-content/uploads/2024/05/Purdue-Boilermakers-Logo-1994.png" />
+      <p><a href="/home" class="button">Return to Home</a></p>
+      <div id="spacer"></div>
+      <div id="spacer"></div>
+      <div id="spacer"></div>
+      <div id="spacer"></div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
+    crossorigin="anonymous"></script>
+  <script src="/frontend/scripts/navigation.js"></script>
+
+  <script>
+    $("#navbar-load").load("/frontend/templates/navbar.html");
+  </script>
+
 </body>
+
 </html>
