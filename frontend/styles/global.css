@@ -126,6 +126,11 @@ h3 {
   font-weight: 300;
 }
 
+h4 {
+  font-family: 'Josefin Sans';
+  color: var(--site-foreground);
+}
+
 p {
   color: var(--site-foreground);
   font-family: 'Josefin Sans';
@@ -135,6 +140,11 @@ p {
 
 p b {
   font-weight: 600;
+}
+
+span {
+  font-family: 'Josefin Sans';
+  font-weight: 300;
 }
 
 .fade-in {

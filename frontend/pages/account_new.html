@@ -7,6 +7,7 @@
 
   <link rel="stylesheet" href="/frontend/styles/navigation.css">
   <link rel="stylesheet" href="/frontend/styles/global.css">
+  <link rel="stylesheet" href="/frontend/styles/account.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +17,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
     rel="stylesheet">
 
-  <title>TEMPLATE - BoilerTechTests</title>
+  <title>Account Details - BoilerTechTests</title>
 </head>
 
 <body>
@@ -30,16 +31,43 @@
 
     <!-- ======== Always use sub-containers for the actual content to maintain proper spacing ======== -->
     <div class="sub-container">
-      <div class="header-panel" style="margin-top: 0; margin-bottom: 0;"></div>
-      <h2 class="fade-in">Header Text (that fades in)</h2>
-      <p class="fade-in" style="--delay: 0.1s">omg subtext (with a delay)</p>
+      <h1>Your Account</h1>
+        <p><strong>Username:</strong> <span id="username"></span></p>
+        <p><strong>Password:</strong> <span id="password" class="hidden-password"></span></p>
+        <p><strong>User ID:</strong> <span id="userId"></span></p>
+        <button id="logout-btn" class="button">Log Out</button>
+
     </div>
+
+    <div id="spacer"></div>
+
+    <div class="sub-container">
+      <h2>Change Username/Password</h2>
+        <div id="change-credentials">
+
+          <span>Current Password:</span> <br>
+          <input type="password" id="currentPassword" placeholder="Current Password" required />
+          <br><br>
+          
+          <span>New Username/Password:</span>
+          <div id="new-credential-container">
+            <input type="text" id="newUsername" placeholder="New Username" />
+            <span></span>
+            <input type="password" id="newPassword" placeholder="New Password" />
+          </div>
+        </div>
+        <br>
+        <button id="change-btn" class="button">Change</button>
+        <p id="response-message"></p>
+      </div>
+      <div id="spacer"></div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
     crossorigin="anonymous"></script>
   <script src="/frontend/scripts/navigation.js"></script>
+  <script src="/frontend/scripts/account.js"></script>
 
 </body>
 
