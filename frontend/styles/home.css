@@ -18,10 +18,10 @@
 }
 
 #homepage-banner {
-  color: white;
+  color: var(--site-foreground);
   padding: 5px;
   font-family: 'Josefin Sans';
-  background-color: var(--site-foreground-dark);
+  background-color: var(--site-background-dark);
 
   z-index: 3;
   position: sticky;
