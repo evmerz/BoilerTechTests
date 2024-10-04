@@ -31,7 +31,7 @@ document.getElementById('login-form').addEventListener('submit', function(event)
       localStorage.setItem('password', password); // Not recommended for production
 
       // Redirect to account.html
-      window.location.href = 'account.html';
+      window.location.href = '/account';
   })
   .catch(error => {
       document.getElementById('response-message').textContent = 'Error: ' + error.message;

@@ -6,7 +6,7 @@ function displayAccountInfo() {
 
   if (!username || !userId || !password) {
       alert("User not logged in.");
-      window.location.href = 'login.html';
+      window.location.href = '/login';
       return;
   }
 
@@ -23,7 +23,7 @@ document.getElementById('logout-btn').addEventListener('click', function() {
   localStorage.removeItem('username');
   localStorage.removeItem('password');
   localStorage.removeItem('userId');
-  window.location.href = 'login.html'; // Redirect to login page
+  window.location.href = '/login'; // Redirect to login page
 });
 
 // Change username and/or password

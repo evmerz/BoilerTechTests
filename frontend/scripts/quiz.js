@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   document.getElementById('back-button').addEventListener('click', function() {
-      window.location.href = "practice.html";  // Redirect back to practice page
+      window.location.href = "/practice";  // Redirect back to practice page
   });
 
   // Render the quiz when the page loads
