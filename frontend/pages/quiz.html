@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="/frontend/styles/navigation.css">
+    <link rel="stylesheet" href="/frontend/styles/global.css">
+    <link rel="stylesheet" href="/frontend/styles/quiz.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+
+    <title>Practice Quiz - BoilerTechTests</title>
+</head>
+
+<body>
+
+    <div id="navbar-load"></div>
+
+    <!-- ================================ MAIN CONTAINER FOR WEBSITE ================================ -->
+    <div class="container">
+        <!-- Include spacers wherever you deem necessary -->
+        <!-- <div id="spacer"></div> -->
+
+        <!-- ======== Always use sub-containers for the actual content to maintain proper spacing ======== -->
+        <div class="sub-container">
+            <h1 id="quiz-title" style="text-align: center;">If-Else Statement Quiz</h1>
+            <div id="quiz-container">
+                <button id="back-button" class="button">Back to Practice</button>
+                <div id="quiz-contents"></div>
+                <p id="answer-message" style="color: red; display: none;">You need to answer all questions before you can submit.</p>
+                <button id="submit-quiz" disabled class="button">Submit</button>
+            </div>
+        </div>
+        <div id="spacer"></div>
+    </div>
+
+    <script src="/frontend/scripts/quiz.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
+        crossorigin="anonymous"></script>
+    <script src="/frontend/scripts/navigation.js"></script>
+
+</body>
+
+</html>

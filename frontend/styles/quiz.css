@@ -1,0 +1,44 @@
+#quiz-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+
+#quiz-contents {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.option {
+  display: block;
+  margin: 5px 0;
+  font-family: 'Josefin Sans'
+}
+
+/* Styling for correct and incorrect answers */
+.correct {
+  color: green;
+  font-weight: bold;
+}
+
+.incorrect {
+  color: red;
+  font-weight: bold;
+}
+
+/* Styling to indicate quiz lock */
+.locked {
+  color: #6c757d;
+  font-weight: bold;
+}
+
+/* Disabled button */
+#submit-quiz:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}

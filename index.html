@@ -1,15 +1,74 @@
 <!doctype html>
-<html>
-	<head>
-		<title>BoilerTechTests</title>
-	</head>
-	<body>
-		<h1>
-			sup folks is this mic on?
-			testing
-			<a href="/frontend/pages/about.html">click me!</a>
-		</h1>
-	</body>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="/frontend/styles/navigation.css">
+    <link rel="stylesheet" href="/frontend/styles/home.css">
+    <link rel="stylesheet" href="/frontend/styles/global.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+
+    <title>Home - BoilerTechTests</title>
+
+</head>
+
+<body>
+
+    <div id="homepage-banner">Sign-up today for early access to BoilerTechTests!</div>
+
+    <div id="navbar-load"></div>
+
+    <!-- The main container of the website (exists for styling) -->
+    <div class="container">
+        <div id="spacer"></div>
+
+        <div id="intro">
+            <div id="intro-text">
+                <h1 class="fade-in" style="--delay: 0.2s;">Welcome to BoilerTechTests!</h1>
+
+                <h3 class="fade-in" style="--delay: 0.25s">
+                    Here you can learn development techniques and strategies taught in <b style="font-weight: 1200;">Purdue computer science</b> classes!
+                </h3>
+
+                <a href="#classes" class="fade-in button" style="--delay: 0.3s">
+                    Start Studying
+                </a>
+            </div>
+
+            <img id="intro-img" class="fade-in" src="https://1000logos.net/wp-content/uploads/2024/05/Purdue-Boilermakers-Logo-1994.png" />
+        </div>
+
+        <br>
+
+        <div id="classes" class="sub-container">
+            <hr class="fade-in" style="margin-top: 50px; color: var(--site-foreground)">
+
+            <div class="header-panel" style="margin-top: 100px; margin-bottom: 0;">
+                <h2 class="fade-in">Class List</h2>
+            </div>
+
+            <div class="content-panel" panel-id="homepage" style="margin-top: 0;"></div>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+    <script src="/frontend/scripts/navigation.js"></script>
+    <script src="/frontend/scripts/project-load.js"></script>
+
+    <script>
+        loadProjectData().then(() => {
+            loadProject("cs240", "homepage");
+            loadProject("cs180", "homepage");
+        });
+    </script>
+
+</body>
+
 </html>
-Test
-Test

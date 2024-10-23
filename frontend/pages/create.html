@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="/frontend/styles/navigation.css">
+	<link rel="stylesheet" href="/frontend/styles/global.css">
+	<link rel="stylesheet" href="/frontend/styles/login.css">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
+		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+		rel="stylesheet">
+
+	<title>Create Account - BoilerTechTests</title>
+</head>
+
+<body style="overflow: hidden; height: 100vh">
+	
+	<div id="navbar-load"></div>
+
+	<!-- ================================ MAIN CONTAINER FOR WEBSITE ================================ -->
+	<div class="container">
+		<!-- Include spacers wherever you deem necessary -->
+		<div id="spacer"></div>
+
+		<!-- ======== Always use sub-containers for the actual content to maintain proper spacing ======== -->
+		<div class="sub-container" >
+			
+			<div id="credential-container">
+				<form id="login-form">
+					<h2 class="fade-in">Create Account</h2>
+					<div class="fade-in" style="--delay: 0.1s;">
+						<input type="text" id="username" name="username" placeholder="Username" required />
+						<input type="password" id="password" name="password" placeholder="Password" required />
+					</div>
+					<button class="button fade-in" style="width: 50%; --delay: 0.15s;" type="submit">Create Account</button>
+
+					<p class="fade-in" style="--delay: 0.3s">
+						Already have an account?
+						<a href="/login" style="text-decoration: none;">Log In</a>
+					</p>
+					<p id="response-message"></p>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+		integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
+		crossorigin="anonymous"></script>
+	<script src="/frontend/scripts/navigation.js"></script>
+	<script src="/frontend/scripts/create-account.js"></script>
+
+</body>
+</html>
