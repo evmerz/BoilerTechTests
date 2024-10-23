@@ -48,7 +48,6 @@ const questions = [
     ]
   },
   {
-
     prompt: "Write a Python function that removes consecutive duplicate characters from a string.",
     functionSignature: "def remove_consecutive_duplicates(s):",
     functionName: "remove_consecutive_duplicates",
@@ -71,6 +70,14 @@ function displayQuestion() {
   editor.setValue(currentQuestion.functionSignature + '\n    # Your Python code goes here\n');
   document.getElementById('output').textContent = "";
   document.getElementById('header').textContent = "Question " + (currentQuestionIndex + 1);
+
+  // Update the 'next' button label
+  const nextButton = document.getElementById('next');
+  if (currentQuestionIndex === questions.length - 1) {
+    nextButton.textContent = 'Submit'; // Change to 'Submit' for the last question
+  } else {
+    nextButton.textContent = 'Next Question'; // Otherwise, 'Next'
+  }
 }
 
 document.getElementById('prev').addEventListener('click', () => {
@@ -148,5 +155,7 @@ output + str(results)  # Include test results
   } catch (error) {
     document.getElementById('output').textContent = error;
   }
-
 });
+
+// Change the 'Run' button label
+document.getElementById('run').textContent = "Run";
