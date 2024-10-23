@@ -18,6 +18,7 @@ body.active {
   --site-background: rgb(245, 239, 227);
   --site-background-dark: rgb(239, 230, 211);
   --outline-color: rgb(38, 38, 38);
+  --old-gold: #dccc96;
   --orange: rgb(191, 115, 95);
   --mobile-width: 768px;
 }
