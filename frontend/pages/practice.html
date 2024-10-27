@@ -17,21 +17,26 @@
     <title>Practice - BoilerTechTests</title>
 
     <style>
-        /* Styling for the new CS240 button */
+        /* Updated class button styling to resemble topic buttons */
         .class-button {
             display: inline-block;
-            padding: 15px 30px;
-            margin: 20px;
-            font-size: 1.2em;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 1.1em;
             color: #fff;
             background-color: #007bff;
-            border-radius: 5px;
+            border: none;
+            border-radius: 8px;
             text-align: center;
             text-decoration: none;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+
         .class-button:hover {
             background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
@@ -46,12 +51,49 @@
             <h2>Practice Your Skills Here!</h2>
             <p>Select a class to practice from the list below!</p>
 
-            <!-- CS240 Button -->
-            <a href="/frontend/pages/cs240.html" class="class-button">CS240</a>
+            <!-- Container for dynamically loaded class buttons -->
+            <div id="class-buttons-container"></div>
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
     <script src="/frontend/scripts/navigation.js"></script>
+
+    <script>
+        // Data for classes and their corresponding pages
+        const classesData = [
+            { name: "CS240", id: "cs240.html" }
+        ];
+
+        // Function to create class buttons
+        function createClassButtons() {
+            const container = document.getElementById("class-buttons-container");
+
+            classesData.forEach(cls => {
+                const fade = document.createElement("div");
+                fade.classList.add("fade-in");
+
+                const panel = document.createElement("div");
+                panel.classList.add("project-panel");
+
+                const text = document.createElement("div");
+                text.classList.add("caption");
+
+                const button = document.createElement("a");
+                button.classList.add("class-button");
+                button.href = `/frontend/pages/${cls.id}`; // Link to class-specific page
+                button.textContent = cls.name;
+
+                text.appendChild(button);
+                panel.appendChild(text);
+                fade.appendChild(panel);
+
+                container.appendChild(fade);
+            });
+        }
+
+        // Load class buttons on page load
+        $(document).ready(createClassButtons);
+    </script>
 </body>
 </html>
