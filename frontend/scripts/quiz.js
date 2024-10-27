@@ -96,7 +96,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function displayResults(results) {
-        quizContainer.innerHTML = `<h2>Quiz Results</h2>`;
+        const totalScore = results.reduce((acc, result) => acc + (result.isCorrect ? 1 : 0), 0); // Calculate total score
+        quizContainer.innerHTML = `<h2>Quiz Results</h2><p>Total Score: ${totalScore}/${results.length}</p>`; // Display total score
         results.forEach((result, index) => {
             quizContainer.innerHTML += `
                 <div class="question">
