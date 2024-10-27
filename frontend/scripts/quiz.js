@@ -89,7 +89,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const results = quizData.map((questionData, index) => {
             const userAnswer = userAnswers[index];
             const correctAnswer = questionData.answer;
-            return { question: questionData.question, userAnswer, correctAnswer };
+            const score = userAnswer === correctAnswer ? '1/1' : '0/1';
+            return { question: questionData.question, userAnswer, correctAnswer, score, isCorrect: userAnswer === correctAnswer };
         });
         displayResults(results);
     }
@@ -100,10 +101,11 @@ document.addEventListener('DOMContentLoaded', function() {
             quizContainer.innerHTML += `
                 <div class="question">
                     <p>Question ${index + 1}: ${result.question}</p>
-                    <p>Your answer: ${result.userAnswer || 'No answer selected'}</p>
-                    <p class="${result.userAnswer === result.correctAnswer ? 'correct' : 'incorrect'}">
-                        Correct answer: ${result.correctAnswer}
+                    <p class="${result.isCorrect ? 'correct' : 'incorrect'}">
+                        Your answer: ${result.userAnswer || 'No answer selected'}
                     </p>
+                    <p>Correct answer: ${result.correctAnswer}</p>
+                    <p>Score: ${result.score}</p>
                 </div>
             `;
         });
