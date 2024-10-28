@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let currentQuestionIndex = 0;
     const userAnswers = new Array(quizData.length).fill(null); // Array to save user answers
+     
     const quizContainer = document.getElementById('quiz-contents');
 
     function renderQuestion() {
@@ -94,6 +95,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         displayResults(results);
     }
+
+    function saveResults() {
+        const results = quizData.map((questionData, index) => {
+            const userAnswer = userAnswers[index];
+            const correctAnswer = questionData.answer;
+            const score = userAnswer === correctAnswer ? 1 : 0;
+            return { question_number: index + 1, response: userAnswer, score };
+        });
+    }
+
+    saveQuiz((1, localStorage.getItem(userID), JSON.stringify(saveResults)));
 
     function displayResults(results) {
         const totalScore = results.reduce((acc, result) => acc + (result.isCorrect ? 1 : 0), 0); // Calculate total score
