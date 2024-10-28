@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify({
                     quizId,
                     userId,
-                    responses: quizResponses
+                    responses: Array.from(quizResponses.entries())
                 })
             });
     
