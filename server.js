@@ -190,8 +190,10 @@ function updateCredentials(userId, newUsername, newPassword, res) {
 }
 
 app.post('/quiz', async (req, res) => {
-    const { quiz_id } = req.params;
-    const { userId, answers } = req.body; 
+    const { quiz_id, userId, answers } = req.body;
+    console.log("id:", userId)
+    console.log("answers:", answers)
+
 
     if (!answers) {
         return res.status(400).json({ error: 'Answers must be provided as an array' });
