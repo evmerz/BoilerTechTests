@@ -189,7 +189,7 @@ function updateCredentials(userId, newUsername, newPassword, res) {
   });
 }
 
-app.post('/frontend/pages/if-statements.html', async (req, res) => {
+app.post('/quiz', async (req, res) => {
     const { quiz_id } = req.params;
     const { userId, answers } = req.body; 
 

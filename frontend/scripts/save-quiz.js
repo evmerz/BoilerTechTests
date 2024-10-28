@@ -1,6 +1,6 @@
 async function saveQuiz(quizId, userId, quizResponses) {
     console.log("yes");
-    const url = `https://boilertechtests.com/frontend/pages/if-statements.html`;
+    const url = `https://boilertechtests.com/api/quiz`;
     try {
         const response = await fetch(url, {
             method: 'POST',
