@@ -115,9 +115,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    quizId,
-                    userId,
-                    quizResponses
+                    quiz_id: quizId,
+                    user_id: userId,
+                    answers: quizResponses
                 })
             });
     
