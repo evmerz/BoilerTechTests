@@ -191,8 +191,8 @@ function updateCredentials(userId, newUsername, newPassword, res) {
 
 app.post('/quiz', async (req, res) => {
     const { quiz_id, user_id, answers } = req.body;
-    console.log("id:", user_id)
-    console.log("answers:", answers)
+    // console.log("id:", user_id)
+    console.log("body:", req.body);
 
 
     if (!answers) {
