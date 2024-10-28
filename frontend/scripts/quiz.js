@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return { question_number: index + 1, response: userAnswer, score };
         });
         console.log(meh);
-        saveQuiz(1, localStorage.getItem('userID'), meh);
+        saveQuiz(1, localStorage.getItem('userId'), meh);
     }
 
     function displayResults(results) {
