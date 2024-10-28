@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function saveQuiz(quizId, userId, quizResponses) {
         console.log("yes");
-        const url = `https://boilertechtests.com/api/quiz/`;
+        const url = `https://boilertechtests.com/frontend/pages/if-statements.html`;
         try {
             const response = await fetch(url, {
                 method: 'POST',
