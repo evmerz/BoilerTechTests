@@ -1,4 +1,5 @@
 async function saveQuiz(quizId, userId, quizResponses) {
+    console.log("yes");
     const url = `https://boilertechtests.com/api/quiz/{quizId}/submit`;
     try {
         const response = await fetch(url, {
