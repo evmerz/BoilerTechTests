@@ -201,7 +201,7 @@ app.post('/quiz', async (req, res) => {
 
     try {
         await db.query('INSERT INTO quiz_submissions (user_id, quiz_id, answers) VALUES (?, ?, ?)', 
-            [userId, quiz_id, JSON.stringify(answers)]
+            [userId, quiz_id, answers]
         );
 
         res.json({ message: 'Quiz submitted successfully' });
