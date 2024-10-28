@@ -84,6 +84,14 @@ function loadProject(classID, contentPanelName) {
 
     fade.appendChild(panel);
 
+
+    if (classData[classID].name === "CS240") {
+        panel.classList.add("clickable"); // Optional, to indicate it’s clickable
+        panel.addEventListener("click", function () {
+            window.location.href = "/frontend/pages/cs240.html";
+        });
+    }
+
     container.appendChild(fade);
 
     return true;
