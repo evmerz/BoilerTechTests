@@ -193,6 +193,7 @@ app.post('/quiz', async (req, res) => {
     const { quiz_id, user_id, answers } = req.body;
     // console.log("id:", user_id)
     console.log("body:", req.body);
+    console.log("string answers", JSON.stringify(answers));
 
 
     if (!answers) {
@@ -201,7 +202,7 @@ app.post('/quiz', async (req, res) => {
 
     try {
         await db.query('INSERT INTO quiz_submissions (user_id, quiz_id, answers) VALUES (?, ?, ?)', 
-            [userId, quiz_id, answers]
+            [userId, quiz_id, JSON.stringify(answers)]
         );
 
         res.json({ message: 'Quiz submitted successfully' });
