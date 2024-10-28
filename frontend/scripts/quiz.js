@@ -132,6 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const score = userAnswer === correctAnswer ? 1 : 0;
             return { question_number: index + 1, response: userAnswer, score };
         });
+        console.log(meh);
         saveQuiz(1, localStorage.getItem('userID'), meh);
     }
 
