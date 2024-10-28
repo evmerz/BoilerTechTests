@@ -189,6 +189,24 @@ function updateCredentials(userId, newUsername, newPassword, res) {
   });
 }
 
+app.post('/quiz/:quiz_id/submit', async (req, res) => {
+    const { quiz_id } = req.params;
+    const { userId, answers } = req.body; 
+
+    if (!answers || !Array.isArray(answers)) {
+        return res.status(400).json({ error: 'Answers must be provided as an array' });
+    }
+
+    try {
+        await db.query('INSERT INTO quiz_submissions (user_id, quiz_id, answers) VALUES (?, ?, ?)', 
+            [userId, quiz_id, JSON.stringify(answers)]
+        );
+
+        res.json({ message: 'Quiz submitted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: 'Database error saving quiz results' });
+    }
+});
 
 
 
