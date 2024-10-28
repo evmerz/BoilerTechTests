@@ -196,19 +196,13 @@ app.post('/quiz', async (req, res) => {
     console.log("string answers", JSON.stringify(answers));
 
 
-    if (!answers) {
-        return res.status(400).json({ error: 'Answers must be provided as an array' });
-    }
-
-    try {
-        await db.query('INSERT INTO quiz_submissions (user_id, quiz_id, answers) VALUES (?, ?, ?)', 
-            [userId, quiz_id, JSON.stringify(answers)]
-        );
-
-        res.json({ message: 'Quiz submitted successfully' });
-    } catch (error) {
-        res.status(500).json({ error: 'Database error saving quiz results' });
-    }
+    const query = 'INSERT INTO users (user_id, quiz_id, answers) VALUES (?, ?, ?)';
+      db.query(query, [user_id, quiz_id, answers], (err, result) => {
+          if (err) {
+              return res.status(500).json({ message: 'Error inserting data into the database' });
+          }
+          res.status(201).json({ message: 'Quiz submission saved!'});
+      });
 });
 
 
