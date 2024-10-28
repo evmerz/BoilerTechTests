@@ -190,6 +190,7 @@ function updateCredentials(userId, newUsername, newPassword, res) {
 }
 
 app.post('/quiz', async (req, res) => {
+    console.log("YESSSSS");
     const { quiz_id } = req.params;
     const { userId, answers } = req.body; 
 
