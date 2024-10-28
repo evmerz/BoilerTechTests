@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
 
     let currentQuestionIndex = 0;
-    const userAnswers = new Array(quizData.length).fill(null); // Array to save user answers
+    const userAnswers = new Array(quizData.length).fill(null);
     const quizContainer = document.getElementById('quiz-contents');
 
     function renderQuestion() {
@@ -62,14 +62,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function nextQuestion() {
         const selectedOption = document.querySelector('input[name="quiz-question"]:checked');
         if (selectedOption) {
-            // Save the selected answer
             userAnswers[currentQuestionIndex] = selectedOption.value;
 
             if (currentQuestionIndex < quizData.length - 1) {
                 currentQuestionIndex++;
                 renderQuestion();
             } else {
-                // All questions answered, show submit button
                 showSubmitButton();
             }
         } else {
@@ -96,22 +94,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function displayResults(results) {
-        const totalScore = results.reduce((acc, result) => acc + (result.isCorrect ? 1 : 0), 0); // Calculate total score
-        quizContainer.innerHTML = `<h2>Quiz Results</h2><p>Total Score: ${totalScore}/${results.length}</p>`; // Display total score
+        const totalScore = results.reduce((acc, result) => acc + (result.isCorrect ? 1 : 0), 0);
+        quizContainer.innerHTML = `<h2>Quiz Results</h2><p>Total Score: ${totalScore}/${results.length}</p>`;
+        
         results.forEach((result, index) => {
+            const correctnessLabel = result.isCorrect ? "(Correct)" : "(Incorrect)";
             quizContainer.innerHTML += `
                 <div class="question">
                     <p>Question ${index + 1}: ${result.question}</p>
                     <p class="${result.isCorrect ? 'correct' : 'incorrect'}">
-                        Your answer: ${result.userAnswer || 'No answer selected'}
+                        Your answer: ${result.userAnswer || 'No answer selected'} ${correctnessLabel}
                     </p>
-                    <p>Correct answer: ${result.correctAnswer}</p>
+                    <p class="correct-answer">Correct answer: ${result.correctAnswer}</p>
                     <p>Score: ${result.score}</p>
                 </div>
             `;
         });
     }
 
-    // Start the quiz by rendering the first question
     renderQuestion();
 });
