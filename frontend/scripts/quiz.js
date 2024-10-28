@@ -100,6 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function saveQuiz(quizId, userId, quizResponses) {
         console.log("yes");
+        console.log("quiz:", quizResponses);
         const url = `https://boilertechtests.com/api/quiz`;
         try {
             const response = await fetch(url, {
