@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify({
                     quizId,
                     userId,
-                    responses: Array.from(quizResponses.entries())
+                    quizResponses
                 })
             });
     
