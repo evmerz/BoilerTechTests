@@ -193,7 +193,7 @@ app.post('/quiz', async (req, res) => {
     const { quiz_id } = req.params;
     const { userId, answers } = req.body; 
 
-    if (!answers || !Array.isArray(answers)) {
+    if (!answers) {
         return res.status(400).json({ error: 'Answers must be provided as an array' });
     }
 
