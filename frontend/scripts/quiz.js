@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
             quizResponses
         }));
 
-        const url = `https://boilertechtests.com/api/quiz`;
+        const url = `localhost:5000/api/quiz`;
         try {
             const response = await fetch(url, {
                 method: 'POST',
