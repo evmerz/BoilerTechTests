@@ -199,6 +199,7 @@ app.post('/quiz', async (req, res) => {
     const query = 'INSERT INTO quiz_submissions (user_id, quiz_id, answers) VALUES (?, ?, ?)';
       db.query(query, [user_id, quiz_id, answers], (err, result) => {
           if (err) {
+                console.log("ah fuck");
               return res.status(500).json({ message: 'Error inserting data into the database' });
           }
           res.status(201).json({ message: 'Quiz submission saved!'});
