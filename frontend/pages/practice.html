@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,14 +16,14 @@
     <title>Practice - BoilerTechTests</title>
 
     <style>
-        /* Updated class button styling to resemble topic buttons */
+        /* Updated class button styling */
         .class-button {
             display: inline-block;
             padding: 10px 20px;
             margin: 10px;
             font-size: 1.1em;
             color: #fff;
-            background-color: #007bff;
+            background-color: #000;
             border: none;
             border-radius: 8px;
             text-align: center;
@@ -34,10 +33,12 @@
         }
 
         .class-button:hover {
-            background-color: #0056b3;
+            background-color: #333;
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
+
+
     </style>
 </head>
 
@@ -71,7 +72,7 @@
 
             classesData.forEach(cls => {
                 const fade = document.createElement("div");
-                fade.classList.add("fade-in");
+                //fade.classList.add("fade-in");
 
                 const panel = document.createElement("div");
                 panel.classList.add("project-panel");
@@ -81,7 +82,7 @@
 
                 const button = document.createElement("a");
                 button.classList.add("class-button");
-                button.href = `/frontend/pages/${cls.id}`; // Link to class-specific page
+                button.href = `/frontend/pages/${cls.id}`;
                 button.textContent = cls.name;
 
                 text.appendChild(button);
