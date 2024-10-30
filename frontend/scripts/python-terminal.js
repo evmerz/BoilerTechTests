@@ -27,6 +27,10 @@ const questions = [
     testCases: [
       { input: ["hello", " world"], expected: "hello world" },
       { input: ["foo", "bar"], expected: "foobar" }
+    ],
+    hiddenCases: [
+      { input: ["Yes ", "please!"], expected: "Yes please!"},
+      { input: ["Come with me\n", "24601"], expected: "Come with me\n24601"},
     ]
   },
   {
@@ -34,8 +38,13 @@ const questions = [
     functionSignature: "def add_numbers(a, b):",
     functionName: "add_numbers",
     testCases: [
-      { input: [1, 2], expected: 3 },
+      { input: [1.3, 2], expected: 3.3 },
       { input: [-1, 1], expected: 0 }
+    ],
+    hiddenCases: [
+      { input: [100, 3001], expected: 3101},
+      { input: [-3, 3], expected: 0},
+      { input: [-60, 5], expected: -55}
     ]
   },
   {
@@ -45,6 +54,10 @@ const questions = [
     testCases: [
       { input: [2, 1], expected: 1 },
       { input: [-6, 1], expected: -7 }
+    ],
+    hiddenCases: [
+      { input: [2, -1], expected: 3 },
+      { input: [-6, -1], expected: -5 }
     ]
   },
   {
@@ -55,6 +68,8 @@ const questions = [
       { input: ["aabbcc"], expected: "abc" },
       { input: ["aaabbbccc"], expected: "abc" },
       { input: ["abccba"], expected: "abcba" },
+    ],
+    hiddeCases: [
       { input: [""], expected: "" },
       { input: ["abc"], expected: "abc" },
       { input: ["aabbccddeeff"], expected: "abcdef" }
@@ -63,21 +78,17 @@ const questions = [
 ];
 
 let currentQuestionIndex = 0;
+let answerCount = 0;
+const userAnswers = new Array(questions.length).fill(null);
 
 function displayQuestion() {
   const currentQuestion = questions[currentQuestionIndex];
   document.getElementById('question').textContent = currentQuestion.prompt;
-  editor.setValue(currentQuestion.functionSignature + '\n    # Your Python code goes here\n');
+  editor.setValue(userAnswers[currentQuestionIndex] || currentQuestion.functionSignature + '\n    # Your code here\n    # click run to save your answer');
+  //editor.setValue(currentQuestion.functionSignature + '\n    # Your Python code goes here\n');
   document.getElementById('output').textContent = "";
   document.getElementById('header').textContent = "Question " + (currentQuestionIndex + 1);
 
-  // Update the 'next' button label
-  const nextButton = document.getElementById('next');
-  if (currentQuestionIndex === questions.length - 1) {
-    nextButton.textContent = 'Submit'; // Change to 'Submit' for the last question
-  } else {
-    nextButton.textContent = 'Next Question'; // Otherwise, 'Next'
-  }
 }
 
 document.getElementById('prev').addEventListener('click', () => {
@@ -108,7 +119,9 @@ displayQuestion();
 // Run code function
 document.getElementById('run').addEventListener('click', async () => {
   const code = editor.getValue().trim();
+  userAnswers[currentQuestionIndex] = code;
   const currentQuestion = questions[currentQuestionIndex];
+
 
   try {
     let output = await pyodide.runPython(`
@@ -133,16 +146,22 @@ test_cases = ${JSON.stringify(currentQuestion.testCases)}
 results = ""
 
 # Loop through the test cases
+i = 0
 for test in test_cases:
     input_args = test['input']
     expected = test['expected']
+    i = i + 1
     
     # Dynamically look up the function by its name and call it
     if function_name in globals():
         func = globals()[function_name]
         result = func(*input_args)
-        results = results + (f"test: {input_args}, result: {result}, expected: {expected}, pass: {result == expected}")
-        results = results + '\\n'
+        results = results + (f"Test Case {i}\\nInput: {input_args}\\nOutput: {result}\\nExpected: {expected}. ")
+        if result == expected:
+          results = results + '\\nTest Case PASSED'
+        else:
+          results = results + 'Test Case FAILED'
+        results = results + '\\n\\n'
     else:
         results = results + (f"Function {function_name} not found.")
 
@@ -152,9 +171,26 @@ sys.stdout = old_stdout  # Restore standard output
 output + str(results)  # Include test results
 `);
     document.getElementById('output').textContent = output || "";
+    // Reset and re-evaluate answerCount based on current answers
+    
   } catch (error) {
     document.getElementById('output').textContent = error;
   }
+  answerCount = 0;
+    for (let i = 0; i < userAnswers.length; i++) {
+        if (userAnswers[i] && userAnswers[i].includes("return")) {
+            answerCount++;  // Increase count if "return" is found
+        } else {
+          answerCount = 0;
+          break;
+        }
+    }
+    const submitButton = document.getElementById('submit');
+    if (answerCount === questions.length) {
+        submitButton.style.display = 'inline-block';  // Show "Submit" button
+    } else {
+        submitButton.style.display = 'none';  // Hide "Submit" button if not all have "return"
+    }
 });
 
 // Change the 'Run' button label
