@@ -197,7 +197,7 @@ app.post('/quiz', async (req, res) => {
 
 
     const query = 'INSERT INTO quiz_submissions (user_id, quiz_id, answers) VALUES (?, ?, ?)';
-      db.query(query, [35, quiz_id, JSON.stringify(answers)], (err, result) => {
+      db.query(query, [35, 2, JSON.stringify(answers)], (err, result) => {
           if (err) {
                 console.log("error thing: ", err);
                 console.log("ah fuck");
