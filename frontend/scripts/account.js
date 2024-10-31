@@ -23,7 +23,7 @@ document.getElementById('logout-btn').addEventListener('click', function() {
   localStorage.removeItem('username');
   localStorage.removeItem('password');
   localStorage.removeItem('userId');
-  localStorage.removeItem('customScrollbar', isChecked);
+  localStorage.removeItem('customScrollbar');
   window.location.href = '/login'; // Redirect to login page
 });
 
