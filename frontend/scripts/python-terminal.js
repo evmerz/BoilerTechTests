@@ -275,26 +275,51 @@ if (codeMirrorElement) codeMirrorElement.style.display = 'none';
 
   // Scroll to the top of the page
   window.scrollTo({ top: 0, behavior: 'smooth' });
-
+  let totalPasses = 0;
+  let tests = 0;
+  
+  // Create a string for the summary output
+  let summaryOutput = '<h2>Quiz Results:</h2>'; // Header for total results
+  
   // Iterate over each question to format the results
   questions.forEach((question, i) => {
       const userResult = userAnswers[i].results;
       const totalTests = (question.testCases.length + question.hiddenCases.length);
+      tests += totalTests;
       const passes = (userResult.match(/PASSED/g) || []).length; // Count 'PASSED' occurrences
+      totalPasses += passes;
       const totalScore = `${passes}/${totalTests}`;
-
-      // Create the formatted output
+  
+      // Create the formatted output for each question
       let output = `<h3>Question ${i + 1}: ${question.prompt}</h3>`;
       output += `<pre>${userAnswers[i].code}</pre>`;
       output += `<h4>Total Score: ${totalScore}</h4>`;
       output += `<h4>Test Results:</h4>`;
-
-      // Add the test case results with line breaks
-      output += userResult.replace(/\\n/g, '<br>').replace(/\n/g, '<br>'); // Handle both escaped and actual newlines
-
-      // Append to resultContainer
+  
+      // Split userResult into visible and hidden parts
+      const visibleResults = userResult.split("Hidden Test Cases:")[0].trim(); // Results before "Hidden Test Cases:"
+      const hiddenResults = userResult.split("Hidden Test Cases:")[1]?.trim(); // Results after "Hidden Test Cases:"
+  
+      // Add the visible results
+      output += visibleResults.replace(/\\n/g, '<br>').replace(/\n/g, '<br>'); // Handle both escaped and actual newlines
+  
+      // Add the bold label for hidden test cases if it exists
+      if (hiddenResults) {
+          output += '<br><h4>Hidden Test Cases:</h4>'; // Bold label
+          output += hiddenResults.replace(/\\n/g, '<br>').replace(/\n/g, '<br>'); // Handle both escaped and actual newlines
+      }
+  
+      // Append the question output to the resultContainer
       resultContainer.innerHTML += output + '<hr>'; // Add a separator between questions
   });
+  
+  // After all questions are processed, add the summary output
+  summaryOutput += `<h4>Total Test Cases: ${tests}</h4>`;
+  summaryOutput += `<h4>Total Passed: ${totalPasses}</h4>`;
+  
+  // Insert the summary output at the top of the resultContainer
+  resultContainer.innerHTML = summaryOutput + resultContainer.innerHTML;
+  
 }
 
 
