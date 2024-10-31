@@ -53,6 +53,7 @@
             <!-- Updated button structure to match the quiz page -->
             <div id="quiz-container">
                 <button id="back-button" class="button">Back to Practice</button>
+                <button id="retake-button" class="button">Retake Quiz</button> <!-- New Retake Quiz button -->
             </div>
         </div>
     </div>
@@ -89,6 +90,11 @@
         // Back button functionality
         document.getElementById('back-button').addEventListener('click', function() {
             window.location.href = '/frontend/pages/cs240.html'; // Update the path if needed
+        });
+
+        // Retake button functionality
+        document.getElementById('retake-button').addEventListener('click', function() {
+            window.location.href = '/frontend/pages/if-statements.html'; // Update the path to the quiz page
         });
     </script>
 </body>
