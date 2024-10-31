@@ -6,8 +6,10 @@ function updateScrollbar() {
 
     if (isCustomScrollbarEnabled) {
         bodyElement.classList.add('custom-scrollbar');
+        scrollbarToggle.checked = true;
     } else {
         bodyElement.classList.remove('custom-scrollbar');
+        scrollbarToggle.checked = false;
     }
 }
 
@@ -23,5 +25,12 @@ if (document.getElementById('scrollbarToggle')) {
     document.getElementById('scrollbarToggle').addEventListener('change', toggleCustomScrollbar);
 }
 
-// Initial check to set the scrollbar based on local storage
-updateScrollbar();
+function initializeScrollbar() {
+    if (localStorage.getItem('username') == null) {
+        // no one logged in, use scrollbar
+        bodyElement.classList.add('custom-scrollbar');
+    } else {
+        updateScrollbar();
+    }
+}
+initializeScrollbar();
