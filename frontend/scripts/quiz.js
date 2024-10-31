@@ -84,37 +84,32 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function gradeQuiz() {
+        // Check if the quiz has already been taken
+        const quizTaken = sessionStorage.getItem('quizTaken');
+    
+        if (quizTaken) {
+            // If the quiz was already taken, redirect to results page
+            window.location.href = '/frontend/pages/results.html'; // Update the path if needed
+            return; // Stop the function execution
+        }
+    
         const results = quizData.map((questionData, index) => {
             const userAnswer = userAnswers[index];
             const correctAnswer = questionData.answer;
             const score = userAnswer === correctAnswer ? '1/1' : '0/1';
             return { question: questionData.question, userAnswer, correctAnswer, score, isCorrect: userAnswer === correctAnswer };
         });
-        displayResults(results);
-    }
-
-    function displayResults(results) {
-        const totalScore = results.reduce((acc, result) => acc + (result.isCorrect ? 1 : 0), 0);
-        quizContainer.innerHTML = `<h2>Quiz Results</h2><p>Total Score: ${totalScore}/${results.length}</p>`;
         
-        results.forEach((result, index) => {
-            const correctnessLabel = result.isCorrect ? "(Correct)" : "(Incorrect)";
-            quizContainer.innerHTML += `
-                <div class="question">
-                    <p>Question ${index + 1}: ${result.question}</p>
-                    <p class="${result.isCorrect ? 'correct' : 'incorrect'}">
-                        Your answer: ${result.userAnswer || 'No answer selected'} ${correctnessLabel}
-                    </p>
-                    <p class="correct-answer">Correct answer: ${result.correctAnswer}</p>
-                    <p>Score: ${result.score}</p>
-                </div>
-            `;
-        });
+        // Save results to session storage
+        sessionStorage.setItem('quizResults', JSON.stringify(results));
+        // Set the flag to indicate the quiz has been taken
+        sessionStorage.setItem('quizTaken', 'true');
+        
+        // Navigate to the results page
+        window.location.href = '/frontend/pages/results.html'; // Update the path if needed
     }
+    
+    
 
     renderQuestion();
-});
-
-document.getElementById('back-button').addEventListener('click', function() {
-    window.location.href = '/cs240.html'; // Update the path if needed
 });
