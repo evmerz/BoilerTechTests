@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="stylesheet" href="/frontend/styles/navigation.css">
+    <link rel="stylesheet" href="/frontend/styles/home.css">
+    <link rel="stylesheet" href="/frontend/styles/global.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+
+    <title>CS240 - BoilerTechTests</title>
+</head>
+
+<body>
+    <div id="navbar-load"></div>
+
+    <div class="container">
+        <div id="spacer"></div>
+
+        <div class="sub-container">
+            <h2>CS240</h2>
+
+            <!-- Exam and topic container where topics will be dynamically loaded -->
+            <div id="exam-sections" class="content-panel">
+                <!-- JavaScript will inject exam sections and topic buttons here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+    <script src="/frontend/scripts/navigation.js"></script>
+    <script src="/frontend/scripts/project-load.js"></script>
+
+    <script>
+        // Data for CS240 page
+        const cs240Data = {
+            exams: [
+                {
+                    title: "EXAM 1",
+                    topics: [
+                        { name: "Topic 1 - if-statements", id: "if-statements" },
+                        { name: "Topic 2 - for-loops", id: "for-loops" }
+                    ]
+                },
+                {
+                    title: "EXAM 2",
+                    topics: [
+                        { name: "Topic 3 - arrays (CODING)", id: "arrays" },
+                        { name: "Topic 4 - linked lists", id: "linked-lists" }
+                    ]
+                }
+            ]
+        };
+
+        // Function to load CS240 exam sections and topics
+        function loadCS240Content() {
+            const examContainer = document.getElementById("exam-sections");
+
+            cs240Data.exams.forEach(exam => {
+                // Create exam title
+                const examTitle = document.createElement("h3");
+                examTitle.textContent = exam.title;
+                examContainer.appendChild(examTitle);
+
+                // Create topic buttons for each exam
+                exam.topics.forEach(topic => {
+                    const fade = document.createElement("div");
+                    //fade.classList.add("fade-in");
+
+                    const panel = document.createElement("div");
+                    panel.classList.add("project-panel");
+
+                    const text = document.createElement("div");
+                    text.classList.add("caption");
+
+                    const button = document.createElement("a");
+                    button.classList.add("button");
+                    button.href = `./${topic.id}.html`; // Link to topic-specific page
+                    button.textContent = topic.name;
+
+                    text.appendChild(button);
+                    panel.appendChild(text);
+                    fade.appendChild(panel);
+
+                    examContainer.appendChild(fade);
+                });
+            });
+        }
+
+        // Load CS240 content on page load
+        $(document).ready(loadCS240Content);
+    </script>
+</body>
+
+</html>

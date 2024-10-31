@@ -10,6 +10,9 @@ loadPyodideAndPackages();
 
 // Disable the run button initially
 document.getElementById('run').disabled = true;
+const quizContainer = document.getElementById('code-contents');
+const resultContainer = document.getElementById('result-contents');
+
 
 // Initialize CodeMirror
 const editor = CodeMirror.fromTextArea(document.getElementById('code'), {
@@ -27,6 +30,10 @@ const questions = [
     testCases: [
       { input: ["hello", " world"], expected: "hello world" },
       { input: ["foo", "bar"], expected: "foobar" }
+    ],
+    hiddenCases: [
+      { name: "punctuation", input: ["Yes ", "please!"], expected: "Yes please!"},
+      { name: "multiple words", input: ["Come with me\n", "24601"], expected: "Come with me\n24601"},
     ]
   },
   {
@@ -34,8 +41,13 @@ const questions = [
     functionSignature: "def add_numbers(a, b):",
     functionName: "add_numbers",
     testCases: [
-      { input: [1, 2], expected: 3 },
+      { input: [1.3, 2], expected: 3.3 },
       { input: [-1, 1], expected: 0 }
+    ],
+    hiddenCases: [
+      { name: "positive positive", input: [100, 3001], expected: 3101},
+      { name: "negative positive", input: [-3, 3], expected: 0},
+      { name: "negative negative", input: [-60, -5], expected: -65}
     ]
   },
   {
@@ -45,6 +57,10 @@ const questions = [
     testCases: [
       { input: [2, 1], expected: 1 },
       { input: [-6, 1], expected: -7 }
+    ],
+    hiddenCases: [
+      { name: "positive negative", input: [2, -1], expected: 3 },
+      { name: "negative negative", input: [-6, -1], expected: -5 }
     ]
   },
   {
@@ -55,29 +71,34 @@ const questions = [
       { input: ["aabbcc"], expected: "abc" },
       { input: ["aaabbbccc"], expected: "abc" },
       { input: ["abccba"], expected: "abcba" },
-      { input: [""], expected: "" },
-      { input: ["abc"], expected: "abc" },
-      { input: ["aabbccddeeff"], expected: "abcdef" }
+    ],
+    hiddenCases: [
+      { name: "empty", input: [""], expected: "" },
+      { name: "no duplicates", input: ["abc"], expected: "abc" },
+      { name: "many duplicates", input: ["aabbccddeeff"], expected: "abcdef" }
     ]
   }
 ];
 
 let currentQuestionIndex = 0;
+let answerCount = 0;
+let submitFlag = 0;
+const userAnswers = new Array(questions.length).fill(null).map(() => ({
+  code: null,
+  results: null
+}));
+ //this contains the user answers for each question 
+//given that they have used the 'run' button
+//index is null if they have not answered the question, but they can't hit submit without at least having written the word return
 
 function displayQuestion() {
   const currentQuestion = questions[currentQuestionIndex];
   document.getElementById('question').textContent = currentQuestion.prompt;
-  editor.setValue(currentQuestion.functionSignature + '\n    # Your Python code goes here\n');
+  editor.setValue(userAnswers[currentQuestionIndex].code || currentQuestion.functionSignature + '\n    # Your code here\n    # Click Run to save answer');
+  //editor.setValue(currentQuestion.functionSignature + '\n    # Your Python code goes here\n');
   document.getElementById('output').textContent = "";
   document.getElementById('header').textContent = "Question " + (currentQuestionIndex + 1);
 
-  // Update the 'next' button label
-  const nextButton = document.getElementById('next');
-  if (currentQuestionIndex === questions.length - 1) {
-    nextButton.textContent = 'Submit'; // Change to 'Submit' for the last question
-  } else {
-    nextButton.textContent = 'Next Question'; // Otherwise, 'Next'
-  }
 }
 
 document.getElementById('prev').addEventListener('click', () => {
@@ -102,13 +123,24 @@ document.getElementById('next').addEventListener('click', () => {
   displayQuestion();
 });
 
+document.getElementById('submit').addEventListener('click', async () => {
+   submitFlag = 1;
+   //for (let i = 0; i < questions.length; i++) {
+    //currentQuestionIndex = i; 
+   await run(); 
+   //}
+    displayResults();
+});
+
 // Initially display the first question
 displayQuestion();
 
-// Run code function
-document.getElementById('run').addEventListener('click', async () => {
+async function run() {
   const code = editor.getValue().trim();
+  userAnswers[currentQuestionIndex].code = code;
   const currentQuestion = questions[currentQuestionIndex];
+  const testCases = currentQuestion.testCases;
+  const hiddenCases = currentQuestion.hiddenCases;
 
   try {
     let output = await pyodide.runPython(`
@@ -129,33 +161,171 @@ exec(user_code)
 function_name = '${currentQuestion.functionName}'
 
 # Test cases
-test_cases = ${JSON.stringify(currentQuestion.testCases)}
+test_cases = ${JSON.stringify(testCases)}
 results = ""
+hidden_str = ""
 
 # Loop through the test cases
-for test in test_cases:
+for i, test in enumerate(test_cases, start=1):
     input_args = test['input']
     expected = test['expected']
-    
+
     # Dynamically look up the function by its name and call it
     if function_name in globals():
         func = globals()[function_name]
         result = func(*input_args)
-        results = results + (f"test: {input_args}, result: {result}, expected: {expected}, pass: {result == expected}")
-        results = results + '\\n'
+
+        # For regular cases, keep the original format
+        result_str = f"Test Case {i}\\nInput: {input_args}\\nOutput: {result}\\nExpected: {expected}. "
+        result_str += "Test Case PASSED" if result == expected else "Test Case FAILED"
+        results += result_str + "\\n\\n"
     else:
-        results = results + (f"Function {function_name} not found.")
+        results += f"Function {function_name} not found.\\n"
+
+# Uncomment this block when you want to check for submitFlag
+# if ${submitFlag}:
+hidden_str += "Hidden Test Cases:\\n\\n"
+test_cases = ${JSON.stringify(hiddenCases)}
+
+for i, test in enumerate(test_cases, start=1):
+    input_args = test['input']
+    expected = test['expected']
+
+    # Dynamically look up the function by its name and call it
+    if function_name in globals():
+        func = globals()[function_name]
+        result = func(*input_args)
+
+        # For hidden cases, format as "[name]: [PASS/FAIL]"
+        test_name = test.get('name', f"Hidden Test {i}")
+        hidden_str += f"{test_name}: {'PASSED' if result == expected else 'FAILED'}"
+        hidden_str += "\\n"
+    else:
+        hidden_str += f"Function {function_name} not found.\\n"
 
 # Get the output from the redirected stdout
 output = sys.stdout.getvalue()
 sys.stdout = old_stdout  # Restore standard output
-output + str(results)  # Include test results
+results += hidden_str
+output + str(results)
+
+
 `);
-    document.getElementById('output').textContent = output || "";
+userAnswers[currentQuestionIndex].results = output;    
+document.getElementById('output').textContent = output.split("Hidden Test Cases:")[0] || "";
+
+
   } catch (error) {
     document.getElementById('output').textContent = error;
+    // TODO: fill the userAnswers of current question with FAIL state for each regular and hidden test case.
+        // In case of an error, mark all test cases as "FAILED"
+    let failedOutput = '';
+    testCases.forEach((_, i) => {
+      failedOutput += `Test Case ${i + 1}: FAILED\n\n`;
+    });
+    failedOutput += "Hidden Test Cases:\n";
+    hiddenCases.forEach((test, i) => {
+      failedOutput += `${test.name || 'Hidden Test ' + (i + 1)}: FAILED\n`;
+    });
+    userAnswers[currentQuestionIndex].results = failedOutput;
   }
+  
+  answerCount = userAnswers.filter(answer => answer.code && answer.code.includes("return")).length;
+  document.getElementById('submit').style.display = answerCount === questions.length ? 'inline-block' : 'none';
+  submitFlag = 0;
+}
+
+
+
+
+// Run code function
+document.getElementById('run').addEventListener('click', async () => {
+    await run();
+
 });
 
 // Change the 'Run' button label
 document.getElementById('run').textContent = "Run";
+
+
+
+function displayResults() {
+  // Clear previous results
+  quizContainer.innerHTML = '';
+  resultContainer.innerHTML = '';
+
+  const elementsToHide = [
+    document.getElementById('header'),
+    document.getElementById('question'),
+    document.getElementById('output'),
+    document.getElementById('code'),
+    document.getElementById('run'),
+    document.getElementById('prev'),
+    document.getElementById('next'),
+    document.getElementById('submit')
+];
+
+// Hide each specified element
+elementsToHide.forEach(element => {
+    if (element) element.style.display = 'none';
+});
+const codeMirrorElement = document.querySelector('.CodeMirror');
+if (codeMirrorElement) codeMirrorElement.style.display = 'none';
+
+
+  // Scroll to the top of the page
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  let totalPasses = 0;
+  let tests = 0;
+  
+  // Create a string for the summary output
+  let summaryOutput = '<h2>Quiz Results:</h2>'; // Header for total results
+  
+  // Iterate over each question to format the results
+  questions.forEach((question, i) => {
+      const userResult = userAnswers[i].results;
+      const totalTests = (question.testCases.length + question.hiddenCases.length);
+      tests += totalTests;
+      const passes = (userResult.match(/PASSED/g) || []).length; // Count 'PASSED' occurrences
+      totalPasses += passes;
+      const totalScore = `${passes}/${totalTests}`;
+  
+      // Create the formatted output for each question
+      let output = `<h3>Question ${i + 1}: ${question.prompt}</h3>`;
+      output += `<pre>${userAnswers[i].code}</pre>`;
+      output += `<h4>Total Score: ${totalScore}</h4>`;
+      output += `<h4>Test Results:</h4>`;
+  
+      // Split userResult into visible and hidden parts
+      const visibleResults = userResult.split("Hidden Test Cases:")[0].trim(); // Results before "Hidden Test Cases:"
+      const hiddenResults = userResult.split("Hidden Test Cases:")[1]?.trim(); // Results after "Hidden Test Cases:"
+  
+      // Add the visible results
+      output += visibleResults.replace(/\\n/g, '<br>').replace(/\n/g, '<br>'); // Handle both escaped and actual newlines
+  
+      // Add the bold label for hidden test cases if it exists
+      if (hiddenResults) {
+          output += '<br><h4>Hidden Test Cases:</h4>'; // Bold label
+          output += hiddenResults.replace(/\\n/g, '<br>').replace(/\n/g, '<br>'); // Handle both escaped and actual newlines
+      }
+  
+      // Append the question output to the resultContainer
+      resultContainer.innerHTML += output + '<hr>'; // Add a separator between questions
+  });
+  
+  // After all questions are processed, add the summary output
+  summaryOutput += `<h4>Total Test Cases: ${tests}</h4>`;
+  summaryOutput += `<h4>Total Passed: ${totalPasses}</h4>`;
+  
+  // Insert the summary output at the top of the resultContainer
+  resultContainer.innerHTML = summaryOutput + resultContainer.innerHTML;
+  
+}
+
+
+
+
+
+
+
+

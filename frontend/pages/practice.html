@@ -1,86 +1,100 @@
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    
     <link rel="stylesheet" href="/frontend/styles/navigation.css">
     <link rel="stylesheet" href="/frontend/styles/home.css">
     <link rel="stylesheet" href="/frontend/styles/global.css">
-
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 
     <title>Practice - BoilerTechTests</title>
+
+    <style>
+        /* Updated class button styling */
+        .class-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 1.1em;
+            color: #fff;
+            background-color: #000;
+            border: none;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .class-button:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+
+    </style>
 </head>
 
 <body>
-
     <div id="navbar-load"></div>
 
-    <!-- Main Content -->
     <div class="container">
         <div id="spacer"></div>
 
         <div id="classes" class="sub-container">
             <h2>Practice Your Skills Here!</h2>
-            <p>Select a subject to practice from the list below!</p>
+            <p>Select a class to practice from the list below!</p>
 
-            <div class="fade-in">
-                <div class="project-panel">
-                    <div class="caption">
-                        <h3>Quiz 1</h3>
-                        <p>stuff we cover in the quiz</p>
-                        <a href="/quiz" class="button">Go To Quiz!</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="fade-in">
-                <div class="project-panel">
-                    <div class="caption">
-                        <h3>Quiz 2</h3>
-                        <p>stuff we cover in the quiz</p>
-                        <a href="/quiz" class="button">Go To Quiz!</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="fade-in">
-                <div class="project-panel">
-                    <div class="caption">
-                        <h3>Quiz 3</h3>
-                        <p>stuff we cover in the quiz</p>
-                        <a href="/quiz" class="button">Go To Quiz!</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="fade-in">
-                <div class="project-panel">
-                    <div class="caption">
-                        <h3>Quiz 4</h3>
-                        <p>stuff we cover in the quiz</p>
-                        <a href="/quiz" class="button">Go To Quiz!</a>
-                    </div>
-                </div>
-            </div>
-
-
+            <!-- Container for dynamically loaded class buttons -->
+            <div id="class-buttons-container"></div>
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
     <script src="/frontend/scripts/navigation.js"></script>
 
-</body>
+    <script>
+        // Data for classes and their corresponding pages
+        const classesData = [
+            { name: "CS240", id: "cs240.html" }
+        ];
 
+        // Function to create class buttons
+        function createClassButtons() {
+            const container = document.getElementById("class-buttons-container");
+
+            classesData.forEach(cls => {
+                const fade = document.createElement("div");
+                //fade.classList.add("fade-in");
+
+                const panel = document.createElement("div");
+                panel.classList.add("project-panel");
+
+                const text = document.createElement("div");
+                text.classList.add("caption");
+
+                const button = document.createElement("a");
+                button.classList.add("class-button");
+                button.href = `/frontend/pages/${cls.id}`;
+                button.textContent = cls.name;
+
+                text.appendChild(button);
+                panel.appendChild(text);
+                fade.appendChild(panel);
+
+                container.appendChild(fade);
+            });
+        }
+
+        // Load class buttons on page load
+        $(document).ready(createClassButtons);
+    </script>
+</body>
 </html>
