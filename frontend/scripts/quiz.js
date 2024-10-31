@@ -85,7 +85,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function gradeQuiz() {
         // Check if the quiz has already been taken
-        const quizTaken = sessionStorage.getItem('quizTaken');
+        const topicKey = 'if-statements'; // Change this based on the current topic
+        const quizTaken = sessionStorage.getItem(`${topicKey}Taken`);
     
         if (quizTaken) {
             // If the quiz was already taken, redirect to results page
@@ -103,11 +104,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Save results to session storage
         sessionStorage.setItem('quizResults', JSON.stringify(results));
         // Set the flag to indicate the quiz has been taken
-        sessionStorage.setItem('quizTaken', 'true');
+        sessionStorage.setItem(`${topicKey}Taken`, 'true'); // Change this based on the current topic
         
         // Navigate to the results page
         window.location.href = '/frontend/pages/results.html'; // Update the path if needed
     }
+    
     
     
 
