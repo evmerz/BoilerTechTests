@@ -31,7 +31,15 @@
 
     <!-- ======== Always use sub-containers for the actual content to maintain proper spacing ======== -->
     <div class="sub-container">
+      
+
       <h1>Your Account</h1>
+        <label class="switch">
+          <input type="checkbox" id="scrollbarToggle" checked>
+          <span class="slider"></span>
+        </label>
+        <span>Enable Custom Scrollbar</span>
+      
         <p><strong>Username:</strong> <span id="username"></span></p>
         <p><strong>Password:</strong> <span id="password" class="hidden-password"></span></p>
         <p><strong>User ID:</strong> <span id="userId"></span></p>
@@ -68,7 +76,6 @@
     crossorigin="anonymous"></script>
   <script src="/frontend/scripts/navigation.js"></script>
   <script src="/frontend/scripts/account.js"></script>
-
 </body>
 
 </html>

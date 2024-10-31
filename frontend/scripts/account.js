@@ -26,6 +26,21 @@ document.getElementById('logout-btn').addEventListener('click', function() {
   window.location.href = '/login'; // Redirect to login page
 });
 
+const scrollbarToggle = document.getElementById('scrollbarToggle');
+const bodyElement = document.body;
+
+function toggleCustomScrollbar() {
+    console.log('Scrollbar Toggle Checked:', scrollbarToggle.checked);
+    if (scrollbarToggle.checked) {
+      bodyElement.classList.add('custom-scrollbar');
+    } else {
+      bodyElement.classList.remove('custom-scrollbar');
+    }
+}
+
+scrollbarToggle.addEventListener('change', toggleCustomScrollbar);
+toggleCustomScrollbar(); // Initialize with custom scrollbar enabled
+
 // Change username and/or password
 document.getElementById('change-btn').addEventListener('click', function() {
   const userId = localStorage.getItem('userId'); // Get user ID
