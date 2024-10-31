@@ -33,7 +33,6 @@
                 <button id="back-button" class="button">Back to Practice</button>
                 <div id="quiz-contents"></div>
                 <p id="answer-message" style="color: red; display: none;">You need to answer all questions before you can submit.</p>
-                <button id="submit-quiz" disabled class="button">Submit</button>
             </div>
         </div>
     </div>
@@ -41,4 +40,9 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
     <script src="/frontend/scripts/navigation.js"></script>
 </body>
+<script>
+    document.getElementById('back-button').addEventListener('click', function() {
+        window.location.href = '/frontend/pages/cs240.html'; // Update the path if needed
+    });
+</script>
 </html>
