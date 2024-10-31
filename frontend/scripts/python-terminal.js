@@ -269,8 +269,9 @@ function displayResults() {
 elementsToHide.forEach(element => {
     if (element) element.style.display = 'none';
 });
-const codeTextarea = document.getElementById('code');
-if (codeTextarea) codeTextarea.blur();
+const codeMirrorElement = document.querySelector('.CodeMirror');
+if (codeMirrorElement) codeMirrorElement.style.display = 'none';
+
 
   // Scroll to the top of the page
   window.scrollTo({ top: 0, behavior: 'smooth' });
