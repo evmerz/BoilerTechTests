@@ -1,0 +1,131 @@
+{
+  "quizInfo": {
+    "quizID": "2eb7d3e0-18b0-4dca-91aa-0d3485daff61",
+    "quizName": "If-Statements Quiz",
+    "tags": [
+      "example"
+    ]
+  },
+  "questions": [
+    {
+      "question": "What will the following code output?\nif (5 > 10) { printf(\"A\"); } else { printf(\"B\"); }",
+      "questionID": "fcd3f73c-4688-46ad-ac21-0f59d72a3721",
+      "answerID": "A-002",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "answer": "A"
+        },
+        {
+          "optionID": "A-002",
+          "answer": "B"
+        },
+        {
+          "optionID": "A-003",
+          "answer": "Error"
+        },
+        {
+          "optionID": "A-004",
+          "answer": "Nothing"
+        }
+      ]
+    },
+    {
+      "question": "Which of the following is true about the if-else statement in C?",
+      "questionID": "686bb12d-35a4-43f5-816b-a996be3b1109",
+      "answerID": "A-003",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "answer": "Else is mandatory after if"
+        },
+        {
+          "optionID": "A-002",
+          "answer": "If can have multiple else blocks"
+        },
+        {
+          "optionID": "A-003",
+          "answer": "If evaluates a condition"
+        },
+        {
+          "optionID": "A-004",
+          "answer": "Else can evaluate a condition"
+        }
+      ]
+    },
+    {
+      "question": "What will the following code output?\nint x = 10; if (x == 10) printf(\"True\"); else printf(\"False\");",
+      "questionID": "f9a78fe4-08a6-4283-9e59-56552ea77c4a",
+      "answerID": "A-001",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "answer": "True"
+        },
+        {
+          "optionID": "A-002",
+          "answer": "False"
+        },
+        {
+          "optionID": "A-003",
+          "answer": "Error"
+        },
+        {
+          "optionID": "A-004",
+          "answer": "Nothing"
+        }
+      ]
+    },
+    {
+      "question": "Which of the following is a valid if-else syntax in C?",
+      "questionID": "18513a8f-98dd-4689-8365-9c25f3e4aa8c",
+      "answerID": "A-001",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "answer": "if (condition) statement1; else statement2;"
+        },
+        {
+          "optionID": "A-002",
+          "answer": "if condition statement1 else statement2"
+        },
+        {
+          "optionID": "A-003",
+          "answer": "if (condition) statement1 else statement2"
+        },
+        {
+          "optionID": "A-004",
+          "answer": "if (condition) statement1; statement2 else"
+        }
+      ]
+    },
+    {
+      "question": "What will the following code output?\nif (5 > 10) { printf(\"A\"); } else { printf(\"B\"); }",
+      "questionID": "8d5c0027-e69b-453d-8d9e-63f39e3189f3",
+      "answerID": "A-002",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "answer": "A"
+        },
+        {
+          "optionID": "A-002",
+          "answer": "B"
+        },
+        {
+          "optionID": "A-003",
+          "answer": "Error"
+        },
+        {
+          "optionID": "A-004",
+          "answer": "Nothing"
+        }
+      ]
+    }
+  ]
+}
