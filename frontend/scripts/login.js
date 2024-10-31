@@ -24,6 +24,7 @@ document.getElementById('login-form').addEventListener('submit', function (event
           localStorage.setItem('userId', data.userId);
           localStorage.setItem('username', username);
           localStorage.setItem('password', password);
+          localStorage.setItem('customScrollbar', isChecked);
           // Redirect to about.html after a short delay
           setTimeout(() => {
               window.location.href = '/account';
