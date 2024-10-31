@@ -83,6 +83,7 @@ const questions = [
 let currentQuestionIndex = 0;
 let answerCount = 0;
 let submitFlag = 0;
+let summaryOutput = "";
 const userAnswers = new Array(questions.length).fill(null).map(() => ({
   code: null,
   results: null
@@ -279,7 +280,7 @@ if (codeMirrorElement) codeMirrorElement.style.display = 'none';
   let tests = 0;
   
   // Create a string for the summary output
-  let summaryOutput = '<h2>Quiz Results:</h2>'; // Header for total results
+  summaryOutput = '<h2>Quiz Results:</h2>'; // Header for total results
   
   // Iterate over each question to format the results
   questions.forEach((question, i) => {
