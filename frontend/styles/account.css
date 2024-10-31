@@ -67,3 +67,7 @@ input:checked + .slider {
 input:checked + .slider:before {
   transform: translateX(15px);
 }
+
+#response-message {
+  color: #931b1b;
+}
