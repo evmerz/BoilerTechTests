@@ -114,3 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     renderQuestion();
 });
+
+document.getElementById('back-button').addEventListener('click', function() {
+    window.location.href = '/cs240.html'; // Update the path if needed
+});
