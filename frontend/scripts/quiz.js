@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       if (allQuestionsAnswered()) {
           submitButton.disabled = false;
-          submitButton.style.backgroundColor = 'blue';  // Turn the button blue when enabled
+          submitButton.style.backgroundColor = '#24409e';  // Turn the button blue when enabled
           submitButton.style.cursor = 'pointer';  // Change cursor to pointer to indicate it's clickable
           message.style.display = 'none';  // Hide the message when all questions are answered
       } else {
