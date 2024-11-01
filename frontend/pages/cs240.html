@@ -85,7 +85,7 @@
                     // Set the click event for the button
                     button.addEventListener('click', async function() {
                         const topicKey = topic.id; // Unique key for each topic
-                        const quizTaken = sessionStorage.getItem(`${topicKey}Taken`);
+                        const quizTaken = localStorage.getItem(`${topicKey}Taken`);
                         const quizID = await getQuizID(topic.id);
 
                         if (quizTaken) {

@@ -63,7 +63,7 @@
     <script>
         // This script should receive results data from the quiz page.
         // You can either pass it through localStorage, sessionStorage or URL parameters.
-        const results = JSON.parse(sessionStorage.getItem('quizResults')) || [];
+        const results = JSON.parse(localStorage.getItem('quizResults')) || [];
 
         function displayResults(results) {
             const resultsContainer = document.getElementById('results-contents');
@@ -96,8 +96,8 @@
 document.getElementById('retake-button').addEventListener('click', async function() {
     const topicKey = 'if-statements'; // Adjust based on topic
     const quizID = await getQuizID(topicKey);
-    sessionStorage.removeItem('quizResults');
-    sessionStorage.removeItem(`${topicKey}Taken`);
+    localStorage.removeItem('quizResults');
+    localStorage.removeItem(`${topicKey}Taken`);
     
     // Redirect back to the quiz page
     window.location.href = `./${topicKey}.html?quiz-id=${quizID}`;

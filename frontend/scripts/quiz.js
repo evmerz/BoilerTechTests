@@ -112,6 +112,7 @@ function gradeQuiz() {
         for (var i = 0; i < questionData.options.length; i++) {
             if (questionData.options[i].optionID == correctAnswer) {
                 correctAnswerText = questionData.options[i].text;
+                console.log("correctAnswerText", correctAnswerText);
             }
             if (questionData.options[i].optionID == userAnswer) {
                 userAnswerText = questionData.options[i].text;
@@ -138,8 +139,8 @@ function gradeQuiz() {
     });
 
      // Overwrite results in sessionStorage
-     sessionStorage.setItem('quizResults', JSON.stringify(results));
-     sessionStorage.setItem(`${quizID}Taken`, 'true');
+     localStorage.setItem('quizResults', JSON.stringify(results));
+     localStorage.setItem(`${quizID}Taken`, 'true');
  
      // Navigate to results page
      window.location.href = '/frontend/pages/results.html';
