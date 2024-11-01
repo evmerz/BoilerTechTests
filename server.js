@@ -285,49 +285,90 @@ app.post('/quiz', async (req, res) => {
     
 });
 
+// app.get('/get-submit', async (req, res) => {
+//     const userID = req.query.userID;
+//     const quizID = req.query.quizID;
+//     console.log("userid", userID);
+//     console.log("quizid", quizID);
+//     var submission = "";
+
+//     //help
+//     if (userID == null | quizID == null) {
+//         return res.status(400).json({ message: 'Missing required query parameter' });
+//     }
+
+//     var submitted = false;
+//     const checkQuery = 'SELECT * from quiz_submissions WHERE user_id = ? AND quiz_id = ?';
+//     const query = util.promisify(db.query).bind(db);
+//     await (async () => {
+//         try {
+//           const rows = await query(checkQuery, [userID, quizID]);
+//           if (rows.length > 0) {
+//             console.log("get submit yes");
+//             submission = JSON.stringify(rows[0].answers);
+//             submitted = true;
+//             // resolve();
+//           }
+//           console.log("get submit rows:", rows);
+//         } finally {
+//         //   db.end();
+//             console.log("end");
+//         }
+//       })()
+
+//       if (submitted){
+//         res.status(201).json({ message: 'Quiz submission retrieved!',
+//             submitted: submitted,
+//             submission: submission
+//         });
+//       } else {
+//         res.status(201).json({ message: 'No previous submission!',
+//             submitted: submitted,
+//             submission: submission
+//         });
+//       }
+
+
+//     // const query = "SELECT answers FROM quiz_submissions WHERE (user_id, quiz_id) = (?, ?)";
+//     // db.query(query, [userID, quizID], (err, result) => {
+//     //     if (err) {
+//     //         return res.status(500).json({ message: 'Error retrieving data from the database' });
+//     //     }
+//     //     console.log("server result:", result);
+//     //     res.status(201).json({
+//     //         message: 'Quiz submission retrieved!',
+//     //         result
+//     //     });
+//     // });
+// });
+
 app.get('/get-submit', async (req, res) => {
     const userID = req.query.userID;
     const quizID = req.query.quizID;
 
-    var submitted = false;
-    const checkQuery = 'SELECT * from quiz_submissions WHERE user_id = ? AND quiz_id = ?';
+    let submitted = false;
+    let submissionData = null;
+    const checkQuery = 'SELECT answers FROM quiz_submissions WHERE user_id = ? AND quiz_id = ?';
     const query = util.promisify(db.query).bind(db);
-    await (async () => {
-        try {
-          const rows = await query(checkQuery, [userID, quizID]);
-          if (rows.length > 0) {
-            console.log("yes");
+
+    try {
+        const rows = await query(checkQuery, [userID, quizID]);
+        if (rows.length > 0) {
             submitted = true;
-            resolve();
-          }
-          console.log("rows:", rows);
-        } finally {
-        //   db.end();
-            console.log("end");
+            submissionData = rows[0].answers; // Get the JSON data from the 'answers' column
         }
-      })()
 
-      if (submitted){
-        res.status(201).json({ message: 'Quiz submission retrieved!',
-            result: rows
+        res.status(200).json({
+            message: submitted ? 'Quiz submission retrieved!' : 'No previous submission!',
+            submitted: submitted,
+            submissionData: submitted ? JSON.stringify(submissionData) : null // Parse JSON if there is a submission
         });
-      } else {
-        res.status(201).json({ message: 'No previous submission!'});
-      }
-
-
-    // const query = "SELECT answers FROM quiz_submissions WHERE (user_id, quiz_id) = (?, ?)";
-    // db.query(query, [userID, quizID], (err, result) => {
-    //     if (err) {
-    //         return res.status(500).json({ message: 'Error retrieving data from the database' });
-    //     }
-    //     console.log("server result:", result);
-    //     res.status(201).json({
-    //         message: 'Quiz submission retrieved!',
-    //         result
-    //     });
-    // });
+    } catch (error) {
+        console.error("Error retrieving submission:", error);
+        res.status(500).json({ message: 'Database query error' });
+    }
 });
+
 
 
 
