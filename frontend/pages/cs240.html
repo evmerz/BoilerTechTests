@@ -99,13 +99,24 @@
                         const quizID = await getQuizID(topic.id);
                         const userID = localStorage.getItem('userId');
                         if (userID) {
-                            const submission = getSubmission(quizID, userID);
-                            console.log("submission", submission);
-                            if (submission) {
-                            window.location.href = '/frontend/pages/results.html'; // Update the path if needed
+                            // const submission = getSubmission(quizID, userID);
+                            // console.log("submission", submission);
+                            // if (submission) {
+                            // window.location.href = '/frontend/pages/results.html'; // Update the path if needed
+                            // } else {
+                            //     window.location.href = `./${topic.id}.html?quiz-id=${quizID}`;
+                            // }
+
+                            const { submitted, submissionData } = await getSubmission(userID, quizID);
+
+                            if (submitted) {
+                                // Store or use the submission data if needed
+                                sessionStorage.setItem('quizResults', JSON.stringify(submissionData));
+                                window.location.href = '/frontend/pages/results.html';
                             } else {
+                                // No previous submission, so proceed to the quiz page
                                 window.location.href = `./${topic.id}.html?quiz-id=${quizID}`;
-                            }
+    }
                         } else {
                             window.location.href = `./${topic.id}.html?quiz-id=${quizID}`;
                         }

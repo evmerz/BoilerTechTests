@@ -268,7 +268,27 @@ function saveResults() {
 //     // return submission;
 // }
 
-async function getSubmission(quizID, userID) {
+// async function getSubmission(quizID, userID) {
+//     const url = `https://www.boilertechtests.com/api/get-submit?userID=${encodeURIComponent(userID)}&quizID=${encodeURIComponent(quizID)}`;
+
+//     try {
+//         const response = await fetch(url, { method: 'GET' });
+//         if (!response.ok) {
+//             const errorData = await response.json();
+//             throw new Error(errorData.message);
+//         }
+
+//         const data = await response.json();
+//         console.log("Submission status:", data.submitted);
+//         console.log("submission from quiz.js:", data.submission);
+//         return data.submission; // Return the submitted status directly
+//     } catch (error) {
+//         console.error("Error retrieving submission:", error);
+//         return null;
+//     }
+// }
+
+async function getSubmission(userID, quizID) {
     const url = `https://www.boilertechtests.com/api/get-submit?userID=${encodeURIComponent(userID)}&quizID=${encodeURIComponent(quizID)}`;
 
     try {
@@ -280,13 +300,18 @@ async function getSubmission(quizID, userID) {
 
         const data = await response.json();
         console.log("Submission status:", data.submitted);
-        console.log("submission from quiz.js:", data.submission);
-        return data.submission; // Return the submitted status directly
+        console.log("Submission data:", data.submissionData);
+
+        return {
+            submitted: data.submitted,
+            submissionData: data.submissionData
+        };
     } catch (error) {
         console.error("Error retrieving submission:", error);
-        return null;
+        return { submitted: false, submissionData: null };
     }
 }
+
 
 
 async function getQuizID(topicID) {
