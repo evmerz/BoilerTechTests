@@ -63,8 +63,8 @@
     <script>
         // This script should receive results data from the quiz page.
         // You can either pass it through localStorage, sessionStorage or URL parameters.
-        // const results = JSON.parse(sessionStorage.getItem('quizResults')) || [];
-        const results = getSubmission();
+        const results = JSON.parse(sessionStorage.getItem('quizResults')) || [];
+        // const results = getSubmission();
 
 
         function displayResults(results) {
