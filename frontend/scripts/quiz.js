@@ -248,7 +248,7 @@ function getSubmission() {
                 throw new Error(errorData.message);
             });
         }
-        return response.json();
+        // return response.json();
     })
     .then(data => {
         document.getElementById('response-message').textContent = data.message;
