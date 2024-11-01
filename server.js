@@ -218,7 +218,9 @@ app.post('/quiz', async (req, res) => {
             console.log("result:", result);
             submitted = true;
             // resolve(result);
+            return res.status(201);
         }
+        return res.status(201);
     }));
     
     console.log("submitted:", submitted);
