@@ -84,16 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function gradeQuiz() {
-        // Check if the quiz has already been taken
-        const topicKey = 'if-statements'; // Change this based on the current topic
-        const quizTaken = sessionStorage.getItem(`${topicKey}Taken`);
-    
-        if (quizTaken) {
-            // If the quiz was already taken, redirect to results page
-            window.location.href = '/frontend/pages/results.html'; // Update the path if needed
-            return; // Stop the function execution
-        }
-    
+        const topicKey = 'if-statements'; // Adjust based on topic
         const results = quizData.map((questionData, index) => {
             const userAnswer = userAnswers[index];
             const correctAnswer = questionData.answer;
@@ -101,14 +92,14 @@ document.addEventListener('DOMContentLoaded', function() {
             return { question: questionData.question, userAnswer, correctAnswer, score, isCorrect: userAnswer === correctAnswer };
         });
         
-        // Save results to session storage
+        // Overwrite results in sessionStorage
         sessionStorage.setItem('quizResults', JSON.stringify(results));
-        // Set the flag to indicate the quiz has been taken
-        sessionStorage.setItem(`${topicKey}Taken`, 'true'); // Change this based on the current topic
-        
-        // Navigate to the results page
-        window.location.href = '/frontend/pages/results.html'; // Update the path if needed
+        sessionStorage.setItem(`${topicKey}Taken`, 'true');
+    
+        // Navigate to results page
+        window.location.href = '/frontend/pages/results.html';
     }
+    
     
     
     

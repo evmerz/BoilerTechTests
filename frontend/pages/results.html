@@ -92,10 +92,16 @@
             window.location.href = '/frontend/pages/cs240.html'; // Update the path if needed
         });
 
-        // Retake button functionality
-        document.getElementById('retake-button').addEventListener('click', function() {
-            window.location.href = '/frontend/pages/if-statements.html'; // Update the path to the quiz page
-        });
+// Retake button functionality
+document.getElementById('retake-button').addEventListener('click', function() {
+    const topicKey = 'if-statements'; // Adjust based on topic
+    sessionStorage.removeItem('quizResults');
+    sessionStorage.removeItem(`${topicKey}Taken`);
+    
+    // Redirect back to the quiz page
+    window.location.href = '/frontend/pages/if-statements.html';
+});
+
     </script>
 </body>
 </html>
