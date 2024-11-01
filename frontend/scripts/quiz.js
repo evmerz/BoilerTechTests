@@ -240,7 +240,7 @@ function getSubmission() {
     const url = `https://www.boilertechtests.com/api/get-submit?userID=${encodeURIComponent(userID)}&quizID=${encodeURIComponent(quizID)}`;
     // const submission = "";
 
-    fetch(url, {
+    return fetch(url, {
         method: 'GET',
     })
     .then(response => {
@@ -252,18 +252,20 @@ function getSubmission() {
             });
         }
         console.log("response good");
+        return response.json();
     })
     .then(data => {
         console.log("data:", data);
         document.getElementById('response-message').textContent = data.message;
         const submission = data.result;
         console.log("submit:", submission);
-        return submission;
+        // return submission;
     })
     .catch(error => {
         console.log("error");
         document.getElementById('response-message').textContent = 'Error: ' + error.message;
     });
+    // return submission;
 }
 
 async function getQuizID(topicID) {
