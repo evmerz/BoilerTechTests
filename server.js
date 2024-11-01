@@ -212,6 +212,7 @@ app.post('/quiz', async (req, res) => {
         try {
           const rows = await query(checkQuery, [user_id, quiz_id]);
           if (rows.length > 0) {
+            console.log("yes");
             submitted = true;
           }
           console.log("rows:", rows);
