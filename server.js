@@ -206,22 +206,36 @@ app.post('/quiz', async (req, res) => {
 
     const checkQuery = 'SELECT * from quiz_submissions WHERE (user_id, quiz_id) = (?, ?)';
     var submitted = false;
-    await new Promise((reject, resolve) => db.query(checkQuery, [user_id, quiz_id], (err, result) =>{
-        if (err) {
-            console.log("BAD");
-            return reject(err);
-            // return res.status(500).json({ message: 'Error retrieving data from the database' });
-        }
-        console.log("something happened");
-        if (result.length > 0) {
-            console.log("checkQuery worked");
-            console.log("result:", result);
-            submitted = true;
-            // resolve(result);
-            // return res.status(201);
-        }
-        resolve();
+
+    var meh = db.query(checkQuery, [user_id, quiz_id], (err, result)
+        .then(result => {
+            return result;
+        })
+        .catch(err => {
+            throw err;
     }));
+
+    if (meh.length > 0) {
+        console.log("yes?");
+        submitted = true;
+    }
+    
+    // db.query.then(checkQuery, [user_id, quiz_id], (err, result) =>{
+    //     if (err) {
+    //         console.log("BAD");
+    //         // return reject(err);
+    //         // return res.status(500).json({ message: 'Error retrieving data from the database' });
+    //     }
+    //     console.log("something happened");
+    //     if (result.length > 0) {
+    //         console.log("checkQuery worked");
+    //         console.log("result:", result);
+    //         submitted = true;
+    //         // resolve(result);
+    //         // return res.status(201);
+    //     }
+    //     // resolve(result);
+    // });
     
     console.log("submitted:", submitted);
     
