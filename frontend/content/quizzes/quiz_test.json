@@ -1,0 +1,22 @@
+{
+  "quizInfo": {
+    "quizName": "test quiz",
+    "tags": [
+      "example"
+    ]
+  },
+  "questions": [
+    {
+      "question": "template question",
+      "questionID": "f49ae04a-a651-4fad-929f-302b784cfdeb",
+      "answerID": "A-001",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "answer text"
+        }
+      ]
+    }
+  ]
+}

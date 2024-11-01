@@ -1,0 +1,12 @@
+{
+  "quizzes": [
+    {
+      "quizID": "a9a99ea0-c705-49c1-8471-ecf8b5da081a",
+      "filePath": "/frontend/content/quizzes/quiz_if-statements.json"
+    },
+    {
+      "quizID": "b84ca076-1eec-4a4c-8977-4cb913078f61",
+      "filePath": "/frontend/content/quizzes/quiz_test.json"
+    }
+  ]
+}

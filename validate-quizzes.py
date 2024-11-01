@@ -3,10 +3,22 @@ import uuid
 from pathlib import Path
 import os
 
-def generate_quiz_id(index):
-  print("Generating new ID for quiz \"" + quizzes[i]["quizInfo"]["quizName"] + "\"")
-  quizzes[index]["quizInfo"]["quizID"] = str(uuid.uuid4())
-  update_quiz_file(index)
+def generate_quiz_id(directoryIndex, jsonIndex):
+  print("Generating new ID for quiz \"" + quizzes[jsonIndex]["quizInfo"]["quizName"] + "\"")
+  quizID = ""
+  existingID = True
+
+  # Ensures there are no existing quizzes with this ID
+  while (existingID):
+    quizID = str(uuid.uuid4())
+    existingID = False
+    for i in range(0, len(quiz_directory["quizzes"])):
+      if (quiz_directory["quizzes"][i]["quizID"] == quizID):
+        existingID = True
+        break
+  
+  quiz_directory["quizzes"][directoryIndex]["quizID"] = quizID
+  update_quiz_directory()
 
 def generate_question_id(quiz_index, question_index):
   quizzes[quiz_index]["questions"][question_index]["questionID"] = str(uuid.uuid4())
@@ -15,8 +27,16 @@ def update_quiz_file(index):
   with open(quiz_file_names[index], 'w', encoding='utf-8') as f:
     json.dump(quizzes[index], f, ensure_ascii=False, indent=2)
 
+def update_quiz_directory():
+  with open('frontend/content/quiz_data.json', 'w', encoding='utf-8') as f:
+    json.dump(quiz_directory, f, ensure_ascii=False, indent=2)
+
 quizzes = []
 quiz_file_names = []
+
+# Load the directory listing of all JSON quiz files
+with open('frontend/content/quiz_data.json') as user_file:
+  quiz_directory = json.load(user_file)
 
 # Load all JSON files in quizzes directory
 index = 0
@@ -47,11 +67,17 @@ for p in Path('frontend/content/quizzes/').glob('*.json'):
     
 # Ensure there are no duplicate or blank quiz IDs
 for i in range(0, len(quizzes)):
-  if (quizzes[i]["quizInfo"]["quizID"] == ""):
-    generate_quiz_id(i)
-    
-  for k in range(i + 1, len(quizzes)):
-    
-    if ((quizzes[k]["quizInfo"]["quizID"] == '') or (quizzes[i]["quizInfo"]["quizID"] == quizzes[k]["quizInfo"]["quizID"])):
-      generate_quiz_id(k)
 
+  quiz_found = False
+  for k in range(0, len(quiz_directory["quizzes"])):
+    if ("/" + str(quiz_file_names[i]) == quiz_directory["quizzes"][k]["filePath"]):
+      quiz_found = True
+      if (quiz_directory["quizzes"][k]["quizID"] == ""):
+        generate_quiz_id(k, i)
+      break
+
+  if (quiz_found == False):
+    listing = {"quizID": "", "filePath": "/" + str(quiz_file_names[i])}
+    quiz_directory["quizzes"].append(listing)
+    print("aaaaaaaaaaaaaaaaaa")
+    generate_quiz_id(len(quiz_directory["quizzes"]) - 1, i)

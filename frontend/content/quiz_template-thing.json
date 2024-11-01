@@ -1,6 +1,5 @@
 {
   "quizInfo": {
-    "quizID": "",
     "quizName": "Named Quiz",
     "tags": [
       "example"
@@ -10,10 +9,10 @@
     {
       "question": "template question",
       "questionID": "",
-      "answerID": "A-YYY",
+      "answerID": "A-XXX",
       "points": 1,
       "options": [
-        {"optionID": "A-YYY", "answer": "A"}
+        {"optionID": "A-XXX", "text": "answer text"}
       ]
     }
   ]

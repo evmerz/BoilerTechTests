@@ -195,9 +195,18 @@ app.post('/quiz', async (req, res) => {
     console.log("body:", req.body);
     // console.log("string answers", JSON.stringify(answers));
 
+    var answerData = [];
+    for (let i = 0; i < answers.length; i++) {
+        answerData.append(
+            {
+                "questionID": answers[i].questionID,
+                "answerID": answers[i].userAnswer
+            }
+        );
+    } 
 
     const query = 'INSERT INTO quiz_submissions (user_id, quiz_id, answers) VALUES (?, ?, ?)';
-      db.query(query, [35, 2, JSON.stringify(answers)], (err, result) => {
+      db.query(query, [user_id, quiz_id, answerData], (err, result) => {
           if (err) {
                 console.log("error thing: ", err);
                 console.log("ah fuck");
