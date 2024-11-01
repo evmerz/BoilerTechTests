@@ -57,6 +57,27 @@
                 }
             ]
         };
+
+        async function getQuizID(topicID) {
+    try {
+        // Fetch the quiz_data.json file
+        const json_directory = await (
+            await fetch("/frontend/content/quiz_data.json")
+        ).json();
+
+        // Find the quiz whose file path includes the topicID
+        for (const quiz of json_directory.quizzes) {
+            if (quiz.filePath.includes(`quiz_${topicID}`)) {
+                return quiz.quizID;
+            }
+        }
+    } catch (error) {
+        console.error("Error loading quiz data:", error);
+    }
+
+    // Return null if no quiz is found with the given topicID
+    return null;
+}
     
         // Function to load CS240 exam sections and topics
         function loadCS240Content() {
@@ -86,13 +107,14 @@
                     button.addEventListener('click', function() {
                         const topicKey = topic.id; // Unique key for each topic
                         const quizTaken = sessionStorage.getItem(`${topicKey}Taken`);
-    
+                        const quizID = getQuizID(topic.id);
+
                         if (quizTaken) {
                             // Redirect to results page if quiz was already taken
                             window.location.href = '/frontend/pages/results.html'; // Update the path if needed
                         } else {
                             // First time clicking, redirect to quiz page
-                            window.location.href = `./${topic.id}.html`; // Link to topic-specific quiz page
+                            window.location.href = `./${topic.id}?quiz-id=${quizID}.html`; // Link to topic-specific quiz page
                         }
                     });
     

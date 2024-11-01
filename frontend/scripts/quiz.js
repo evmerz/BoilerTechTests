@@ -234,6 +234,7 @@ function saveResults() {
 window.addEventListener("load", async function () {
     const params = new URLSearchParams(location.search);
     quizID = params.get("quiz-id");
+    console.log(quizID);
 
     await loadQuizData(quizID);
 
