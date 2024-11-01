@@ -99,9 +99,9 @@
                         const quizID = await getQuizID(topic.id);
                         const userID = localStorage.getItem('userId');
                         // if (quizID != null && userID != null) {
-                            const submission = getSubmission(quizID, localStorage.getItem('userId'));
+                            const submission = getSubmission(quizID, userID));
                             console.log("submission", submission);
-                            if (submission == true) {
+                            if (submission) {
                             window.location.href = '/frontend/pages/results.html'; // Update the path if needed
                             } else {
                                 window.location.href = `./${topic.id}.html?quiz-id=${quizID}`;
