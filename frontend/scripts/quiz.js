@@ -141,7 +141,7 @@ function gradeQuiz() {
     });
 
      // Overwrite results in sessionStorage
-    //  sessionStorage.setItem('quizResults', JSON.stringify(results));
+     sessionStorage.setItem('quizResults', JSON.stringify(results));
      sessionStorage.setItem(`${quizID}Taken`, 'true');
  
      // Navigate to results page
@@ -240,7 +240,7 @@ function getSubmission() {
     const url = `https://www.boilertechtests.com/api/get-submit?userID=${encodeURIComponent(userID)}&quizID=${encodeURIComponent(quizID)}`;
     // const submission = "";
 
-    fetch(url, {
+    return fetch(url, {
         method: 'GET',
     })
     .then(response => {
