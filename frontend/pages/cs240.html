@@ -87,14 +87,20 @@
                         const topicKey = topic.id; // Unique key for each topic
                         const quizTaken = sessionStorage.getItem(`${topicKey}Taken`);
                         const quizID = await getQuizID(topic.id);
-
-                        if (quizTaken) {
-                            // Redirect to results page if quiz was already taken
+                        const submission = getSubmission();
+                        if (submission.length > 0) {
                             window.location.href = '/frontend/pages/results.html'; // Update the path if needed
                         } else {
-                            // First time clicking, redirect to quiz page
-                            window.location.href = `./${topic.id}.html?quiz-id=${quizID}`; // Link to topic-specific quiz page
+                            window.location.href = `./${topic.id}.html?quiz-id=${quizID}`;
                         }
+
+                        // if (quizTaken) {
+                        //     // Redirect to results page if quiz was already taken
+                        //     window.location.href = '/frontend/pages/results.html'; // Update the path if needed
+                        // } else {
+                        //     // First time clicking, redirect to quiz page
+                        //     window.location.href = `./${topic.id}.html?quiz-id=${quizID}`; // Link to topic-specific quiz page
+                        // }
                     });
     
                     text.appendChild(button);
