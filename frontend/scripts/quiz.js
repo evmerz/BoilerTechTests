@@ -254,7 +254,6 @@ function getSubmission() {
         document.getElementById('response-message').textContent = data.message;
         submission = data.result;
         return submission;
-        
     })
     .catch(error => {
         document.getElementById('response-message').textContent = 'Error: ' + error.message;

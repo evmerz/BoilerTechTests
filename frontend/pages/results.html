@@ -76,9 +76,9 @@
                     <div class="question">
                         <p>Question ${index + 1}: ${result.question}</p>
                         <p class="${result.isCorrect ? 'correct' : 'incorrect'}">
-                            Your answer: ${result.userAnswer || 'No answer selected'} ${correctnessLabel}
+                            Your answer: ${result.userAnswerText || 'No answer selected'} ${correctnessLabel}
                         </p>
-                        <p class="correct-answer">Correct answer: ${result.correctAnswer}</p>
+                        <p class="correct-answer">Correct answer: ${result.correctAnswerText}</p>
                         <p>Score: ${result.score}</p>
                     </div>
                 `;

@@ -204,7 +204,22 @@ app.post('/quiz', async (req, res) => {
     //     );
     // } 
 
-    const query = 'INSERT INTO quiz_submissions (user_id, quiz_id, answers) VALUES (?, ?, ?)';
+    const checkQuery = 'SELECT * from quiz_submissions WHERE (user_id, quiz_id) = (?, ?)';
+    db.query(checkQuery, [user_id, quiz_id], (err, result) =>{
+        if (err) {
+            return res.status(500).json({ message: 'Error retrieving data from the database' });
+        }
+        if (result.length > 0) {
+            return res.status(400).json({ message: 'You have already submitted this quiz' });
+            query = 'UPDATE quiz_submissions SET answers = ? WHERE (user_id, quiz_id) = (?, ?)'
+        } else {
+            query = 'INSERT INTO quiz_submissions (user_id, quiz_id, answers) VALUES (?, ?, ?)';
+        }
+
+    })
+
+
+     query = 'INSERT INTO quiz_submissions (user_id, quiz_id, answers) VALUES (?, ?, ?)';
       db.query(query, [user_id, quiz_id, JSON.stringify(answers)], (err, result) => {
           if (err) {
                 console.log("error thing: ", err);
