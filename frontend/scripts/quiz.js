@@ -238,9 +238,9 @@ function getSubmission() {
     console.log("inside");
     const userID = localStorage.getItem('userId');
     const url = `https://www.boilertechtests.com/api/get-submit?userID=${encodeURIComponent(userID)}&quizID=${encodeURIComponent(quizID)}`;
-    const submission = "";
+    // const submission = "";
 
-    fetch(url, {
+    return fetch(url, {
         method: 'GET',
     })
     .then(response => {
@@ -257,7 +257,7 @@ function getSubmission() {
     .then(data => {
         console.log("data:", data);
         document.getElementById('response-message').textContent = data.message;
-        submission = data.result;
+        const submission = data.result;
         console.log("submit:", submission);
         // return submission;
     })
@@ -265,7 +265,7 @@ function getSubmission() {
         console.log("error");
         document.getElementById('response-message').textContent = 'Error: ' + error.message;
     });
-    return submission;
+    // return submission;
 }
 
 async function getQuizID(topicID) {
