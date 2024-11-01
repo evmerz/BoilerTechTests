@@ -107,7 +107,7 @@ function gradeQuiz() {
         const userAnswer = userAnswers[index];
         const correctAnswer = questionData.answerID;
         const score = userAnswer === correctAnswer ? questionData.points : 0;
-        var correctAnswerText = "";gi
+        var correctAnswerText = "";
         var userAnswerText = "";
         for (var i = 0; i < questionData.options.length; i++) {
             if (questionData.options[i].optionID == correctAnswer) {
@@ -252,6 +252,7 @@ async function getQuizID(topicID) {
     // Return null if no quiz is found with the given topicID
     return null;
 }
+
 
 window.addEventListener("load", async function () {
     const params = new URLSearchParams(location.search);
