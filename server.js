@@ -290,7 +290,7 @@ app.get('/get-submit', async (req, res) => {
     const quizID = req.query.quizID;
 
     var submitted = false;
-    const checkQuery = 'SELECT * from quiz_submissions WHERE (user_id, quiz_id) = (?, ?)';
+    const checkQuery = 'SELECT * from quiz_submissions WHERE user_id = ? AND quiz_id = ?';
     const query = util.promisify(db.query).bind(db);
     await (async () => {
         try {
@@ -308,7 +308,7 @@ app.get('/get-submit', async (req, res) => {
 
       if (submitted){
         res.status(201).json({ message: 'Quiz submission retrieved!',
-            result
+            result: rows
         });
       } else {
         res.status(201).json({ message: 'No previous submission!'});
