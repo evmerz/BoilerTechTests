@@ -290,6 +290,7 @@ app.get('/get-submit', async (req, res) => {
     const quizID = req.query.quizID;
     console.log("userid", userID);
     console.log("quizid", quizID);
+    const submission = "";
 
     //help
     if (userID == null | quizID == null) {
@@ -304,6 +305,7 @@ app.get('/get-submit', async (req, res) => {
           const rows = await query(checkQuery, [userID, quizID]);
           if (rows.length > 0) {
             console.log("get submit yes");
+            submission = JSON.stringify(rows.answers);
             submitted = true;
             // resolve();
           }
@@ -316,11 +318,12 @@ app.get('/get-submit', async (req, res) => {
 
       if (submitted){
         res.status(201).json({ message: 'Quiz submission retrieved!',
-            submitted: submitted
+            submitted: submitted,
+            submission: submission
         });
       } else {
         res.status(201).json({ message: 'No previous submission!',
-            submitted: submitted
+            submitted: submitted,
         });
       }
 

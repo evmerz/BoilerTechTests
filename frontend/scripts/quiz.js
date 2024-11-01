@@ -280,10 +280,10 @@ async function getSubmission(quizID, userID) {
 
         const data = await response.json();
         console.log("Submission status:", data.submitted);
-        return data.submitted; // Return the submitted status directly
+        return data.submission; // Return the submitted status directly
     } catch (error) {
         console.error("Error retrieving submission:", error);
-        return false;
+        return "";
     }
 }
 
