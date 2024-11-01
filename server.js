@@ -215,7 +215,7 @@ app.post('/quiz', async (req, res) => {
             console.log("result:", result);
             submitted = true;
         }
-    })
+    });
     
     if (!submitted) {
         const query = 'INSERT INTO quiz_submissions (user_id, quiz_id, answers) VALUES (?, ?, ?)';
