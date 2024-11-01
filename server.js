@@ -215,7 +215,7 @@ app.post('/quiz', async (req, res) => {
             console.log("checkQuery worked");
             console.log("result:", result);
             submitted = true;
-            resolve(results);
+            resolve(result);
         }
     }));
     
