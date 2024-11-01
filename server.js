@@ -315,10 +315,12 @@ app.get('/get-submit', async (req, res) => {
 
       if (submitted){
         res.status(201).json({ message: 'Quiz submission retrieved!',
-            // result: rows
+            submitted: submitted
         });
       } else {
-        res.status(201).json({ message: 'No previous submission!'});
+        res.status(201).json({ message: 'No previous submission!',
+            submitted: submitted
+        });
       }
 
 

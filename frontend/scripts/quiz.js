@@ -234,39 +234,59 @@ function saveResults() {
     // saveQuiz(1, localStorage.getItem("userId"), meh);
 }
 
-function getSubmission(quizID, userID) {
-    console.log("inside");
-    const url = `https://www.boilertechtests.com/api/get-submit?userID=${encodeURIComponent(userID)}&quizID=${encodeURIComponent(quizID)}`;
-    // const submission = "";
+// function getSubmission(quizID, userID) {
+//     console.log("inside");
+//     const url = `https://www.boilertechtests.com/api/get-submit?userID=${encodeURIComponent(userID)}&quizID=${encodeURIComponent(quizID)}`;
+//     // const submission = "";
 
-    fetch(url, {
-        method: 'GET',
-    })
-    .then(response => {
-        console.log("response");
+//     const response =fetch(url, {
+//         method: 'GET',
+//     })
+//     .then(response => {
+//         console.log("response");
+//         if (!response.ok) {
+//             console.log("response bad");
+//             return response.json().then(errorData => {
+//                 throw new Error(errorData.message);
+//             });
+//         }
+//         console.log("response good");
+//         return response.json().data;
+//     })
+//     .then(data => {
+//         console.log("data:", data);
+//         // document.getElementById('response-message').textContent = data.message;
+//         // const submission = data.result;
+//         // console.log("submit:", submission);
+//         // return submission;
+//     })
+//     .catch(error => {
+//         console.log("error");
+//         throw error;
+//         // document.getElementById('response-message').textContent = 'Error: ' + error.message;
+//     });
+//     // return submission;
+// }
+
+async function getSubmission(userID, quizID) {
+    const url = `https://www.boilertechtests.com/api/get-submit?userID=${encodeURIComponent(userID)}&quizID=${encodeURIComponent(quizID)}`;
+
+    try {
+        const response = await fetch(url, { method: 'GET' });
         if (!response.ok) {
-            console.log("response bad");
-            return response.json().then(errorData => {
-                throw new Error(errorData.message);
-            });
+            const errorData = await response.json();
+            throw new Error(errorData.message);
         }
-        console.log("response good");
-        return response.json().result;
-    })
-    .then(data => {
-        console.log("data:", data);
-        // document.getElementById('response-message').textContent = data.message;
-        // const submission = data.result;
-        // console.log("submit:", submission);
-        // return submission;
-    })
-    .catch(error => {
-        console.log("error");
-        throw error;
-        // document.getElementById('response-message').textContent = 'Error: ' + error.message;
-    });
-    // return submission;
+
+        const data = await response.json();
+        console.log("Submission status:", data.submitted);
+        return data.submitted; // Return the submitted status directly
+    } catch (error) {
+        console.error("Error retrieving submission:", error);
+        return false;
+    }
 }
+
 
 async function getQuizID(topicID) {
     try {
