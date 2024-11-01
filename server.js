@@ -298,7 +298,7 @@ app.get('/get-submit', async (req, res) => {
     }
 
     var submitted = false;
-    const checkQuery = 'SELECT * from quiz_submissions WHERE user_id = ? AND quiz_id = ?';
+    const checkQuery = 'SELECT * from quiz_submissions WHERE user_id = ? AND quiz_id = ? LIMIT 1';
     const query = util.promisify(db.query).bind(db);
     await (async () => {
         try {
