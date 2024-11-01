@@ -141,7 +141,7 @@ function gradeQuiz() {
     });
 
      // Overwrite results in sessionStorage
-     sessionStorage.setItem('quizResults', JSON.stringify(results));
+    //  sessionStorage.setItem('quizResults', JSON.stringify(results));
      sessionStorage.setItem(`${quizID}Taken`, 'true');
  
      // Navigate to results page
