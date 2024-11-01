@@ -225,6 +225,7 @@ app.get('/get-submit', (req, res) => {
         if (err) {
             return res.status(500).json({ message: 'Error retrieving data from the database' });
         }
+        console.log("server result:", result);
         res.status(201).json({
             message: 'Quiz submission retrieved!',
             result
