@@ -256,14 +256,15 @@ function getSubmission() {
     })
     .then(data => {
         console.log("data:", data);
-        document.getElementById('response-message').textContent = data.message;
+        // document.getElementById('response-message').textContent = data.message;
         const submission = data.result;
         console.log("submit:", submission);
         return submission;
     })
     .catch(error => {
         console.log("error");
-        document.getElementById('response-message').textContent = 'Error: ' + error.message;
+        throw error;
+        // document.getElementById('response-message').textContent = 'Error: ' + error.message;
     });
     // return submission;
 }
