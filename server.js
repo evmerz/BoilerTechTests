@@ -1,5 +1,5 @@
 const express = require('express');
-const mysql = require('mysql2/promise');
+const mysql = require('mysql2');
 const cors = require('cors');
 
 const app = express();
@@ -206,16 +206,18 @@ app.post('/quiz', async (req, res) => {
 
     const checkQuery = 'SELECT * from quiz_submissions WHERE (user_id, quiz_id) = (?, ?)';
     var submitted = false;
-    await db.query(checkQuery, [user_id, quiz_id], (err, result) =>{
+    await new Promise((resolve, reject) => db.query(checkQuery, [user_id, quiz_id], (err, result) =>{
         if (err) {
+            reject(err);
             return res.status(500).json({ message: 'Error retrieving data from the database' });
         }
         if (result.length > 0) {
             console.log("checkQuery worked");
             console.log("result:", result);
             submitted = true;
+            resolve(results);
         }
-    });
+    }));
     
     console.log("submitted:", submitted);
     
