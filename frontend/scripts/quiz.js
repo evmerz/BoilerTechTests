@@ -130,8 +130,15 @@ function gradeQuiz() {
         };
     });
 
+    const answerData = quizData.questions.map((questionData, index) => {
+        return {
+            questionID: questionData.questionID,
+            answerID: userAnswers[index]
+        };
+    });
+
     displayResults(results);
-    saveQuiz(localStorage.getItem("userId"), quizID, results);
+    saveQuiz(localStorage.getItem("userId"), quizID, answerData);
 }
 
 function displayResults(results) {
