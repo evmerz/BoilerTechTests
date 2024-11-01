@@ -206,11 +206,11 @@ app.post('/quiz', async (req, res) => {
 
     const checkQuery = 'SELECT * from quiz_submissions WHERE (user_id, quiz_id) = (?, ?)';
     var submitted = false;
-    await new Promise((resolve, reject) => db.query(checkQuery, [user_id, quiz_id], (err, result) =>{
+    await new Promise((reject, resolve) => db.query(checkQuery, [user_id, quiz_id], (err, result) =>{
         if (err) {
             console.log("BAD");
-            // reject(err);
-            return res.status(500).json({ message: 'Error retrieving data from the database' });
+            return reject(err);
+            // return res.status(500).json({ message: 'Error retrieving data from the database' });
         }
         console.log("something happened");
         if (result.length > 0) {
@@ -218,9 +218,9 @@ app.post('/quiz', async (req, res) => {
             console.log("result:", result);
             submitted = true;
             // resolve(result);
-            return res.status(201);
+            // return res.status(201);
         }
-        return res.status(201);
+        resolve();
     }));
     
     console.log("submitted:", submitted);
