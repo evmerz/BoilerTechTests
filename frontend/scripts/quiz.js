@@ -140,12 +140,15 @@ async function gradeQuiz() {
         };
     });
 
-     // Overwrite results in sessionStorage
-     sessionStorage.setItem('quizResults', JSON.stringify(results));
-     sessionStorage.setItem(`${quizID}Taken`, 'true');
- 
-     // Navigate to results page
-     window.location.href = '/frontend/pages/results.html';
+    // Overwrite results in sessionStorage
+    sessionStorage.setItem('quizResults', JSON.stringify(results));
+    sessionStorage.setItem(`${quizID}Taken`, 'true');
+
+    displayResults(results);
+    saveQuiz(localStorage.getItem("userId"), quizID, answerData);
+
+    // Navigate to results page
+    // window.location.href = '/frontend/pages/results.html';
     // displayResults(results);
     const { submitted, submissionData } = await getSubmission(userID, quizID);
     console.log("gradequiz submissionData:", submissionData);
@@ -155,8 +158,7 @@ async function gradeQuiz() {
     // } else {
     //     displayResults(results);
     // }
-    displayResults(results);
-    saveQuiz(localStorage.getItem("userId"), quizID, answerData);
+    
 }
 
 function displayResults(results) {
