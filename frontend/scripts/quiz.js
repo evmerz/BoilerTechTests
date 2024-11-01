@@ -243,20 +243,24 @@ function getSubmission() {
         method: 'GET',
     })
     .then(response => {
+        console.log("response");
         if (!response.ok) {
+            console.log("response bad");
             return response.json().then(errorData => {
                 throw new Error(errorData.message);
             });
         }
-        // return response.json();
+        console.log("response good");
     })
     .then(data => {
+        console.log("data:", data);
         document.getElementById('response-message').textContent = data.message;
         const submission = data.result;
         console.log("submit:", submission);
         return submission;
     })
     .catch(error => {
+        console.log("error");
         document.getElementById('response-message').textContent = 'Error: ' + error.message;
     });
 }
