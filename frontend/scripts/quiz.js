@@ -107,14 +107,14 @@ function gradeQuiz() {
         const userAnswer = userAnswers[index];
         const correctAnswer = questionData.answerID;
         const score = userAnswer === correctAnswer ? questionData.points : 0;
-        var correctAnswerText = "";
+        var correctAnswerText = "";gi
         var userAnswerText = "";
         for (var i = 0; i < questionData.options.length; i++) {
             if (questionData.options[i].optionID == correctAnswer) {
-                correctAnswerText = questionData.options[i].text;
+                correctAnswerText = questionData.options[i].optionID.text;
             }
             if (questionData.options[i].optionID == userAnswer) {
-                userAnswerText = questionData.options[i].text;
+                userAnswerText = questionData.options[i].optionID.text;
             }
         }
 
