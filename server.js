@@ -1,6 +1,7 @@
 const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
+const util = require('util');
 
 const app = express();
 const port = 5000;
@@ -205,20 +206,35 @@ app.post('/quiz', async (req, res) => {
     // } 
 
     const checkQuery = 'SELECT * from quiz_submissions WHERE (user_id, quiz_id) = (?, ?)';
+    const query = util.promisify(db.query).bind(db);
+    (async () => {
+        try {
+          const rows = await query(checkQuery, [user_id, quiz_id]);
+          console.log("rows:", rows);
+        } finally {
+        //   db.end();
+            console.log("end");
+        }
+      })()
+
+
+
+
+    // const checkQuery = 'SELECT * from quiz_submissions WHERE (user_id, quiz_id) = (?, ?)';
     var submitted = false;
 
-    var meh = db.promise.query(checkQuery, [user_id, quiz_id])
-        .then(result => {
-            return result;
-        })
-        .catch(err => {
-            throw err;
-    });
+    // var meh = db.promise.query(checkQuery, [user_id, quiz_id])
+    //     .then(result => {
+    //         return result;
+    //     })
+    //     .catch(err => {
+    //         throw err;
+    // });
 
-    if (meh.length > 0) {
-        console.log("yes?");
-        submitted = true;
-    }
+    // if (meh.length > 0) {
+    //     console.log("yes?");
+    //     submitted = true;
+    // }
     
     // db.query(checkQuery, [user_id, quiz_id], (err, result) =>{
     //     if (err) {
