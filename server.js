@@ -291,6 +291,10 @@ app.get('/get-submit', async (req, res) => {
     console.log("userid", userID);
     console.log("quizid", quizID);
 
+    if (userID == null | quizID == null) {
+        return res.status(400).json({ message: 'Missing required query parameter' });
+    }
+
     var submitted = false;
     const checkQuery = 'SELECT * from quiz_submissions WHERE user_id = ? AND quiz_id = ?';
     const query = util.promisify(db.query).bind(db);
@@ -300,7 +304,7 @@ app.get('/get-submit', async (req, res) => {
           if (rows.length > 0) {
             console.log("get submit yes");
             submitted = true;
-            resolve();
+            // resolve();
           }
           console.log("get submit rows:", rows);
         } finally {
