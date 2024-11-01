@@ -183,15 +183,15 @@ document.getElementById('submit').addEventListener('click', async () => {
   submitFlag = 1;
   //for (let i = 0; i < questions.length; i++) {
   //currentQuestionIndex = i; 
-  await run(editor.getValue().trim(), true);
+  await run();
   //}
   displayResults();
   localStorage.setItem('quizSubmitted', 'true');
 
 });
 
-async function run(codeInput, display) {
-  const code = codeInput;
+async function run() {
+  const code = editor.getValue().trim();
   userAnswers[currentQuestionIndex].code = code;
   const currentQuestion = quizData.questions[currentQuestionIndex];
   const testCases = currentQuestion.testCases;
@@ -268,15 +268,11 @@ async function run(codeInput, display) {
     userAnswers[currentQuestionIndex].results = output;
     // console.log("output: " + output);
 
-    if (display) {
-      document.getElementById('output').textContent = output.split("Hidden Test Cases:")[0] || "";
-    }
+    document.getElementById('output').textContent = output.split("Hidden Test Cases:")[0] || "";
 
 
   } catch (error) {
-    if (display) {
-      document.getElementById('output').textContent = error;
-    }
+    document.getElementById('output').textContent = error;
     // TODO: fill the userAnswers of current question with FAIL state for each regular and hidden test case.
     // In case of an error, mark all test cases as "FAILED"
     let failedOutput = '';
@@ -298,7 +294,7 @@ async function run(codeInput, display) {
 
 // Run code function
 document.getElementById('run').addEventListener('click', async () => {
-  await run(editor.getValue().trim(), true);
+  await run();
 });
 
 // // Change the 'Run' button label
@@ -390,7 +386,7 @@ function displayResults() {
     localStorage.setItem('savedResults', resultContainer.innerHTML);
 
     // Save the result to the database
-    // saveQuiz();
+    saveQuiz(resultContainer.innerHTML);
   }
 
   const retakeButton = document.createElement('button');
@@ -409,11 +405,12 @@ function displayResults() {
   resultContainer.appendChild(retakeButton);
 }
 
-async function saveQuiz() {
+async function saveQuiz(results) {
     const answerData = quizData.questions.map((questionData, index) => {
         return {
             questionID: questionData.questionID,
-            answer: userAnswers[index].code
+            // answer: userAnswers[index].code
+            answer: results
         };
     });
 
