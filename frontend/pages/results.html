@@ -93,9 +93,9 @@
         });
 
 // Retake button functionality
-document.getElementById('retake-button').addEventListener('click', function() {
+document.getElementById('retake-button').addEventListener('click', async function() {
     const topicKey = 'if-statements'; // Adjust based on topic
-    const quizID = getQuizID(topicKey);
+    const quizID = await getQuizID(topicKey);
     sessionStorage.removeItem('quizResults');
     sessionStorage.removeItem(`${topicKey}Taken`);
     
