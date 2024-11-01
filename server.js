@@ -289,17 +289,43 @@ app.get('/get-submit', (req, res) => {
     const userID = req.query.userID;
     const quizID = req.query.quizID;
 
-    const query = "SELECT answers FROM quiz_submissions WHERE (user_id, quiz_id) = (?, ?)";
-    db.query(query, [userID, quizID], (err, result) => {
-        if (err) {
-            return res.status(500).json({ message: 'Error retrieving data from the database' });
+    var submitted = false;
+    const checkQuery = 'SELECT * from quiz_submissions WHERE (user_id, quiz_id) = (?, ?)';
+    const query = util.promisify(db.query).bind(db);
+    await (async () => {
+        try {
+          const rows = await query(checkQuery, [user_id, quiz_id]);
+          if (rows.length > 0) {
+            console.log("yes");
+            submitted = true;
+          }
+          console.log("rows:", rows);
+        } finally {
+        //   db.end();
+            console.log("end");
         }
-        console.log("server result:", result);
-        res.status(201).json({
-            message: 'Quiz submission retrieved!',
+      })()
+
+      if (submitted){
+        res.status(201).json({ message: 'Quiz submission retrieved!',
             result
         });
-    });
+      } else {
+        res.status(201).json({ message: 'No previous submission!'});
+      }
+
+
+    // const query = "SELECT answers FROM quiz_submissions WHERE (user_id, quiz_id) = (?, ?)";
+    // db.query(query, [userID, quizID], (err, result) => {
+    //     if (err) {
+    //         return res.status(500).json({ message: 'Error retrieving data from the database' });
+    //     }
+    //     console.log("server result:", result);
+    //     res.status(201).json({
+    //         message: 'Quiz submission retrieved!',
+    //         result
+    //     });
+    // });
 });
 
 
