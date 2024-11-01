@@ -29,36 +29,35 @@
   <div class="container">
     <!-- Include spacers wherever you deem necessary -->
     <!-- <div id="spacer"></div> -->
-
+    <div class="row">
     <!-- ======== Always use sub-containers for the actual content to maintain proper spacing ======== -->
     <div class="sub-container">
-      
-
-      <h1>Your Account</h1>
-        <label class="switch">
-          <input type="checkbox" id="scrollbarToggle" checked>
-          <span class="slider"></span>
-        </label>
-        <span>Use Custom Scrollbar</span>
-      
+      <div class="column">
+      <br/>
+      <h1>Account</h1>
+      <h3>Account Information</h3>
         <p><strong>Username:</strong> <span id="username"></span></p>
         <p><strong>Password:</strong> <span id="password" class="hidden-password"></span></p>
         <p><strong>User ID:</strong> <span id="userId"></span></p>
         <button id="logout-btn" class="button">Log Out</button>
 
     </div>
+  </div>
 
+    <div id="spacer"></div>
+    <div id="spacer"></div>
     <div id="spacer"></div>
 
     <div class="sub-container">
-      <h2>Change Username/Password</h2>
+      <div class="column">
+      <h3>Change Username/Password</h3>
         <div id="change-credentials">
 
-          <span>Current Password:</span> <br>
+          <span><strong>Current Password:</strong></span> <br>
           <input type="password" id="currentPassword" placeholder="Current Password" required />
           <br><br>
           
-          <span>New Username/Password:</span>
+          <span><strong>  New Username/Password:</strong></span>
           <div id="new-credential-container">
             <input type="text" id="newUsername" placeholder="New Username" />
             <span></span>
@@ -69,8 +68,21 @@
         <button id="change-btn" class="button">Change</button>
         <p id="response-message"></p>
       </div>
-      <div id="spacer"></div>
+    </div>
+
+    </div>
+      <div class="sub-container">
+        <h3>Settings</h3>
+        <p><strong>Scroll Bar</strong></p>
+        <label class="switch">
+          <input type="checkbox" id="scrollbarToggle" checked>
+          <span class="slider"></span>
+        </label>
+        <span>Disable/Enable Custom Scrollbar</span>
+      </div>
   </div>
+
+  
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"

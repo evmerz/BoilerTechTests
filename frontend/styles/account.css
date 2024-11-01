@@ -71,3 +71,15 @@ input:checked + .slider:before {
 #response-message {
   color: #931b1b;
 }
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
