@@ -285,7 +285,7 @@ app.post('/quiz', async (req, res) => {
     
 });
 
-app.get('/get-submit', (req, res) => {
+app.get('/get-submit', async (req, res) => {
     const userID = req.query.userID;
     const quizID = req.query.quizID;
 
