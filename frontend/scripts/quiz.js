@@ -268,7 +268,7 @@ function saveResults() {
 //     // return submission;
 // }
 
-async function getSubmission(userID, quizID) {
+async function getSubmission(quizID, userID) {
     const url = `https://www.boilertechtests.com/api/get-submit?userID=${encodeURIComponent(userID)}&quizID=${encodeURIComponent(quizID)}`;
 
     try {
