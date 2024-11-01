@@ -283,7 +283,7 @@ async function getSubmission(quizID, userID) {
         return data.submission; // Return the submitted status directly
     } catch (error) {
         console.error("Error retrieving submission:", error);
-        return "";
+        return null;
     }
 }
 

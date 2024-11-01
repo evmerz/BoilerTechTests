@@ -290,7 +290,7 @@ app.get('/get-submit', async (req, res) => {
     const quizID = req.query.quizID;
     console.log("userid", userID);
     console.log("quizid", quizID);
-    const submission = "";
+    var submission = "";
 
     //help
     if (userID == null | quizID == null) {
@@ -324,6 +324,7 @@ app.get('/get-submit', async (req, res) => {
       } else {
         res.status(201).json({ message: 'No previous submission!',
             submitted: submitted,
+            submission: submission
         });
       }
 
