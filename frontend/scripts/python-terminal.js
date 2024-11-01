@@ -406,6 +406,7 @@ function displayResults() {
 }
 
 async function saveQuiz(results) {
+  console.log("saving!!!!");
     const answerData = quizData.questions.map((questionData, index) => {
         return {
             questionID: questionData.questionID,
@@ -413,6 +414,8 @@ async function saveQuiz(results) {
             answer: results
         };
     });
+
+    console.log("answer: ", answerData);
 
     const url = `https://boilertechtests.com/api/quiz`;
     try {
