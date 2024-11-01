@@ -315,7 +315,7 @@ app.get('/get-submit', async (req, res) => {
 
       if (submitted){
         res.status(201).json({ message: 'Quiz submission retrieved!',
-            result: rows
+            // result: rows
         });
       } else {
         res.status(201).json({ message: 'No previous submission!'});
