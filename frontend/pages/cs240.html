@@ -58,11 +58,11 @@
             ]
         };
 
-        // function promiseState(p) {
-        // const t = {};
-        // return Promise.race([p, t])
-        //     .then(v => (v === t)? "pending" : "fulfilled", () => "rejected");
-        // }
+        function promiseState(p) {
+        const t = {};
+        return Promise.race([p, t])
+            .then(v => (v === t)? "pending" : "fulfilled", () => "rejected");
+        }
 
         // var a = Promise.resolve();
         // var b = Promise.reject();
@@ -99,7 +99,7 @@
                         const quizID = await getQuizID(topic.id);
                         const submission = getSubmission();
                         console.log("submission", submission);
-                        if (promiseStatus(submission)  == 'resolved') {
+                        if (promiseState(submission) == "fulfilled") {
                             window.location.href = '/frontend/pages/results.html'; // Update the path if needed
                         } else {
                             window.location.href = `./${topic.id}.html?quiz-id=${quizID}`;
