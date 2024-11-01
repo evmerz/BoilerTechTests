@@ -149,6 +149,7 @@ async function gradeQuiz() {
 
     // displayResults(results);
     const { submitted, submissionData } = await getSubmission(userID, quizID);
+    console.log("gradequiz submissionData:", submissionData);
     if (submitted) {
         displayResults(submissionData)
     } else {
