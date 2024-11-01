@@ -104,10 +104,10 @@
                     button.textContent = topic.name;
     
                     // Set the click event for the button
-                    button.addEventListener('click', function() {
+                    button.addEventListener('click', async function() {
                         const topicKey = topic.id; // Unique key for each topic
                         const quizTaken = sessionStorage.getItem(`${topicKey}Taken`);
-                        const quizID = getQuizID(topic.id);
+                        const quizID = await getQuizID(topic.id);
 
                         if (quizTaken) {
                             // Redirect to results page if quiz was already taken
