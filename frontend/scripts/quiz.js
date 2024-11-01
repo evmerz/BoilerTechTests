@@ -153,7 +153,7 @@ async function gradeQuiz() {
     const userID = localStorage.getItem('userId');
     const { submitted, submissionData } = await getSubmission(userID, quizID);
     console.log("gradequiz submissionData:", submissionData);
-
+    window.location.href = '/frontend/pages/results.html';
     // if (submitted) {
     //     displayResults(submissionData)
     // } else {
