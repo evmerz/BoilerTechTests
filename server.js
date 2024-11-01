@@ -211,6 +211,8 @@ app.post('/quiz', async (req, res) => {
             return res.status(500).json({ message: 'Error retrieving data from the database' });
         }
         if (result.length > 0) {
+            console.log("checkQuery worked");
+            console.log("result:", result);
             submitted = true;
         }
     })
