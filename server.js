@@ -288,6 +288,8 @@ app.post('/quiz', async (req, res) => {
 app.get('/get-submit', async (req, res) => {
     const userID = req.query.userID;
     const quizID = req.query.quizID;
+    console.log("userid", userID);
+    console.log("quizid", quizID);
 
     var submitted = false;
     const checkQuery = 'SELECT * from quiz_submissions WHERE user_id = ? AND quiz_id = ?';
@@ -296,11 +298,11 @@ app.get('/get-submit', async (req, res) => {
         try {
           const rows = await query(checkQuery, [userID, quizID]);
           if (rows.length > 0) {
-            console.log("yes");
+            console.log("get submit yes");
             submitted = true;
             resolve();
           }
-          console.log("rows:", rows);
+          console.log("get submit rows:", rows);
         } finally {
         //   db.end();
             console.log("end");
