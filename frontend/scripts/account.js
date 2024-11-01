@@ -24,6 +24,7 @@ document.getElementById('logout-btn').addEventListener('click', function() {
   localStorage.removeItem('password');
   localStorage.removeItem('userId');
   localStorage.removeItem('customScrollbar');
+  sessionStorage.removeItem('quizResults');
   window.location.href = '/login'; // Redirect to login page
 });
 
