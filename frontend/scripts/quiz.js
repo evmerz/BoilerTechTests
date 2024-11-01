@@ -257,7 +257,7 @@ function getSubmission() {
     .then(data => {
         console.log("data:", data);
         // document.getElementById('response-message').textContent = data.message;
-        const submission = data.result;
+        // const submission = data.result;
         console.log("submit:", submission);
         // return submission;
     })
