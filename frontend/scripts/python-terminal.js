@@ -335,6 +335,8 @@ function displayResults() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
   if (savedResults) {
+
+    // TODO: load user answers from database and run the code against the test cases
     // Load previously saved results if they exist
     resultContainer.innerHTML = savedResults;
   } else {
