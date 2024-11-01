@@ -51,51 +51,64 @@
                 {
                     title: "EXAM 2",
                     topics: [
-                        { name: "Topic 3 - arrays (CODING)", id: "arrays" },
+                        { name: "Topic 3 - arrays (CODING)", id: "terminal" },
                         { name: "Topic 4 - linked lists", id: "linked-lists" }
                     ]
                 }
             ]
         };
-
+    
         // Function to load CS240 exam sections and topics
         function loadCS240Content() {
             const examContainer = document.getElementById("exam-sections");
-
+    
             cs240Data.exams.forEach(exam => {
                 // Create exam title
                 const examTitle = document.createElement("h3");
                 examTitle.textContent = exam.title;
                 examContainer.appendChild(examTitle);
-
+    
                 // Create topic buttons for each exam
                 exam.topics.forEach(topic => {
                     const fade = document.createElement("div");
-                    //fade.classList.add("fade-in");
-
+    
                     const panel = document.createElement("div");
                     panel.classList.add("project-panel");
-
+    
                     const text = document.createElement("div");
                     text.classList.add("caption");
-
+    
                     const button = document.createElement("a");
                     button.classList.add("button");
-                    button.href = `./${topic.id}.html`; // Link to topic-specific page
                     button.textContent = topic.name;
-
+    
+                    // Set the click event for the button
+                    button.addEventListener('click', function() {
+                        const topicKey = topic.id; // Unique key for each topic
+                        const quizTaken = sessionStorage.getItem(`${topicKey}Taken`);
+    
+                        if (quizTaken) {
+                            // Redirect to results page if quiz was already taken
+                            window.location.href = '/frontend/pages/results.html'; // Update the path if needed
+                        } else {
+                            // First time clicking, redirect to quiz page
+                            window.location.href = `./${topic.id}.html`; // Link to topic-specific quiz page
+                        }
+                    });
+    
                     text.appendChild(button);
                     panel.appendChild(text);
                     fade.appendChild(panel);
-
+    
                     examContainer.appendChild(fade);
                 });
             });
         }
-
+    
         // Load CS240 content on page load
         $(document).ready(loadCS240Content);
     </script>
+    
 </body>
 
 </html>

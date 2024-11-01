@@ -84,33 +84,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function gradeQuiz() {
+        const topicKey = 'if-statements'; // Adjust based on topic
         const results = quizData.map((questionData, index) => {
             const userAnswer = userAnswers[index];
             const correctAnswer = questionData.answer;
             const score = userAnswer === correctAnswer ? '1/1' : '0/1';
             return { question: questionData.question, userAnswer, correctAnswer, score, isCorrect: userAnswer === correctAnswer };
         });
-        displayResults(results);
-    }
-
-    function displayResults(results) {
-        const totalScore = results.reduce((acc, result) => acc + (result.isCorrect ? 1 : 0), 0);
-        quizContainer.innerHTML = `<h2>Quiz Results</h2><p>Total Score: ${totalScore}/${results.length}</p>`;
         
-        results.forEach((result, index) => {
-            const correctnessLabel = result.isCorrect ? "(Correct)" : "(Incorrect)";
-            quizContainer.innerHTML += `
-                <div class="question">
-                    <p>Question ${index + 1}: ${result.question}</p>
-                    <p class="${result.isCorrect ? 'correct' : 'incorrect'}">
-                        Your answer: ${result.userAnswer || 'No answer selected'} ${correctnessLabel}
-                    </p>
-                    <p class="correct-answer">Correct answer: ${result.correctAnswer}</p>
-                    <p>Score: ${result.score}</p>
-                </div>
-            `;
-        });
+        // Overwrite results in sessionStorage
+        sessionStorage.setItem('quizResults', JSON.stringify(results));
+        sessionStorage.setItem(`${topicKey}Taken`, 'true');
+    
+        // Navigate to results page
+        window.location.href = '/frontend/pages/results.html';
     }
+    
+    
+    
+    
 
     renderQuestion();
 });
