@@ -252,7 +252,7 @@ function getSubmission() {
             });
         }
         console.log("response good");
-        return response.json();
+        return response.json().result;
     })
     .then(data => {
         console.log("data:", data);
