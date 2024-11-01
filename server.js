@@ -209,14 +209,14 @@ app.post('/quiz', async (req, res) => {
     await new Promise((resolve, reject) => db.query(checkQuery, [user_id, quiz_id], (err, result) =>{
         if (err) {
             console.log("BAD");
-            reject(err);
+            // reject(err);
             return res.status(500).json({ message: 'Error retrieving data from the database' });
         }
         if (result.length > 0) {
             console.log("checkQuery worked");
             console.log("result:", result);
             submitted = true;
-            resolve(result);
+            // resolve(result);
         }
     }));
     
