@@ -205,7 +205,7 @@ app.post('/quiz', async (req, res) => {
     // } 
 
     const checkQuery = 'SELECT * from quiz_submissions WHERE (user_id, quiz_id) = (?, ?)';
-    const submitted = false;
+    var submitted = false;
     db.query(checkQuery, [user_id, quiz_id], (err, result) =>{
         if (err) {
             return res.status(500).json({ message: 'Error retrieving data from the database' });
