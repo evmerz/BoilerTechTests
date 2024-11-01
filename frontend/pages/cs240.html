@@ -98,7 +98,7 @@
                         const quizTaken = sessionStorage.getItem(`${topicKey}Taken`);
                         const quizID = await getQuizID(topic.id);
                         const userID = localStorage.getItem('userId');
-                        if (quizID != null & userID != null) {
+                        if (quizID != null && userID != null) {
                             const submission = getSubmission(quizID, localStorage.getItem('userId'));
                             console.log("submission", submission);
                             if (promiseState(submission) == "fulfilled") {
