@@ -137,6 +137,13 @@ function gradeQuiz() {
         };
     });
 
+     // Overwrite results in sessionStorage
+     sessionStorage.setItem('quizResults', JSON.stringify(results));
+     sessionStorage.setItem(`${quizID}Taken`, 'true');
+ 
+     // Navigate to results page
+     window.location.href = '/frontend/pages/results.html';
+
     displayResults(results);
     saveQuiz(localStorage.getItem("userId"), quizID, answerData);
 }
