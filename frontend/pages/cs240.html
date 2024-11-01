@@ -111,7 +111,7 @@
 
                             if (submitted) {
                                 // Store or use the submission data if needed
-                                sessionStorage.setItem('quizResults', JSON.stringify(submissionData));
+                                sessionStorage.setItem('quizResults', (submissionData));
                                 window.location.href = '/frontend/pages/results.html';
                             } else {
                                 // No previous submission, so proceed to the quiz page
