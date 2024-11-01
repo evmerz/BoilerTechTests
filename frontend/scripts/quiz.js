@@ -145,18 +145,18 @@ async function gradeQuiz() {
      sessionStorage.setItem(`${quizID}Taken`, 'true');
  
      // Navigate to results page
-
+     window.location.href = '/frontend/pages/results.html';
     // displayResults(results);
     const { submitted, submissionData } = await getSubmission(userID, quizID);
     console.log("gradequiz submissionData:", submissionData);
 
-    if (submitted) {
-        displayResults(submissionData)
-    } else {
-        displayResults(results);
-    }
+    // if (submitted) {
+    //     displayResults(submissionData)
+    // } else {
+    //     displayResults(results);
+    // }
+    displayResults(results);
     saveQuiz(localStorage.getItem("userId"), quizID, answerData);
-    window.location.href = '/frontend/pages/results.html';
 }
 
 function displayResults(results) {
