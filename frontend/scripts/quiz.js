@@ -102,7 +102,7 @@ function showSubmitButton() {
  *
  * @returns JSON object storing quiz submission data
  */
-function gradeQuiz() {
+async function gradeQuiz() {
     // const results = getSubmission();
     // console.log("results:", results);
     const results = quizData.questions.map((questionData, index) => {
@@ -147,7 +147,13 @@ function gradeQuiz() {
      // Navigate to results page
      window.location.href = '/frontend/pages/results.html';
 
-    displayResults(results);
+    // displayResults(results);
+    const { submitted, submissionData } = await getSubmission(userID, quizID);
+    if (submitted) {
+        displayResults(submissionData)
+    } else {
+        displayResults(results);
+    }
     saveQuiz(localStorage.getItem("userId"), quizID, answerData);
 }
 
