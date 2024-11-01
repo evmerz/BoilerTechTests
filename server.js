@@ -294,7 +294,7 @@ app.get('/get-submit', async (req, res) => {
     const query = util.promisify(db.query).bind(db);
     await (async () => {
         try {
-          const rows = await query(checkQuery, [user_id, quiz_id]);
+          const rows = await query(checkQuery, [userID, quizID]);
           if (rows.length > 0) {
             console.log("yes");
             submitted = true;
