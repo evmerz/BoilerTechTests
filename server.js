@@ -298,6 +298,7 @@ app.get('/get-submit', async (req, res) => {
           if (rows.length > 0) {
             console.log("yes");
             submitted = true;
+            resolve();
           }
           console.log("rows:", rows);
         } finally {

@@ -58,6 +58,16 @@
             ]
         };
 
+        // function promiseState(p) {
+        // const t = {};
+        // return Promise.race([p, t])
+        //     .then(v => (v === t)? "pending" : "fulfilled", () => "rejected");
+        // }
+
+        // var a = Promise.resolve();
+        // var b = Promise.reject();
+        // var c = new Promise(() => {});
+
         // Function to load CS240 exam sections and topics
         function loadCS240Content() {
             const examContainer = document.getElementById("exam-sections");
@@ -89,10 +99,10 @@
                         const quizID = await getQuizID(topic.id);
                         const submission = getSubmission();
                         console.log("submission", submission);
-                        if (submission.length > 0) {
-                            // window.location.href = '/frontend/pages/results.html'; // Update the path if needed
+                        if (promiseStatus(submission)  == 'resolved') {
+                            window.location.href = '/frontend/pages/results.html'; // Update the path if needed
                         } else {
-                            // window.location.href = `./${topic.id}.html?quiz-id=${quizID}`;
+                            window.location.href = `./${topic.id}.html?quiz-id=${quizID}`;
                         }
 
                         // if (quizTaken) {
