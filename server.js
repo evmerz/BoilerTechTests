@@ -361,7 +361,7 @@ app.get('/get-submit', async (req, res) => {
         res.status(200).json({
             message: submitted ? 'Quiz submission retrieved!' : 'No previous submission!',
             submitted: submitted,
-            submissionData: submitted ? JSON.parse(submissionData) : null // Parse JSON if there is a submission
+            submissionData: submitted ? JSON.strinify(submissionData) : null // Parse JSON if there is a submission
         });
     } catch (error) {
         console.error("Error retrieving submission:", error);
