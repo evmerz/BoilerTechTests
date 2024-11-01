@@ -340,6 +340,20 @@ function displayResults() {
     // Save the result content to localStorage
     localStorage.setItem('savedResults', resultContainer.innerHTML);
   }
+  const retakeButton = document.createElement('button');
+  retakeButton.textContent = 'Retake Quiz';
+  retakeButton.style.marginTop = '20px'; // Optional styling
+  retakeButton.addEventListener('click', () => {
+    // Remove flags for quiz submission and saved results
+    localStorage.removeItem('quizSubmitted');
+    localStorage.removeItem('savedResults');
+
+    // Refresh the page to reset the quiz view
+    window.location.reload();
+  });
+
+  // Append the button to the result container
+  resultContainer.appendChild(retakeButton);
 }
 
 
