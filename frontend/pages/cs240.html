@@ -97,7 +97,7 @@
                         const topicKey = topic.id; // Unique key for each topic
                         const quizTaken = sessionStorage.getItem(`${topicKey}Taken`);
                         const quizID = await getQuizID(topic.id);
-                        const submission = getSubmission();
+                        const submission = getSubmission(quizID, localStorage.getItem('userId'));
                         console.log("submission", submission);
                         if (promiseState(submission) == "fulfilled") {
                             window.location.href = '/frontend/pages/results.html'; // Update the path if needed
