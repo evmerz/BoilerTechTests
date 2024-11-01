@@ -205,11 +205,15 @@ app.post('/quiz', async (req, res) => {
     //     );
     // } 
 
+    var submitted = false;
     const checkQuery = 'SELECT * from quiz_submissions WHERE (user_id, quiz_id) = (?, ?)';
     const query = util.promisify(db.query).bind(db);
     (async () => {
         try {
           const rows = await query(checkQuery, [user_id, quiz_id]);
+          if (rows.length > 0) {
+            submitted = true;
+          }
           console.log("rows:", rows);
         } finally {
         //   db.end();
@@ -221,7 +225,7 @@ app.post('/quiz', async (req, res) => {
 
 
     // const checkQuery = 'SELECT * from quiz_submissions WHERE (user_id, quiz_id) = (?, ?)';
-    var submitted = false;
+    // var submitted = false;
 
     // var meh = db.promise.query(checkQuery, [user_id, quiz_id])
     //     .then(result => {
