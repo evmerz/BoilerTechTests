@@ -226,6 +226,7 @@ app.post('/quiz', async (req, res) => {
                     console.log("result: ", result);
                     return res.status(500).json({ message: 'Error inserting data into the database' });
             }
+            console.log("inserted");
             res.status(201).json({ message: 'Quiz submission saved!'});
         });
     } else {
@@ -234,6 +235,7 @@ app.post('/quiz', async (req, res) => {
             if (err) {
                 return res.status(500).json({ message: 'Error inserting data into the database' });
             }
+            console.log("updated");
             res.status(201).json({ message: 'Quiz submission saved!'});
         });
     }
