@@ -216,6 +216,22 @@ app.post('/quiz', async (req, res) => {
       });
 });
 
+app.get('/get-submit', (req, res) => {
+    const userID = req.query.userID;
+    const quizID = req.query.quizID;
+
+    const query = "SELECT answers FROM quiz_submissions WHERE (user_id, quiz_id) = (?, ?)";
+    db.query(query, [userID, quizID], (err, result) => {
+        if (err) {
+            return res.status(500).json({ message: 'Error retrieving data from the database' });
+        }
+        res.status(201).json({
+            message: 'Quiz submission retrieved!',
+            result
+        });
+    });
+});
+
 
 
   app.listen(port, '0.0.0.0', () => {
