@@ -136,10 +136,10 @@ window.addEventListener('DOMContentLoaded', async function() {
   // Initially display the first question
   displayQuestion();
 
-  // const quizSubmitted = localStorage.getItem('quizSubmitted');
-  // if (quizSubmitted === 'true') {
-  //   displayResults();
-  // }
+  const quizSubmitted = localStorage.getItem('quizSubmitted');
+  if (quizSubmitted === 'true') {
+    displayResults();
+  }
 });
 
 
