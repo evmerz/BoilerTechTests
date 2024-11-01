@@ -2,6 +2,7 @@ var currentQuestionIndex = 0;
 var quizData;
 var userAnswers;
 var quizContainer;
+var quizID;
 
 /**
  * Loads the appropriate quiz based on the quiz id from the URL query string parameter.
@@ -130,7 +131,7 @@ function gradeQuiz() {
     });
 
     displayResults(results);
-    saveQuiz(localStorage.getItem("userId"), params.get("quiz-id"), results);
+    saveQuiz(localStorage.getItem("userId"), quizID, results);
 }
 
 function displayResults(results) {
@@ -218,8 +219,9 @@ function saveResults() {
 
 window.addEventListener("load", async function () {
     const params = new URLSearchParams(location.search);
+    quizID = params.get("quiz-id");
 
-    await loadQuizData(params.get("quiz-id"));
+    await loadQuizData(quizID);
 
     userAnswers = new Array(quizData.questions.length).fill(null);
     quizContainer = document.getElementById("quiz-contents");
