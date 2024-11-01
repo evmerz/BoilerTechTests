@@ -240,7 +240,7 @@ function getSubmission() {
     const url = `https://www.boilertechtests.com/api/get-submit?userID=${encodeURIComponent(userID)}&quizID=${encodeURIComponent(quizID)}`;
     // const submission = "";
 
-    return fetch(url, {
+    fetch(url, {
         method: 'GET',
     })
     .then(response => {
@@ -259,7 +259,7 @@ function getSubmission() {
         document.getElementById('response-message').textContent = data.message;
         const submission = data.result;
         console.log("submit:", submission);
-        // return submission;
+        return submission;
     })
     .catch(error => {
         console.log("error");
