@@ -111,10 +111,10 @@ function gradeQuiz() {
         var userAnswerText = "";
         for (var i = 0; i < questionData.options.length; i++) {
             if (questionData.options[i].optionID == correctAnswer) {
-                correctAnswerText = questionData.options[i].optionID.text;
+                correctAnswerText = questionData.options[i].text;
             }
             if (questionData.options[i].optionID == userAnswer) {
-                userAnswerText = questionData.options[i].optionID.text;
+                userAnswerText = questionData.options[i].text;
             }
         }
 
