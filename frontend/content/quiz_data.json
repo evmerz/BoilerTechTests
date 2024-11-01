@@ -7,6 +7,10 @@
     {
       "quizID": "b84ca076-1eec-4a4c-8977-4cb913078f61",
       "filePath": "/frontend/content/quizzes/quiz_test.json"
+    },
+    {
+      "quizID": "212f9faf-6560-4abe-850f-05e590ce755f",
+      "filePath": "/frontend/content/quizzes/quiz_python1.json"
     }
   ]
 }

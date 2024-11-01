@@ -5,7 +5,7 @@ var quizContainer;
 var quizID;
 
 /**
- * Loads the appropriate quiz based on the quiz id from the URL query string parameter.
+ * Loads the appropriate multiple choice quiz based on the quiz id from the URL query string parameter.
  *
  * @param {string} quiz_id
  */
@@ -28,6 +28,8 @@ async function loadQuizData(quiz_id) {
             quizData = await (
                 await fetch(json_directory.quizzes[i].filePath)
             ).json();
+
+            if (quizData.quizInfo.type != "mc") continue;
 
             console.log(JSON.stringify(quizData));
 
@@ -282,7 +284,7 @@ async function getQuizID(topicID) {
 }
 
 
-window.addEventListener("load", async function () {
+window.addEventListener("DOMContentLoaded", async function () {
     const params = new URLSearchParams(location.search);
     quizID = params.get("quiz-id");
     console.log(quizID);

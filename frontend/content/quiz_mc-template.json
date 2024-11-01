@@ -3,7 +3,8 @@
     "quizName": "Named Quiz",
     "tags": [
       "example"
-    ]
+    ],
+    "type": "mc"
   },
   "questions": [
     {
