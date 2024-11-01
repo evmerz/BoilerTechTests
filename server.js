@@ -208,7 +208,7 @@ app.post('/quiz', async (req, res) => {
     var submitted = false;
     const checkQuery = 'SELECT * from quiz_submissions WHERE (user_id, quiz_id) = (?, ?)';
     const query = util.promisify(db.query).bind(db);
-    (async () => {
+    await (async () => {
         try {
           const rows = await query(checkQuery, [user_id, quiz_id]);
           if (rows.length > 0) {
