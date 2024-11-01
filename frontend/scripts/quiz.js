@@ -172,19 +172,19 @@ function displayResults(results) {
 /**
  * Saves the quiz results in the MySQL database.
  *
- * @param {string} quizId
- * @param {int} userId
+ * @param {int} userID
+ * @param {string} quizID
  * @param {json} quizResponses
  */
-async function saveQuiz(quizId, userId, quizResponses) {
+async function saveQuiz(userID, quizID, quizResponses) {
     console.log("yes");
     console.log("quiz:", quizResponses);
     console.log(
         "quiz string:",
         JSON.stringify({
-            quizId,
-            userId,
-            quizResponses,
+            user_id: userID,
+            quiz_id: quizID,
+            answers: quizResponses,
         })
     );
 
@@ -196,8 +196,8 @@ async function saveQuiz(quizId, userId, quizResponses) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                quiz_id: quizId,
-                user_id: userId,
+                user_id: userID,
+                quiz_id: quizID,
                 answers: quizResponses,
             }),
         });
