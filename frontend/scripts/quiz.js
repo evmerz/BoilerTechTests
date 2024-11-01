@@ -231,6 +231,28 @@ function saveResults() {
     // saveQuiz(1, localStorage.getItem("userId"), meh);
 }
 
+
+async function getQuizID(topicID) {
+    try {
+        // Fetch the quiz_data.json file
+        const json_directory = await (
+            await fetch("/frontend/content/quiz_data.json")
+        ).json();
+
+        // Find the quiz whose file path includes the topicID
+        for (const quiz of json_directory.quizzes) {
+            if (quiz.filePath.includes(`quiz_${topicID}`)) {
+                return quiz.quizID;
+            }
+        }
+    } catch (error) {
+        console.error("Error loading quiz data:", error);
+    }
+
+    // Return null if no quiz is found with the given topicID
+    return null;
+}
+
 window.addEventListener("load", async function () {
     const params = new URLSearchParams(location.search);
     quizID = params.get("quiz-id");
