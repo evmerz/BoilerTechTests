@@ -237,6 +237,7 @@ function saveResults() {
 function getSubmission() {
     console.log("inside");
     const userID = localStorage.getItem('userId');
+    const quizID = quiz_id;
     const url = `https://www.boilertechtests.com/api/get-submit?userID=${encodeURIComponent(userID)}&quizID=${encodeURIComponent(quizID)}`;
     // const submission = "";
 
