@@ -207,7 +207,7 @@ app.post('/quiz', async (req, res) => {
     const checkQuery = 'SELECT * from quiz_submissions WHERE (user_id, quiz_id) = (?, ?)';
     var submitted = false;
 
-    var meh = db.query(checkQuery, [user_id, quiz_id])
+    var meh = db.promise.query(checkQuery, [user_id, quiz_id])
         .then(result => {
             return result;
         })
@@ -220,7 +220,7 @@ app.post('/quiz', async (req, res) => {
         submitted = true;
     }
     
-    // db.query.then(checkQuery, [user_id, quiz_id], (err, result) =>{
+    // db.query(checkQuery, [user_id, quiz_id], (err, result) =>{
     //     if (err) {
     //         console.log("BAD");
     //         // return reject(err);
