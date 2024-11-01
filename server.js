@@ -195,15 +195,23 @@ app.post('/quiz', async (req, res) => {
     console.log("body:", req.body);
     // console.log("string answers", JSON.stringify(answers));
 
-    var answerData = [];
-    for (let i = 0; i < answers.length; i++) {
-        answerData.append(
-            {
-                "questionID": answers[i].questionID,
-                "answerID": answers[i].userAnswer
-            }
-        );
-    } 
+    const answerData = answers.map((data, index) => {
+        return {
+            questionID: data.questionID,
+            answerID: data.userAnswer
+        };
+    });
+
+    console.log("answerData: " + answerData);
+
+    // for (let i = 0; i < answers.length; i++) {
+    //     answerData.append(
+    //         {
+    //             "questionID": answers[i].questionID,
+    //             "answerID": answers[i].userAnswer
+    //         }
+    //     );
+    // } 
 
     const query = 'INSERT INTO quiz_submissions (user_id, quiz_id, answers) VALUES (?, ?, ?)';
       db.query(query, [user_id, quiz_id, answerData], (err, result) => {
