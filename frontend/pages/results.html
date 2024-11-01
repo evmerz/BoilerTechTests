@@ -95,12 +95,12 @@
 // Retake button functionality
 document.getElementById('retake-button').addEventListener('click', function() {
     const topicKey = 'if-statements'; // Adjust based on topic
-    getQuizID(topicKey);
+    const quizID = getQuizID(topicKey);
     sessionStorage.removeItem('quizResults');
     sessionStorage.removeItem(`${topicKey}Taken`);
     
     // Redirect back to the quiz page
-    window.location.href = './${topicKey}.html?quiz-id=${quizID}';
+    window.location.href = `./${topicKey}.html?quiz-id=${quizID}`;
 });
 
     </script>
