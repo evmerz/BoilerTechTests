@@ -105,52 +105,52 @@ function showSubmitButton() {
  * @returns JSON object storing quiz submission data
  */
 function gradeQuiz() {
-    const results = getSubmission();
-    console.log("results:", results);
-    // const results = quizData.questions.map((questionData, index) => {
-    //     const userAnswer = userAnswers[index];
-    //     const correctAnswer = questionData.answerID;
-    //     const score = userAnswer === correctAnswer ? questionData.points : 0;
-    //     var correctAnswerText = "";
-    //     var userAnswerText = "";
-    //     for (var i = 0; i < questionData.options.length; i++) {
-    //         if (questionData.options[i].optionID == correctAnswer) {
-    //             correctAnswerText = questionData.options[i].text;
-    //             console.log("correctAnswerText", correctAnswerText);
-    //         }
-    //         if (questionData.options[i].optionID == userAnswer) {
-    //             userAnswerText = questionData.options[i].text;
-    //         }
-    //     }
+    // const results = getSubmission();
+    // console.log("results:", results);
+    const results = quizData.questions.map((questionData, index) => {
+        const userAnswer = userAnswers[index];
+        const correctAnswer = questionData.answerID;
+        const score = userAnswer === correctAnswer ? questionData.points : 0;
+        var correctAnswerText = "";
+        var userAnswerText = "";
+        for (var i = 0; i < questionData.options.length; i++) {
+            if (questionData.options[i].optionID == correctAnswer) {
+                correctAnswerText = questionData.options[i].text;
+                console.log("correctAnswerText", correctAnswerText);
+            }
+            if (questionData.options[i].optionID == userAnswer) {
+                userAnswerText = questionData.options[i].text;
+            }
+        }
 
-    //     return {
-    //         question: questionData.question,
-    //         questionID: questionData.questionID,
-    //         userAnswer,
-    //         userAnswerText,
-    //         correctAnswer,
-    //         correctAnswerText,
-    //         score,
-    //         isCorrect: userAnswer === correctAnswer,
-    //     };
-    // });
+        return {
+            question: questionData.question,
+            questionID: questionData.questionID,
+            userAnswer,
+            userAnswerText,
+            correctAnswer,
+            correctAnswerText,
+            score,
+            isCorrect: userAnswer === correctAnswer,
+        };
+    });
 
-    // const answerData = quizData.questions.map((questionData, index) => {
-    //     return {
-    //         questionID: questionData.questionID,
-    //         answerID: userAnswers[index]
-    //     };
-    // });
+    const answerData = quizData.questions.map((questionData, index) => {
+        return {
+            questionID: questionData.questionID,
+            answerID: userAnswers[index]
+        };
+    });
 
-    //  // Overwrite results in sessionStorage
-    //  sessionStorage.setItem('quizResults', JSON.stringify(results));
-    //  sessionStorage.setItem(`${quizID}Taken`, 'true');
+     // Overwrite results in sessionStorage
+     sessionStorage.setItem('quizResults', JSON.stringify(results));
+     sessionStorage.setItem(`${quizID}Taken`, 'true');
  
-    //  // Navigate to results page
-    //  window.location.href = '/frontend/pages/results.html';
+     // Navigate to results page
+     window.location.href = '/frontend/pages/results.html';
 
-    // displayResults(results);
-    // saveQuiz(localStorage.getItem("userId"), quizID, answerData);
+    displayResults(results);
+    saveQuiz(localStorage.getItem("userId"), quizID, answerData);
 }
 
 function displayResults(results) {
@@ -237,29 +237,38 @@ function saveResults() {
 }
 
 function getSubmission() {
+    console.log("inside");
     const userID = localStorage.getItem('userId');
     const url = `https://www.boilertechtests.com/api/get-submit?userID=${encodeURIComponent(userID)}&quizID=${encodeURIComponent(quizID)}`;
-    const submission = "";
+    // const submission = "";
 
     fetch(url, {
         method: 'GET',
     })
     .then(response => {
+        console.log("response");
         if (!response.ok) {
+            console.log("response bad");
             return response.json().then(errorData => {
                 throw new Error(errorData.message);
             });
         }
-        return response.json();
+        console.log("response good");
+        return response.json().result;
     })
     .then(data => {
-        document.getElementById('response-message').textContent = data.message;
-        submission = data.result;
-        return submission;
+        console.log("data:", data);
+        // document.getElementById('response-message').textContent = data.message;
+        // const submission = data.result;
+        // console.log("submit:", submission);
+        // return submission;
     })
     .catch(error => {
-        document.getElementById('response-message').textContent = 'Error: ' + error.message;
+        console.log("error");
+        throw error;
+        // document.getElementById('response-message').textContent = 'Error: ' + error.message;
     });
+    // return submission;
 }
 
 async function getQuizID(topicID) {
