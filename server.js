@@ -291,6 +291,7 @@ app.get('/get-submit', async (req, res) => {
     console.log("userid", userID);
     console.log("quizid", quizID);
 
+    //help
     if (userID == null | quizID == null) {
         return res.status(400).json({ message: 'Missing required query parameter' });
     }
