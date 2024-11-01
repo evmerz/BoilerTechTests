@@ -207,13 +207,13 @@ app.post('/quiz', async (req, res) => {
     const checkQuery = 'SELECT * from quiz_submissions WHERE (user_id, quiz_id) = (?, ?)';
     var submitted = false;
 
-    var meh = db.query(checkQuery, [user_id, quiz_id], (err, result)
+    var meh = db.query(checkQuery, [user_id, quiz_id])
         .then(result => {
             return result;
         })
         .catch(err => {
             throw err;
-    }));
+    });
 
     if (meh.length > 0) {
         console.log("yes?");
