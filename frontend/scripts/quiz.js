@@ -150,6 +150,7 @@ async function gradeQuiz() {
     // Navigate to results page
     // window.location.href = '/frontend/pages/results.html';
     // displayResults(results);
+    const userID = localStorage.getItem('userId');
     const { submitted, submissionData } = await getSubmission(userID, quizID);
     console.log("gradequiz submissionData:", submissionData);
 
