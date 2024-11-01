@@ -139,8 +139,8 @@ function gradeQuiz() {
     });
 
      // Overwrite results in sessionStorage
-     localStorage.setItem('quizResults', JSON.stringify(results));
-     localStorage.setItem(`${quizID}Taken`, 'true');
+     sessionStorage.setItem('quizResults', JSON.stringify(results));
+     sessionStorage.setItem(`${quizID}Taken`, 'true');
  
      // Navigate to results page
      window.location.href = '/frontend/pages/results.html';
