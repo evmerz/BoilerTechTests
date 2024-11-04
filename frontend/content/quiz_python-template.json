@@ -1,0 +1,25 @@
+{
+  "quizInfo": {
+    "quizName": "Named Quiz",
+    "tags": [
+      "example"
+    ],
+    "type": "python"
+  },
+  "questions": [
+    {
+      "prompt": "Write a Python function that concatenates two strings.",
+      "questionID": "",
+      "functionSignature": "def concat_strings(str1, str2):",
+      "functionName": "concat_strings",
+      "testCases": [
+        { "input": ["hello", " world"], "expected": "hello world" },
+        { "input": ["foo", "bar"], "expected": "foobar" }
+      ],
+      "hiddenCases": [
+        { "name": "punctuation", "input": ["Yes ", "please!"], "expected": "Yes please!" },
+        { "name": "multiple words", "input": ["Come with me\n", "24601"], "expected": "Come with me\n24601" }
+      ]
+    }
+  ]
+}

@@ -9,17 +9,17 @@
     <title>Quiz Results</title>
     <style>
         .correct {
-            color: #20b625; /* Light green for correct user answers */
+            color: #48a43f; /* Light green for correct user answers */
             font-weight: bold;
         }
         
         .incorrect {
-            color: #f44336; /* Red for incorrect user answers */
+            color: #931b1b; /* Red for incorrect user answers */
             font-weight: bold;
         }
         
         .correct-answer {
-            color: #87cf8b; /* Light green for the correct answer line */
+            color:#207318; /* Light green for the correct answer line */
             font-weight: bold;
         }
 
@@ -64,6 +64,8 @@
         // This script should receive results data from the quiz page.
         // You can either pass it through localStorage, sessionStorage or URL parameters.
         const results = JSON.parse(sessionStorage.getItem('quizResults')) || [];
+        // const results = getSubmission();
+
 
         function displayResults(results) {
             const resultsContainer = document.getElementById('results-contents');
@@ -76,9 +78,9 @@
                     <div class="question">
                         <p>Question ${index + 1}: ${result.question}</p>
                         <p class="${result.isCorrect ? 'correct' : 'incorrect'}">
-                            Your answer: ${result.userAnswer || 'No answer selected'} ${correctnessLabel}
+                            Your answer: ${result.userAnswerText || 'No answer selected'} ${correctnessLabel}
                         </p>
-                        <p class="correct-answer">Correct answer: ${result.correctAnswer}</p>
+                        <p class="correct-answer">Correct answer: ${result.correctAnswerText}</p>
                         <p>Score: ${result.score}</p>
                     </div>
                 `;
@@ -93,15 +95,17 @@
         });
 
 // Retake button functionality
-document.getElementById('retake-button').addEventListener('click', function() {
+document.getElementById('retake-button').addEventListener('click', async function() {
     const topicKey = 'if-statements'; // Adjust based on topic
+    const quizID = await getQuizID(topicKey);
     sessionStorage.removeItem('quizResults');
     sessionStorage.removeItem(`${topicKey}Taken`);
     
     // Redirect back to the quiz page
-    window.location.href = '/frontend/pages/if-statements.html';
+    window.location.href = `./${topicKey}.html?quiz-id=${quizID}`;
 });
 
     </script>
+    <script src="/frontend/scripts/quiz.js"></script> 
 </body>
 </html>

@@ -1,0 +1,20 @@
+{
+  "quizInfo": {
+    "quizName": "Named Quiz",
+    "tags": [
+      "example"
+    ],
+    "type": "mc"
+  },
+  "questions": [
+    {
+      "question": "template question",
+      "questionID": "",
+      "answerID": "A-XXX",
+      "points": 1,
+      "options": [
+        {"optionID": "A-XXX", "text": "answer text"}
+      ]
+    }
+  ]
+}

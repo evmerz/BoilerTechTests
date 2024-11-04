@@ -1,5 +1,6 @@
 <div id="top-border"></div>
 
+<div id="navbar-container">
 <div id="navbar">
   <div id="logo-container">
     <h2 id="logo-text">
@@ -21,7 +22,7 @@
     <a href="/about" class="hoverable-text">about</a>
 
     <a href="javascript:redirectToAccountOrLogin()" class="hoverable-svg">
-      <img src="/frontend/images/account_circle.svg">
+      <img src="/frontend/images/account_circle.svg" alt="White circular account icon for login or account access">
     </a>
   </div>
 
@@ -46,11 +47,13 @@
     <div class="sidebar-text"><a class="underlineable" href="javascript:delay('/about', 500)">about</a></div>
 
     <div id="logos">
-      <a href="javascript:redirectToAccountOrLogin()"><img src="/frontend/images/account_circle_white.svg"></a>
+      <a href="javascript:redirectToAccountOrLogin()"><img src="/frontend/images/account_circle_white.svg" alt="White circular account icon for login or account access"></a>
     </div>
   </div>
 </div>
+</div>
 
+<script src="/frontend/scripts/scrollbar.js" defer></script>
 <script>
   function redirectToAccountOrLogin() {
     // Check if username and password are stored in local storage

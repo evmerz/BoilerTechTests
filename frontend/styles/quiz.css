@@ -22,12 +22,12 @@
 
 /* Styling for correct and incorrect answers */
 .correct {
-  color: green;
+  color: #207318;
   font-weight: bold;
 }
 
 .incorrect {
-  color: red;
+  color: #931b1b;
   font-weight: bold;
 }
 
@@ -42,3 +42,4 @@
   background-color: gray;
   cursor: not-allowed;
 }
+
