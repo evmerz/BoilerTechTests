@@ -111,10 +111,8 @@
                             console.log("submissiondata", submissionData);
 
                             if (submitted) {
-                                // Store or use the submission data if needed
-                                if (submissionData != null) {
-                                    // sessionStorage.setItem('quizResults', (submissionData));
-                                }
+                                localStorage.setItem('quizResults', submissionData);
+                                // displayResults(submissionData);
                                 window.location.href = '/frontend/pages/results.html';
                             } else {
                                 // No previous submission, so proceed to the quiz page

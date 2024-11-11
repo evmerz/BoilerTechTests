@@ -144,10 +144,11 @@ async function gradeQuiz() {
 
     // Overwrite results in sessionStorage
 
+    localStorage.setItem('quizResults', JSON.stringify(results));
 
 
-    sessionStorage.setItem('quizResults', JSON.stringify(results));
-    sessionStorage.setItem(`${quizID}Taken`, 'true');
+    // sessionStorage.setItem('quizResults', JSON.stringify(results));
+    // sessionStorage.setItem(`${quizID}Taken`, 'true');
 
 
 
@@ -156,19 +157,19 @@ async function gradeQuiz() {
     // Navigate to results page
     // window.location.href = '/frontend/pages/results.html';
     // displayResults(results);
-    const userID = localStorage.getItem('userId');
-    const { submitted, submissionData } = await getSubmission(userID, quizID);
-    console.log("gradequiz submissionData:", submissionData);
+    // const userID = localStorage.getItem('userId');
+    // const { submitted, submissionData } = await getSubmission(userID, quizID);
+    // console.log("gradequiz submissionData:", submissionData);
 
-    if (submitted) {
-        console.log("displaying submission");
-        displayResults(submissionData);
-    } else {
-        console.log("displaying answers");
-        displayResults(answerData);
-    }
+    // if (submitted) {
+    //     console.log("displaying submission");
+    //     displayResults(submissionData);
+    // } else {
+    //     console.log("displaying answers");
+    //     displayResults(answerData);
+    // }
 
-    saveQuiz(localStorage.getItem("userId"), quizID, answerData);
+    // saveQuiz(localStorage.getItem("userId"), quizID, answerData);
     window.location.href = '/frontend/pages/results.html';
 
     // maybe?
@@ -176,28 +177,20 @@ async function gradeQuiz() {
 }
 
 function displayResults(results) {
-    // Calculate total score
-    const totalScore = results.reduce((acc, result) => acc + result.score, 0);
-
-    var totalPossible = 0;
-    for (var i = 0; i < quizData.questions.length; i++) {
-        totalPossible += quizData.questions[i].points;
-    }
-
-    // Display total score
-    quizContainer.innerHTML = `<h2>Quiz Results</h2><p>Total Score: ${totalScore}/${totalPossible}</p>`;
-
+    const resultsContainer = document.getElementById('results-contents');
+    const totalScore = results.reduce((acc, result) => acc + (result.isCorrect ? 1 : 0), 0);
+    resultsContainer.innerHTML = `<h2>Total Score: ${totalScore}/${results.length}</h2>`;
+    
     results.forEach((result, index) => {
-        quizContainer.innerHTML += `
+        const correctnessLabel = result.isCorrect ? "(Correct)" : "(Incorrect)";
+        resultsContainer.innerHTML += `
             <div class="question">
                 <p>Question ${index + 1}: ${result.question}</p>
-                <p class="${result.isCorrect ? "correct" : "incorrect"}">
-                    Your answer: ${result.userAnswerText || "No answer selected"}
+                <p class="${result.isCorrect ? 'correct' : 'incorrect'}">
+                    Your answer: ${result.userAnswerText || 'No answer selected'} ${correctnessLabel}
                 </p>
-                <p>Correct answer: ${result.correctAnswerText}</p>
-                <p>Score: ${result.score}/${
-            quizData.questions[index].points
-        }</p>
+                <p class="correct-answer">Correct answer: ${result.correctAnswerText}</p>
+                <p>Score: ${result.score}</p>
             </div>
         `;
     });
