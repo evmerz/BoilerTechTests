@@ -146,8 +146,7 @@ async function gradeQuiz() {
     sessionStorage.setItem('quizResults', JSON.stringify(results));
     sessionStorage.setItem(`${quizID}Taken`, 'true');
 
-    displayResults(results);
-    saveQuiz(localStorage.getItem("userId"), quizID, answerData);
+    // displayResults(answerData);
 
     // Navigate to results page
     // window.location.href = '/frontend/pages/results.html';
@@ -155,12 +154,14 @@ async function gradeQuiz() {
     const userID = localStorage.getItem('userId');
     const { submitted, submissionData } = await getSubmission(userID, quizID);
     console.log("gradequiz submissionData:", submissionData);
+
+    saveQuiz(localStorage.getItem("userId"), quizID, answerData);
+    if (submitted) {
+        displayResults(submissionData)
+    } else {
+        displayResults(answerData);
+    }
     window.location.href = '/frontend/pages/results.html';
-    // if (submitted) {
-    //     displayResults(submissionData)
-    // } else {
-    //     displayResults(results);
-    // }
 
     // maybe?
     
