@@ -162,14 +162,14 @@ async function gradeQuiz() {
 
     if (submitted) {
         console.log("displaying submission");
-        // displayResults(submissionData)
+        displayResults(submissionData);
     } else {
         console.log("displaying answers");
-        // displayResults(answerData);
+        displayResults(answerData);
     }
 
     saveQuiz(localStorage.getItem("userId"), quizID, answerData);
-    // window.location.href = '/frontend/pages/results.html';
+    window.location.href = '/frontend/pages/results.html';
 
     // maybe?
     
