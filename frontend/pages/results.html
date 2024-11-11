@@ -67,7 +67,6 @@
         
         const results = JSON.parse(localStorage.getItem('quizResults'));
         console.log("results from html:", results);
-        const newResults = gradeQuiz(results);
         // const results = getSubmission();
 
 
@@ -91,7 +90,7 @@
             });
         }
 
-        displayResults(newResults);
+        displayResults(results);
 
         // Back button functionality
         document.getElementById('back-button').addEventListener('click', function() {
