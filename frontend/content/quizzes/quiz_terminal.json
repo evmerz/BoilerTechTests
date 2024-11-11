@@ -47,7 +47,7 @@
           "expected": "Come with me\n24601"
         }
       ], 
-      "solution": "def concat_strings(str1, str2):\n  return str1 + str2"
+      "solution": "Solution:\ndef concat_strings(str1, str2):\n  return str1 + str2"
     },
     {
       "prompt": "Write a Python function that adds two numbers.",
@@ -97,7 +97,7 @@
           "expected": -65
         }
       ],
-      "solution": "def add_numbers(a, b):\n  return a + b"
+      "solution": "Solution:\ndef add_numbers(a, b):\n  return a + b"
     },
     {
       "prompt": "Write a Python function that subtracts one number from another.",
@@ -139,7 +139,7 @@
           "expected": -5
         }
       ],
-      "solution": "def subtract_numbers(a, b):\n  return a - b"
+      "solution": "Solution:\ndef subtract_numbers(a, b):\n  return a - b"
     },
     {
       "prompt": "Write a Python function that removes consecutive duplicate characters from a string.",
@@ -190,7 +190,7 @@
           "expected": "abcdef"
         }
       ],
-      "solution": "def remove_consecutive_duplicates(s):\n  result = []\n  for i, char in enumerate(s):\n    if i == 0 or char != s[i - 1]:\n      result.append(char)\n  return ''.join(result)"
+      "solution": "Solution:\ndef remove_consecutive_duplicates(s):\n  result = []\n  for i, char in enumerate(s):\n    if i == 0 or char != s[i - 1]:\n      result.append(char)\n  return ''.join(result)"
     }
   ]
 }
