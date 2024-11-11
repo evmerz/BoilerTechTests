@@ -176,25 +176,25 @@ async function gradeQuiz() {
     
 }
 
-function displayResults(results) {
-    const resultsContainer = document.getElementById('results-contents');
-    const totalScore = results.reduce((acc, result) => acc + (result.isCorrect ? 1 : 0), 0);
-    resultsContainer.innerHTML = `<h2>Total Score: ${totalScore}/${results.length}</h2>`;
+// function displayResults(results) {
+//     const resultsContainer = document.getElementById('results-contents');
+//     const totalScore = results.reduce((acc, result) => acc + (result.isCorrect ? 1 : 0), 0);
+//     resultsContainer.innerHTML = `<h2>Total Score: ${totalScore}/${results.length}</h2>`;
     
-    results.forEach((result, index) => {
-        const correctnessLabel = result.isCorrect ? "(Correct)" : "(Incorrect)";
-        resultsContainer.innerHTML += `
-            <div class="question">
-                <p>Question ${index + 1}: ${result.question}</p>
-                <p class="${result.isCorrect ? 'correct' : 'incorrect'}">
-                    Your answer: ${result.userAnswerText || 'No answer selected'} ${correctnessLabel}
-                </p>
-                <p class="correct-answer">Correct answer: ${result.correctAnswerText}</p>
-                <p>Score: ${result.score}</p>
-            </div>
-        `;
-    });
-}
+//     results.forEach((result, index) => {
+//         const correctnessLabel = result.isCorrect ? "(Correct)" : "(Incorrect)";
+//         resultsContainer.innerHTML += `
+//             <div class="question">
+//                 <p>Question ${index + 1}: ${result.question}</p>
+//                 <p class="${result.isCorrect ? 'correct' : 'incorrect'}">
+//                     Your answer: ${result.userAnswerText || 'No answer selected'} ${correctnessLabel}
+//                 </p>
+//                 <p class="correct-answer">Correct answer: ${result.correctAnswerText}</p>
+//                 <p>Score: ${result.score}</p>
+//             </div>
+//         `;
+//     });
+// }
 
 /**
  * Saves the quiz results in the MySQL database.
