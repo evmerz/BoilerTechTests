@@ -113,7 +113,7 @@
                             if (submitted) {
                                 localStorage.setItem('quizResults', JSON.stringify(submissionData));
                                 // displayResults(submissionData);
-                                window.location.href = '/frontend/pages/results.html';
+                                window.location.href = `/frontend/pages/results.html?quiz-id=${quizID}`;
                             } else {
                                 // No previous submission, so proceed to the quiz page
                                 window.location.href = `./${topic.id}.html?quiz-id=${quizID}`;

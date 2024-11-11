@@ -67,6 +67,10 @@
         
         const results = JSON.parse(localStorage.getItem('quizResults'));
         console.log("results from html:", results);
+
+        const params = new URLSearchParams(location.search);
+        quizID = params.get("quiz-id");
+
         // const results = getSubmission();
 
 
