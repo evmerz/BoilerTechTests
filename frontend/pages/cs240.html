@@ -111,7 +111,7 @@
                             console.log("submissiondata", submissionData);
 
                             if (submitted) {
-                                localStorage.setItem('quizResults', submissionData);
+                                localStorage.setItem('quizResults', JSON.stringify(submissionData));
                                 // displayResults(submissionData);
                                 window.location.href = '/frontend/pages/results.html';
                             } else {
