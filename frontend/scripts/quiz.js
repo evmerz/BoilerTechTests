@@ -143,8 +143,13 @@ async function gradeQuiz() {
     });
 
     // Overwrite results in sessionStorage
+
+
+
     sessionStorage.setItem('quizResults', JSON.stringify(results));
     sessionStorage.setItem(`${quizID}Taken`, 'true');
+
+
 
     // displayResults(answerData);
 
@@ -155,13 +160,16 @@ async function gradeQuiz() {
     const { submitted, submissionData } = await getSubmission(userID, quizID);
     console.log("gradequiz submissionData:", submissionData);
 
-    saveQuiz(localStorage.getItem("userId"), quizID, answerData);
     if (submitted) {
+        console.log("displaying submission");
         displayResults(submissionData)
     } else {
+        console.log("displaying answers");
         displayResults(answerData);
     }
-    window.location.href = '/frontend/pages/results.html';
+
+    saveQuiz(localStorage.getItem("userId"), quizID, answerData);
+    // window.location.href = '/frontend/pages/results.html';
 
     // maybe?
     
