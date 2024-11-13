@@ -17,6 +17,8 @@ async function loadQuizData(quiz_id) {
 
     console.log(JSON.stringify(json_directory));
 
+    var _quizData;
+
     // Serve the quiz data that corresponds to the quiz ID
     for (let i = 0; i < json_directory.quizzes.length; i++) {
         if (json_directory.quizzes[i].quizID == quiz_id) {

@@ -36,6 +36,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
     <script src="/frontend/scripts/navigation.js"></script>
     <script src="/frontend/scripts/project-load.js"></script>
+    <script src="/frontend/scripts/quiz.js"></script> 
 
     <script>
         // Data for CS240 page
@@ -64,10 +65,6 @@
             .then(v => (v === t)? "pending" : "fulfilled", () => "rejected");
         }
 
-        // var a = Promise.resolve();
-        // var b = Promise.reject();
-        // var c = new Promise(() => {});
-
         // Function to load CS240 exam sections and topics
         function loadCS240Content() {
             const examContainer = document.getElementById("exam-sections");
@@ -84,34 +81,30 @@
     
                     const panel = document.createElement("div");
                     panel.classList.add("project-panel");
-    
+
                     const text = document.createElement("div");
                     text.classList.add("caption");
-    
+
                     const button = document.createElement("a");
                     button.classList.add("button");
                     button.textContent = topic.name;
-    
+
                     // Set the click event for the button
                     button.addEventListener('click', async function() {
                         const topicKey = topic.id;
-                        const quizTaken = sessionStorage.getItem(`${topicKey}Taken`);
                         const quizID = await getQuizID(topic.id);
                         const userID = localStorage.getItem('userId');
 
                         // If the user is logged in
                         if (userID) {
 
-                            const { submitted, submissionData } = await getSubmission(userID, quizID);
+                            const submissionData = await getSubmission(userID, quizID);
                             console.log("submissiondata", submissionData);
 
-                            if (submitted) {
+                            if (submissionData) {
                                 // Store or use the submission data if needed
-                                if (submissionData != null) {
-                                    
-                                    // sessionStorage.setItem('quizResults', (submissionData));
-                                }
-                                window.location.href = '/frontend/pages/results.html';
+                                window.location.href = `/frontend/pages/results.html?quiz-id=${quizID}`;
+
                             } else {
                                 // No previous submission, so proceed to the quiz page
                                 window.location.href = `./${topic.id}.html?quiz-id=${quizID}`;
@@ -142,7 +135,5 @@
         // Load CS240 content on page load
         $(document).ready(loadCS240Content);
     </script>
-
-   <script src="/frontend/scripts/quiz.js"></script> 
 </body>
 </html>
