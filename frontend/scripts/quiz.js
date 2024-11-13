@@ -2,12 +2,12 @@ var currentQuestionIndex = 0;
 var quizData;
 var userAnswers;
 var quizContainer;
-var quizID;
 
 /**
  * Loads the appropriate multiple choice quiz based on the quiz id from the URL query string parameter.
  *
- * @param {string} quiz_id
+ * @param {string} quiz_id The unique ID of the quiz that is to be loaded in.
+ * @returns The JSON data of the quiz. Returns null if there is no quiz found.
  */
 async function loadQuizData(quiz_id) {
     
@@ -25,19 +25,20 @@ async function loadQuizData(quiz_id) {
 
             console.log("filepath: " + json_directory.quizzes[i].filePath);
 
-            quizData = await (
+            _quizData = await (
                 await fetch(json_directory.quizzes[i].filePath)
             ).json();
 
-            if (quizData.quizInfo.type != "mc") continue;
+            if (_quizData.quizInfo.type != "mc") continue;
 
-            console.log(JSON.stringify(quizData));
+            console.log(JSON.stringify(_quizData));
 
-            return;
+            return _quizData;
         }
     }
 
-    console.log('No quiz found with ID "' + quiz_id + '"');
+    console.log('No quiz found with ID \"' + quiz_id + '\"');
+    return null;
 }
 
 /**
@@ -80,7 +81,14 @@ function nextQuestion() {
             renderQuestion();
         } else {
             // All questions answered, show submit button
-            showSubmitButton();
+            quizContainer.innerHTML = `
+                <p>All questions answered. Click below to submit your answers.</p>
+                <button id="submit-quiz">Submit</button>
+            `;
+            document.getElementById("submit-quiz").addEventListener("click", async () => {
+                await storeQuizResults();
+                window.location.href = `frontend/pages/results.html?quiz-id=${quizID}`;
+            });
         }
     } else {
         alert("Please select an answer before proceeding.");
@@ -88,137 +96,41 @@ function nextQuestion() {
 }
 
 /**
- * Displays the submit button for the quiz.
+ * Grades the quiz and stores results in local storage and the MySQL database (if the user is logged in).
  */
-function showSubmitButton() {
-    quizContainer.innerHTML = `
-        <p>All questions answered. Click below to submit your answers.</p>
-        <button id="submit-quiz">Submit</button>
-    `;
-    document.getElementById("submit-quiz").addEventListener("click", gradeQuiz);
-    // document.getElementById("submit-quiz").addEventListener("click", saveResults);
-}
+async function storeQuizResults() {
 
-/**
- * Grades the quiz and displays the results.
- *
- * @returns JSON object storing quiz submission data
- */
-async function gradeQuiz() {
-    // const results = getSubmission();
-    // console.log("results:", results);
+    // Store the results of the quiz in an array of JSON objects
     const results = quizData.questions.map((questionData, index) => {
-        const userAnswer = userAnswers[index];
-        const correctAnswer = questionData.answerID;
-        const score = userAnswer === correctAnswer ? questionData.points : 0;
-        var correctAnswerText = "";
-        var userAnswerText = "";
-        for (var i = 0; i < questionData.options.length; i++) {
-            if (questionData.options[i].optionID == correctAnswer) {
-                correctAnswerText = questionData.options[i].text;
-                console.log("correctAnswerText", correctAnswerText);
-            }
-            if (questionData.options[i].optionID == userAnswer) {
-                userAnswerText = questionData.options[i].text;
-            }
-        }
-
-        return {
-            question: questionData.question,
-            questionID: questionData.questionID,
-            userAnswer,
-            userAnswerText,
-            correctAnswer,
-            correctAnswerText,
-            score,
-            isCorrect: userAnswer === correctAnswer,
-        };
-    });
-
-    const answerData = quizData.questions.map((questionData, index) => {
         return {
             questionID: questionData.questionID,
             answerID: userAnswers[index]
         };
     });
 
-    // Overwrite results in sessionStorage
+    localStorage.setItem(`quiz_${quizID}`, JSON.stringify(results));
 
-
-
-    sessionStorage.setItem('quizResults', JSON.stringify(results));
-    sessionStorage.setItem(`${quizID}Taken`, 'true');
-
-
-
-    // displayResults(answerData);
-
-    // Navigate to results page
-    // window.location.href = '/frontend/pages/results.html';
-    // displayResults(results);
-    const userID = localStorage.getItem('userId');
-    const { submitted, submissionData } = await getSubmission(userID, quizID);
-    console.log("gradequiz submissionData:", submissionData);
-
-    if (submitted) {
-        console.log("displaying submission");
-        // displayResults(submissionData)
-    } else {
-        console.log("displaying answers");
-        // displayResults(answerData);
-    }
-
-    saveQuiz(localStorage.getItem("userId"), quizID, answerData);
-    // window.location.href = '/frontend/pages/results.html';
-
-    // maybe?
-    
-}
-
-function displayResults(results) {
-    // Calculate total score
-    const totalScore = results.reduce((acc, result) => acc + result.score, 0);
-
-    var totalPossible = 0;
-    for (var i = 0; i < quizData.questions.length; i++) {
-        totalPossible += quizData.questions[i].points;
-    }
-
-    // Display total score
-    quizContainer.innerHTML = `<h2>Quiz Results</h2><p>Total Score: ${totalScore}/${totalPossible}</p>`;
-
-    results.forEach((result, index) => {
-        quizContainer.innerHTML += `
-            <div class="question">
-                <p>Question ${index + 1}: ${result.question}</p>
-                <p class="${result.isCorrect ? "correct" : "incorrect"}">
-                    Your answer: ${result.userAnswerText || "No answer selected"}
-                </p>
-                <p>Correct answer: ${result.correctAnswerText}</p>
-                <p>Score: ${result.score}/${
-            quizData.questions[index].points
-        }</p>
-            </div>
-        `;
-    });
+    // If there is a user logged in, store the quiz response in the database
+    const userID = localStorage.getItem("userId");
+    if (userID) saveQuiz(userID, quizID, results);
 }
 
 /**
  * Saves the quiz results in the MySQL database.
  *
- * @param {int} userID
- * @param {string} quizID
- * @param {json} quizResponses
+ * @param {int} userID The unique ID of the user that took the quiz.
+ * @param {string} quizID The unique ID of the quiz that the user took.
+ * @param {json} answerData The array of the user's responses to the quiz questions.
  */
-async function saveQuiz(userID, quizID, quizResponses) {
+async function saveQuiz(userID, quizID, answerData) {
     console.log("yes");
-    console.log("quiz:", quizResponses);
+    console.log("quiz:", answerData);
     console.log(
         "quiz string:",
         JSON.stringify({
             user_id: userID,
             quiz_id: quizID,
-            answers: quizResponses,
+            answers: answerData,
         })
     );
 
@@ -232,7 +144,7 @@ async function saveQuiz(userID, quizID, quizResponses) {
             body: JSON.stringify({
                 user_id: userID,
                 quiz_id: quizID,
-                answers: quizResponses,
+                answers: answerData,
             }),
         });
 
@@ -247,71 +159,13 @@ async function saveQuiz(userID, quizID, quizResponses) {
     }
 }
 
-function saveResults() {
-    // const meh = quizData.questions.map((questionData, index) => {
-    //     const userAnswer = userAnswers[index];
-    //     const correctAnswer = questionData.answer;
-    //     const score = userAnswer === correctAnswer ? 1 : 0;
-    //     return { question_number: index + 1, response: userAnswer, score };
-    // });
-    // console.log(meh);
-    // saveQuiz(1, localStorage.getItem("userId"), meh);
-}
-
-// function getSubmission(quizID, userID) {
-//     console.log("inside");
-//     const url = `https://www.boilertechtests.com/api/get-submit?userID=${encodeURIComponent(userID)}&quizID=${encodeURIComponent(quizID)}`;
-//     // const submission = "";
-
-//     const response =fetch(url, {
-//         method: 'GET',
-//     })
-//     .then(response => {
-//         console.log("response");
-//         if (!response.ok) {
-//             console.log("response bad");
-//             return response.json().then(errorData => {
-//                 throw new Error(errorData.message);
-//             });
-//         }
-//         console.log("response good");
-//         return response.json().data;
-//     })
-//     .then(data => {
-//         console.log("data:", data);
-//         // document.getElementById('response-message').textContent = data.message;
-//         // const submission = data.result;
-//         // console.log("submit:", submission);
-//         // return submission;
-//     })
-//     .catch(error => {
-//         console.log("error");
-//         throw error;
-//         // document.getElementById('response-message').textContent = 'Error: ' + error.message;
-//     });
-//     // return submission;
-// }
-
-// async function getSubmission(quizID, userID) {
-//     const url = `https://www.boilertechtests.com/api/get-submit?userID=${encodeURIComponent(userID)}&quizID=${encodeURIComponent(quizID)}`;
-
-//     try {
-//         const response = await fetch(url, { method: 'GET' });
-//         if (!response.ok) {
-//             const errorData = await response.json();
-//             throw new Error(errorData.message);
-//         }
-
-//         const data = await response.json();
-//         console.log("Submission status:", data.submitted);
-//         console.log("submission from quiz.js:", data.submission);
-//         return data.submission; // Return the submitted status directly
-//     } catch (error) {
-//         console.error("Error retrieving submission:", error);
-//         return null;
-//     }
-// }
-
+/**
+ * Retrieves the user's quiz submission based on userID and quizID, respectively.
+ * 
+ * @param {int} userID The unique ID of the user that submitted the quiz.
+ * @param {string} quizID The unique ID of the quiz that is to be requested.
+ * @returns The JSON array of the user's responses to the quiz, pulled from the MySQL database. Returns null if there is no submission.
+ */
 async function getSubmission(userID, quizID) {
     const url = `https://www.boilertechtests.com/api/get-submit?userID=${encodeURIComponent(userID)}&quizID=${encodeURIComponent(quizID)}`;
 
@@ -323,21 +177,16 @@ async function getSubmission(userID, quizID) {
         }
 
         const data = await response.json();
-        console.log("Submission status:", data.submitted);
         console.log("Submission data:", data.submissionData);
 
-        return {
-            submitted: data.submitted,
-            submissionData: data.submissionData
-        };
+        return data.submissionData
     } catch (error) {
         console.error("Error retrieving submission:", error);
-        return { submitted: false, submissionData: null };
+        return null;
     }
 }
 
-
-
+// TODO: Change this function since topic ID isn't the same as file name (probs don't need function at all honestly)
 async function getQuizID(topicID) {
     try {
         // Fetch the quiz_data.json file
@@ -358,17 +207,3 @@ async function getQuizID(topicID) {
     // Return null if no quiz is found with the given topicID
     return null;
 }
-
-
-window.addEventListener("DOMContentLoaded", async function () {
-    const params = new URLSearchParams(location.search);
-    quizID = params.get("quiz-id");
-    console.log(quizID);
-
-    await loadQuizData(quizID);
-
-    userAnswers = new Array(quizData.questions.length).fill(null);
-    quizContainer = document.getElementById("quiz-contents");
-
-    renderQuestion();
-});

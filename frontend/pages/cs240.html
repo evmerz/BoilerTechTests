@@ -94,18 +94,13 @@
     
                     // Set the click event for the button
                     button.addEventListener('click', async function() {
-                        const topicKey = topic.id; // Unique key for each topic
+                        const topicKey = topic.id;
                         const quizTaken = sessionStorage.getItem(`${topicKey}Taken`);
                         const quizID = await getQuizID(topic.id);
                         const userID = localStorage.getItem('userId');
+
+                        // If the user is logged in
                         if (userID) {
-                            // const submission = getSubmission(quizID, userID);
-                            // console.log("submission", submission);
-                            // if (submission) {
-                            // window.location.href = '/frontend/pages/results.html'; // Update the path if needed
-                            // } else {
-                            //     window.location.href = `./${topic.id}.html?quiz-id=${quizID}`;
-                            // }
 
                             const { submitted, submissionData } = await getSubmission(userID, quizID);
                             console.log("submissiondata", submissionData);
@@ -113,6 +108,7 @@
                             if (submitted) {
                                 // Store or use the submission data if needed
                                 if (submissionData != null) {
+                                    
                                     // sessionStorage.setItem('quizResults', (submissionData));
                                 }
                                 window.location.href = '/frontend/pages/results.html';
