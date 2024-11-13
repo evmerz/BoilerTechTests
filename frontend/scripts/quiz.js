@@ -101,6 +101,9 @@ function nextQuestion() {
  * Grades the quiz and stores results in local storage and the MySQL database (if the user is logged in).
  */
 async function storeQuizResults() {
+    
+    const params = new URLSearchParams(location.search);
+    quizID = params.get("quiz-id");
 
     // Store the results of the quiz in an array of JSON objects
     const results = quizData.questions.map((questionData, index) => {
