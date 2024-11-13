@@ -89,7 +89,7 @@ function nextQuestion() {
             `;
             document.getElementById("submit-quiz").addEventListener("click", async () => {
                 await storeQuizResults();
-                window.location.href = `frontend/pages/results.html?quiz-id=${quizID}`;
+                window.location.href = `/frontend/pages/results.html?quiz-id=${quizID}`;
             });
         }
     } else {
