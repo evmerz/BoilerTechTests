@@ -163,7 +163,14 @@ app.post('/update-account', (req, res) => {
   });
 });
 
-// Helper function to update credentials in the database
+/**
+ * Helper function for updating credentials in the database.
+ * 
+ * @param {int} userId 
+ * @param {string} newUsername 
+ * @param {string} newPassword 
+ * @param {*} res 
+ */
 function updateCredentials(userId, newUsername, newPassword, res) {
   let query = 'UPDATE users SET ';
   const params = [];
