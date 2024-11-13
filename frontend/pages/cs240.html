@@ -102,7 +102,8 @@
                             console.log("submissiondata", submissionData);
 
                             if (submissionData) {
-                                // Store or use the submission data if needed
+                                // Store the submission data in local storage and go to results page
+                                localStorage.setItem(`quiz_${quizID}`, submissionData);
                                 window.location.href = `/frontend/pages/results.html?quiz-id=${quizID}`;
 
                             } else {
