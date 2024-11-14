@@ -1,5 +1,10 @@
 RewriteEngine On
+
+ErrorDocument 403 /frontend/pages/403.html
+ErrorDocument 404 /frontend/pages/404.html
+
 RewriteCond %{REQUEST_URI} !^/api/
+RewriteCond %{HTTP_HOST} !^localhost$
 
 RewriteRule ^home$ /index.html [L]
 RewriteRule ^code$ /frontend/pages/terminal.html [L]
@@ -10,10 +15,7 @@ RewriteRule ^quiz$ /frontend/pages/quiz.html [L]
 RewriteRule ^account$ /frontend/pages/account.html [L] 
 RewriteRule ^create-account$ /frontend/pages/create.html [L]
 
-ErrorDocument 404 /frontend/pages/404.html
 RewriteRule ^404$ /frontend/pages/404.html [L]
-
-ErrorDocument 403 /frontend/pages/403.html
 RewriteRule ^403$ /frontend/pages/403.html [L]
 
 Options -Indexes
