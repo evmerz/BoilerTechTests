@@ -4,7 +4,7 @@ ErrorDocument 403 /frontend/pages/403.html
 ErrorDocument 404 /frontend/pages/404.html
 
 RewriteCond %{REQUEST_URI} !^/api/
-RewriteCond %{HTTP_HOST} !^localhost$
+# RewriteCond %{HTTP_HOST} !^localhost$
 
 RewriteRule ^home$ /index.html [L]
 RewriteRule ^code$ /frontend/pages/terminal.html [L]
