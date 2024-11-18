@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,41 +10,56 @@
     <title>Quiz Results</title>
     <style>
         .correct {
-            color: #48a43f; /* Light green for correct user answers */
+            color: #48a43f;
+            /* Light green for correct user answers */
             font-weight: bold;
         }
-        
+
         .incorrect {
-            color: #931b1b; /* Red for incorrect user answers */
+            color: #931b1b;
+            /* Red for incorrect user answers */
             font-weight: bold;
         }
-        
+
         .correct-answer {
-            color:#207318; /* Light green for the correct answer line */
+            color: #207318;
+            /* Light green for the correct answer line */
             font-weight: bold;
         }
 
         /* Add the button styling from the quiz page */
         .button {
             padding: 10px 20px;
-            background-color: #000000; /* Primary color */
-            color: white; /* Text color */
+            background-color: #000000;
+            /* Primary color */
+            color: white;
+            /* Text color */
             text-align: center;
-            text-decoration: none; /* No underline */
-            border: none; /* No border */
-            border-radius: 5px; /* Rounded corners */
-            cursor: pointer; /* Pointer on hover */
-            display: inline-block; /* Inline block element */
-            margin-top: 20px; /* Spacing above the button */
-            font-size: 16px; /* Font size */
-            transition: background-color 0.3s; /* Smooth transition for hover */
+            text-decoration: none;
+            /* No underline */
+            border: none;
+            /* No border */
+            border-radius: 5px;
+            /* Rounded corners */
+            cursor: pointer;
+            /* Pointer on hover */
+            display: inline-block;
+            /* Inline block element */
+            margin-top: 20px;
+            /* Spacing above the button */
+            font-size: 16px;
+            /* Font size */
+            transition: background-color 0.3s;
+            /* Smooth transition for hover */
         }
-        
+
         .button:hover {
-            background-color: #424242; /* Darker shade on hover */
+            background-color: #424242;
+            /* Darker shade on hover */
         }
-    </style> 
+    </style>
 </head>
+
 <body>
     <div id="navbar-load"></div>
     <div class="container">
@@ -58,54 +74,100 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
+        crossorigin="anonymous"></script>
     <script src="/frontend/scripts/navigation.js"></script>
-    <script>
+    <script src="/frontend/scripts/quiz.js"></script>
+
+    <script async>
         // This script should receive results data from the quiz page.
         // You can either pass it through localStorage, sessionStorage or URL parameters.
-        const results = JSON.parse(sessionStorage.getItem('quizResults')) || [];
-        // const results = getSubmission();
 
+        window.addEventListener("DOMContentLoaded", async function () {
 
-        function displayResults(results) {
+            const params = new URLSearchParams(location.search);
+            quizID = params.get("quiz-id");
+
+            const quizData = await loadQuizData(quizID);
+
+            // If the quiz ID is invalid, redirect to 404 error page
+            if (quizData == null) {
+                throw 404; // idk if this actually works lol
+            }
+
+            var resultsStr = localStorage.getItem(`quiz_${quizID}`);
+
+            // If the data isn't stored in local storage
+            if (resultsStr == null) {
+                const userID = localStorage.getItem('userId');
+                if (userID == null) {
+                    // window.location.href =
+                }
+            }
+
+            const results = JSON.parse(resultsStr);
+
+            // Display the results of the quiz
             const resultsContainer = document.getElementById('results-contents');
-            const totalScore = results.reduce((acc, result) => acc + (result.isCorrect ? 1 : 0), 0);
-            resultsContainer.innerHTML = `<h2>Total Score: ${totalScore}/${results.length}</h2>`;
-            
+
+            var resultContents, userScore, maxScore;
+
             results.forEach((result, index) => {
-                const correctnessLabel = result.isCorrect ? "(Correct)" : "(Incorrect)";
-                resultsContainer.innerHTML += `
+
+                for (var question of quizData.questions) {
+                    if (result.questionID != question.questionID) continue;
+
+                    // Get the text for the user response and the correct answer
+                    var userAnswerText, correctAnswerText;
+                    for (option of question.options) {
+                        if (result.answerID == option.optionID) userAnswerText = option.text;
+
+                        if (question.answerID == option.optionID) correctAnswerText = option.text;
+
+                        if (userAnswerText && correctAnswerText) break;
+                    }
+
+                    const correct = (result.answerID == question.answerID);
+
+                    userScore += correct ? question.points : 0;
+                    maxScore += question.points;
+
+                    const correctnessLabel = correct ? "(Correct)" : "(Incorrect)";
+                    resultContents += `
                     <div class="question">
-                        <p>Question ${index + 1}: ${result.question}</p>
-                        <p class="${result.isCorrect ? 'correct' : 'incorrect'}">
-                            Your answer: ${result.userAnswerText || 'No answer selected'} ${correctnessLabel}
+                        <p>Question ${index + 1}: ${question.question}</p>
+                        <p class="${correct ? 'correct' : 'incorrect'}">
+                            Your answer: ${userAnswerText || 'No answer selected'} ${correctnessLabel}
                         </p>
-                        <p class="correct-answer">Correct answer: ${result.correctAnswerText}</p>
-                        <p>Score: ${result.score}</p>
+                        <p class="correct-answer">Correct answer: ${correctAnswerText}</p>
+                        <p>Score: ${correct ? question.points : 0}</p>
                     </div>
                 `;
+
+                    break;
+                }
             });
-        }
 
-        displayResults(results);
+            resultsContainer.innerHTML = `<h2>Total Score: ${userScore}/${maxScore}</h2>`;
+            resultsContainer.innerHTML += resultContents; // Append the formatted results
+        });
 
-        // Back button functionality
-        document.getElementById('back-button').addEventListener('click', function() {
+        document.getElementById('back-button').addEventListener('click', function () {
             window.location.href = '/frontend/pages/cs240.html'; // Update the path if needed
         });
 
-// Retake button functionality
-document.getElementById('retake-button').addEventListener('click', async function() {
-    const topicKey = 'if-statements'; // Adjust based on topic
-    const quizID = await getQuizID(topicKey);
-    sessionStorage.removeItem('quizResults');
-    sessionStorage.removeItem(`${topicKey}Taken`);
-    
-    // Redirect back to the quiz page
-    window.location.href = `./${topicKey}.html?quiz-id=${quizID}`;
-});
+        document.getElementById('retake-button').addEventListener('click', async function () {
+            const topicKey = 'if-statements'; // Adjust based on topic
+            const quizID = await getQuizID(topicKey);
+            sessionStorage.removeItem('quizResults');
+            sessionStorage.removeItem(`${topicKey}Taken`);
+
+            // Redirect back to the quiz page
+            window.location.href = `./${topicKey}.html?quiz-id=${quizID}`;
+        });
 
     </script>
-    <script src="/frontend/scripts/quiz.js"></script> 
 </body>
+
 </html>

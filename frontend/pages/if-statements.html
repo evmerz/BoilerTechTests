@@ -44,6 +44,22 @@
     document.getElementById('back-button').addEventListener('click', function() {
         window.location.href = '/frontend/pages/cs240.html'; // Update the path if needed
     });
+
 </script>
 <script src="/frontend/scripts/quiz.js"></script>
+<script>
+    // Initialize the quiz upon load
+    window.addEventListener("DOMContentLoaded", async function () {
+        const params = new URLSearchParams(location.search);
+        quizID = params.get("quiz-id");
+        console.log(quizID);
+
+        quizData = await loadQuizData(quizID);
+
+        userAnswers = new Array(quizData.questions.length).fill(null);
+        quizContainer = document.getElementById("quiz-contents");
+
+        renderQuestion();
+    });
+</script>
 </html>

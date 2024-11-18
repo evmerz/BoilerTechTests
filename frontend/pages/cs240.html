@@ -36,6 +36,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
     <script src="/frontend/scripts/navigation.js"></script>
     <script src="/frontend/scripts/project-load.js"></script>
+    <script src="/frontend/scripts/quiz.js"></script>
 
     <script>
         // Data for CS240 page
@@ -64,58 +65,47 @@
             .then(v => (v === t)? "pending" : "fulfilled", () => "rejected");
         }
 
-        // var a = Promise.resolve();
-        // var b = Promise.reject();
-        // var c = new Promise(() => {});
-
         // Function to load CS240 exam sections and topics
         function loadCS240Content() {
             const examContainer = document.getElementById("exam-sections");
-    
+
             cs240Data.exams.forEach(exam => {
                 // Create exam title
                 const examTitle = document.createElement("h3");
                 examTitle.textContent = exam.title;
                 examContainer.appendChild(examTitle);
-    
+
                 // Create topic buttons for each exam
                 exam.topics.forEach(topic => {
                     const fade = document.createElement("div");
-    
+
                     const panel = document.createElement("div");
                     panel.classList.add("project-panel");
-    
+
                     const text = document.createElement("div");
                     text.classList.add("caption");
-    
+
                     const button = document.createElement("a");
                     button.classList.add("button");
                     button.textContent = topic.name;
-    
+
                     // Set the click event for the button
                     button.addEventListener('click', async function() {
-                        const topicKey = topic.id; // Unique key for each topic
-                        const quizTaken = sessionStorage.getItem(`${topicKey}Taken`);
+                        const topicKey = topic.id;
                         const quizID = await getQuizID(topic.id);
                         const userID = localStorage.getItem('userId');
-                        if (userID) {
-                            // const submission = getSubmission(quizID, userID);
-                            // console.log("submission", submission);
-                            // if (submission) {
-                            // window.location.href = '/frontend/pages/results.html'; // Update the path if needed
-                            // } else {
-                            //     window.location.href = `./${topic.id}.html?quiz-id=${quizID}`;
-                            // }
 
-                            const { submitted, submissionData } = await getSubmission(userID, quizID);
+                        // If the user is logged in
+                        if (userID) {
+
+                            const submissionData = await getSubmission(userID, quizID);
                             console.log("submissiondata", submissionData);
 
-                            if (submitted) {
-                                // Store or use the submission data if needed
-                                if (submissionData != null) {
-                                    // sessionStorage.setItem('quizResults', (submissionData));
-                                }
-                                window.location.href = '/frontend/pages/results.html';
+                            if (submissionData) {
+                                // Store the submission data in local storage and go to results page
+                                localStorage.setItem(`quiz_${quizID}`, submissionData);
+                                window.location.href = `/frontend/pages/results.html?quiz-id=${quizID}`;
+
                             } else {
                                 // No previous submission, so proceed to the quiz page
                                 window.location.href = `./${topic.id}.html?quiz-id=${quizID}`;
@@ -133,20 +123,18 @@
                         // }
                         // help
                     });
-    
+
                     text.appendChild(button);
                     panel.appendChild(text);
                     fade.appendChild(panel);
-    
+
                     examContainer.appendChild(fade);
                 });
             });
         }
-    
+
         // Load CS240 content on page load
         $(document).ready(loadCS240Content);
     </script>
-
-   <script src="/frontend/scripts/quiz.js"></script> 
 </body>
 </html>
