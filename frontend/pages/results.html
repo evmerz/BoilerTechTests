@@ -89,9 +89,24 @@
             const params = new URLSearchParams(location.search);
             quizID = params.get("quiz-id");
 
-            const results = JSON.parse(localStorage.getItem('quiz_' + quizID)) || [];
-
             const quizData = await loadQuizData(quizID);
+
+            // If the quiz ID is invalid, redirect to 404 error page
+            if (quizData == null) {
+                throw 404; // idk if this actually works lol
+            }
+
+            var resultsStr = localStorage.getItem(`quiz_${quizID}`);
+
+            // If the data isn't stored in local storage
+            if (resultsStr == null) {
+                const userID = localStorage.getItem('userId');
+                if (userID == null) {
+                    // window.location.href =
+                }
+            }
+
+            const results = JSON.parse(resultsStr);
 
             // Display the results of the quiz
             const resultsContainer = document.getElementById('results-contents');
