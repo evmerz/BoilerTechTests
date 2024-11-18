@@ -36,7 +36,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
     <script src="/frontend/scripts/navigation.js"></script>
     <script src="/frontend/scripts/project-load.js"></script>
-    <script src="/frontend/scripts/quiz.js"></script> 
+    <script src="/frontend/scripts/quiz.js"></script>
 
     <script>
         // Data for CS240 page
@@ -68,17 +68,17 @@
         // Function to load CS240 exam sections and topics
         function loadCS240Content() {
             const examContainer = document.getElementById("exam-sections");
-    
+
             cs240Data.exams.forEach(exam => {
                 // Create exam title
                 const examTitle = document.createElement("h3");
                 examTitle.textContent = exam.title;
                 examContainer.appendChild(examTitle);
-    
+
                 // Create topic buttons for each exam
                 exam.topics.forEach(topic => {
                     const fade = document.createElement("div");
-    
+
                     const panel = document.createElement("div");
                     panel.classList.add("project-panel");
 
@@ -123,16 +123,16 @@
                         // }
                         // help
                     });
-    
+
                     text.appendChild(button);
                     panel.appendChild(text);
                     fade.appendChild(panel);
-    
+
                     examContainer.appendChild(fade);
                 });
             });
         }
-    
+
         // Load CS240 content on page load
         $(document).ready(loadCS240Content);
     </script>
