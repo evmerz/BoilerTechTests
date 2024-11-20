@@ -13,8 +13,7 @@ function loadProjectData() {
                 console.log(classData[json.classes[i].id].name);
             }
             // After loading class data, load pinned classes
-            loadPinnedClasses();
-            loadAllClasses();
+            
         });
 }
 
