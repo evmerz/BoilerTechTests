@@ -33,12 +33,25 @@
                     Here you can learn development techniques and strategies taught in <b style="font-weight: 1200;">Purdue computer science</b> classes!
                 </h3>
 
-                <a href="#classes" class="fade-in button" style="--delay: 0.3s">
+                <a href="#pinned-classes" class="fade-in button" style="--delay: 0.3s">
                     Start Studying
                 </a>
             </div>
 
             <img id="intro-img" class="fade-in" src="https://1000logos.net/wp-content/uploads/2024/05/Purdue-Boilermakers-Logo-1994.png" />
+        </div>
+
+        <br>
+
+         <!-- Pinned Classes Section -->
+         <div id="pinned-classes" class="sub-container" style="display: none;">
+            <hr class="fade-in" style="margin-top: 50px; color: var(--site-foreground)">
+
+            <div class="header-panel" style="margin-top: 100px; margin-bottom: 0;">
+                <h2 class="fade-in">Pinned Classes</h2>
+            </div>
+
+            <div class="content-panel" panel-id="pinned-classes" style="margin-top: 0;"></div>
         </div>
 
         <br>
@@ -61,10 +74,12 @@
 
     <script>
         loadProjectData().then(() => {
-            loadProject("cs240", "homepage");
-            loadProject("cs180", "homepage");
+            loadPinnedClasses();
+            loadAllClasses();
+            //loadProject("cs240", "homepage");
+            //loadProject("cs180", "homepage");
         });
-    </script>
+    </script> 
 
 </body>
 

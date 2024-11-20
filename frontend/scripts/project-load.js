@@ -1,11 +1,10 @@
 var classData = [];
+var pinnedClasses = [];
 
 /**
  * Loads all project data into memory on the load of the website.
  */
 function loadProjectData() {
-    // if (projectData.length > 0) return Promise.resolve;
-
     return fetch("/frontend/content/class_data.json")
         .then((response) => response.json())
         .then((json) => {
@@ -13,8 +12,31 @@ function loadProjectData() {
                 classData[json.classes[i].id] = json.classes[i];
                 console.log(classData[json.classes[i].id].name);
             }
+            // After loading class data, load pinned classes
+            
         });
 }
+
+/**
+ * Loads pinned classes from localStorage and updates the UI.
+ */
+function loadPinnedClasses() {
+    const savedPinnedClasses = JSON.parse(localStorage.getItem("pinnedClasses")) || [];
+    pinnedClasses = savedPinnedClasses;
+
+    pinnedClasses.forEach((classID) => {
+        loadProject(classID, "pinned-classes");
+    });
+}
+
+function loadAllClasses() {
+    for (let classID in classData) {
+        if (!pinnedClasses.includes(classID)) {
+            loadProject(classID, "homepage"); // Load unpinned classes into "homepage"
+        }
+    }
+}
+
 
 /**
  * Loads a specific project into a project container html object.
@@ -24,9 +46,6 @@ function loadProjectData() {
  * @returns
  */
 function loadProject(classID, contentPanelName) {
-    // console.log("hahaha!!! noo!!!");
-    // if (projectData.length <= 0) return false;
-
     var container;
     var galleries = document.querySelectorAll("div[panel-id]");
     for (var i = 0; i < galleries.length; i++) {
@@ -37,25 +56,9 @@ function loadProject(classID, contentPanelName) {
     }
 
     if (container == null) {
-        console.log(
-            "oops haha no container named " + contentPanelName + " exists"
-        );
+        console.log("oops haha no container named " + contentPanelName + " exists");
         return;
     }
-
-    /* Create project panel element
-
-        Structure to be created:
-        <div class="fade-in">
-            <div class="project-panel">
-                <img src="images/debug_image.png">
-                <div class="caption">
-                    <h3>Deflexion Redux</h3>
-                    <p>caption</p>
-                </div>
-            </div>
-        </div>
-     */
 
     var fade = document.createElement("div");
     fade.classList.add("fade-in");
@@ -64,10 +67,6 @@ function loadProject(classID, contentPanelName) {
 
     var panel = document.createElement("div");
     panel.classList.add("project-panel");
-
-    // var img = document.createElement("img");
-    // console.log("id: " + classID);
-    // img.src = "images/" + classData[classID].thumbnail;
 
     var text = document.createElement("div");
     text.classList.add("caption");
@@ -78,11 +77,24 @@ function loadProject(classID, contentPanelName) {
     var cap = document.createElement("p");
     cap.textContent = classData[classID].caption;
 
+    var pinButton = document.createElement("button");
+    pinButton.classList.add("button");
+    pinButton.textContent = pinnedClasses.includes(classID) ? "Unpin" : "Pin";
+
+    var userID = localStorage.getItem("userId");
     text.appendChild(heading);
     text.appendChild(cap);
+    console.log("this is userID:" + userID);
 
-    // panel.appendChild(img);
     panel.appendChild(text);
+
+    if (userID) {
+        document.getElementById("pinned-classes").style.display = "block";
+        panel.appendChild(pinButton);
+        pinButton.addEventListener("click", function () {
+            pinClass(classID, fade, container, pinButton);
+        });
+    }
 
     link.style = "text-decoration: none;";
     link.href = "/frontend/pages/cs240.html";
@@ -90,15 +102,39 @@ function loadProject(classID, contentPanelName) {
 
     fade.appendChild(link);
 
-
-    if (classData[classID].name === "CS240") {
-        panel.classList.add("clickable"); // Optional, to indicate it’s clickable
-        panel.addEventListener("click", function () {
-            window.location.href = "/frontend/pages/cs240.html";
-        });
-    }
-
     container.appendChild(fade);
 
     return true;
+}
+
+/**
+ * Pins a class and moves it to the "Pinned Classes" section. 
+ * If already pinned, it will unpin it.
+ *
+ * @param {string} classID
+ * @param {HTMLElement} fade
+ * @param {HTMLElement} container
+ * @param {HTMLElement} pinButton
+ */
+function pinClass(classID, fade, container, pinButton) {
+    if (pinnedClasses.includes(classID)) {
+        // Unpin the class
+        pinnedClasses = pinnedClasses.filter(id => id !== classID); // Remove classID from pinnedClasses
+        pinButton.textContent = "Pin";
+
+        // Move the panel back to the original container
+        var originalContainer = document.querySelector("[panel-id='homepage']");
+        originalContainer.appendChild(fade);
+    } else {
+        // Pin the class
+        pinnedClasses.push(classID); // Add the class ID to the pinnedClasses array
+        pinButton.textContent = "Unpin";
+
+        // Move the panel to the "Pinned Classes" section
+        var pinnedContainer = document.getElementById("pinned-classes");
+        pinnedContainer.getElementsByClassName("content-panel")[0].appendChild(fade);
+    }
+
+    // Save the updated pinnedClasses to localStorage
+    localStorage.setItem("pinnedClasses", JSON.stringify(pinnedClasses));
 }
