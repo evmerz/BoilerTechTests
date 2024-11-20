@@ -84,7 +84,8 @@ function loadProject(classID, contentPanelName) {
     var userID = localStorage.getItem("userId");
     text.appendChild(heading);
     text.appendChild(cap);
-    console.log("this is userID:" + userID);
+    console.log(userID);
+
 
     panel.appendChild(text);
 
