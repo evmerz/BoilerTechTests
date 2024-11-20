@@ -63,6 +63,8 @@ function loadProject(classID, contentPanelName) {
     var fade = document.createElement("div");
     fade.classList.add("fade-in");
 
+    var link = document.createElement("a");
+
     var panel = document.createElement("div");
     panel.classList.add("project-panel");
 
@@ -86,6 +88,7 @@ function loadProject(classID, contentPanelName) {
 
 
     panel.appendChild(text);
+
     if (userID) {
         document.getElementById("pinned-classes").style.display = "block";
         panel.appendChild(pinButton);
@@ -94,7 +97,12 @@ function loadProject(classID, contentPanelName) {
         });
     }
 
-    fade.appendChild(panel);
+    link.style = "text-decoration: none;";
+    link.href = "/frontend/pages/cs240.html";
+    link.appendChild(panel);
+
+    fade.appendChild(link);
+
     container.appendChild(fade);
 
     return true;
