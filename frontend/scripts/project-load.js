@@ -84,7 +84,6 @@ function loadProject(classID, contentPanelName) {
     text.appendChild(heading);
     text.appendChild(cap);
 
-    userID = 5;
 
     panel.appendChild(text);
     if (userID) {
