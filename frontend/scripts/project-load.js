@@ -80,11 +80,12 @@ function loadProject(classID, contentPanelName) {
     pinButton.classList.add("button");
     pinButton.textContent = pinnedClasses.includes(classID) ? "Unpin" : "Pin";
 
-    var userID = localStorage.getItem("user-id");
+    var userID = localStorage.getItem("userID");
     text.appendChild(heading);
     text.appendChild(cap);
+    console.log(userID);
 
-    userID = 5;
+
 
     panel.appendChild(text);
     if (userID) {
