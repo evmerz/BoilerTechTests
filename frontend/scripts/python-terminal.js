@@ -130,6 +130,11 @@ document.getElementById("submit").addEventListener("click", async () => {
     localStorage.setItem("quizSubmitted", "true");
 });
 
+document.getElementById('reveal').addEventListener('click', () => {
+  const currentQuestion = quizData.questions[currentQuestionIndex];
+  document.getElementById('output').textContent = currentQuestion.solution;
+});
+
 async function run() {
     const code = editor.getValue().trim();
     userAnswers[currentQuestionIndex].code = code;

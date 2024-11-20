@@ -75,11 +75,6 @@ window.addEventListener("DOMContentLoaded", async function () {
 
     // Initially display the first question
     displayQuestion();
-
-    const quizSubmitted = localStorage.getItem("quizSubmitted");
-    if (quizSubmitted === "true") {
-        displayResults();
-    }
 });
 
 //this contains the user answers for each question
@@ -98,6 +93,11 @@ function displayQuestion() {
     document.getElementById("output").textContent = "";
     document.getElementById("header").textContent =
         "Question " + (currentQuestionIndex + 1);
+
+    const scoreContainer = document.getElementById("score-container");
+    if (scoreContainer) {
+        scoreContainer.style.display = "none";
+    }
 }
 
 document.getElementById("prev").addEventListener("click", () => {
@@ -122,17 +122,22 @@ document.getElementById("next").addEventListener("click", () => {
     displayQuestion();
 });
 
-document.getElementById("submit").addEventListener("click", async () => {
-    submitFlag = 1;
-    //for (let i = 0; i < questions.length; i++) {
-    //currentQuestionIndex = i;
-    await run();
-    //}
-    displayResults();
-    localStorage.setItem("quizSubmitted", "true");
-});
+// document.getElementById("submit").addEventListener("click", async () => {
+//     submitFlag = 1;
+//     //for (let i = 0; i < questions.length; i++) {
+//     //currentQuestionIndex = i;
+//     await run();
+//     //}
+//     displayResults();
+//     localStorage.setItem("quizSubmitted", "true");
+// });
 
-async function run() {
+document.getElementById('reveal').addEventListener('click', () => {
+    const currentQuestion = questionData.questions[currentQuestionIndex];
+    document.getElementById('output').textContent = currentQuestion.solution;
+  });
+
+  async function run() {
     const code = editor.getValue().trim();
     userAnswers[currentQuestionIndex].code = code;
     const currentQuestion = questionData.questions[currentQuestionIndex];
@@ -159,240 +164,114 @@ async function run() {
 
         # Test cases
         test_cases = ${JSON.stringify(testCases)}
+        hidden_cases = ${JSON.stringify(hiddenCases)}
         results = ""
-        hidden_str = ""
 
-        # Loop through the test cases
+        # Process regular test cases
+        results += "Public Test Cases:\\n\\n"
         for i, test in enumerate(test_cases, start=1):
             input_args = test['input']
             expected = test['expected']
 
-            # Dynamically look up the function by its name and call it
             if function_name in globals():
                 func = globals()[function_name]
                 result = func(*input_args)
 
-                # For regular cases, keep the original format
-                result_str = f"Test Case {i}\\nInput: {input_args}\\nOutput: {result}\\nExpected: {expected}. "
-                result_str += "Test Case PASSED" if result == expected else "Test Case FAILED"
-                results += result_str + "\\n\\n"
+                # Regular test case results
+                results += f"Test Case {i}\\nInput: {input_args}\\nOutput: {result}\\nExpected: {expected}. "
+                results += "Test Case PASSED" if result == expected else "Test Case FAILED"
+                results += "\\n\\n"
             else:
                 results += f"Function {function_name} not found.\\n"
 
-        # Uncomment this block when you want to check for submitFlag
-        # if ${submitFlag}:
-        hidden_str += "Hidden Test Cases:\\n\\n"
-        test_cases = ${JSON.stringify(hiddenCases)}
-
-        for i, test in enumerate(test_cases, start=1):
+        # Process hidden test cases
+        results += "Hidden Test Cases:\\n"
+        for i, test in enumerate(hidden_cases, start=1):
             input_args = test['input']
             expected = test['expected']
 
-            # Dynamically look up the function by its name and call it
             if function_name in globals():
                 func = globals()[function_name]
                 result = func(*input_args)
 
-                # For hidden cases, format as "[name]: [PASS/FAIL]"
+                # Add test case results with a newline after each
                 test_name = test.get('name', f"Hidden Test {i}")
-                hidden_str += f"{test_name}: {'PASSED' if result == expected else 'FAILED'}"
-                hidden_str += "\\n"
+                results += f"{test_name}: {'PASSED' if result == expected else 'FAILED'}"
+                results += "\\n\\n"
             else:
-                hidden_str += f"Function {function_name} not found.\\n"
+                results += f"Function {function_name} not found.\\n\\n"
+
+
 
         # Get the output from the redirected stdout
         output = sys.stdout.getvalue()
         sys.stdout = old_stdout  # Restore standard output
-        results += hidden_str
-        output + str(results)
+        results += output
+        results
     `);
 
         userAnswers[currentQuestionIndex].results = output;
-        // console.log("output: " + output);
 
-        document.getElementById("output").textContent =
-            output.split("Hidden Test Cases:")[0] || "";
+        // Display both regular and hidden test cases in the output box
+        document.getElementById("output").textContent = output;
     } catch (error) {
         document.getElementById("output").textContent = error;
-        // TODO: fill the userAnswers of current question with FAIL state for each regular and hidden test case.
-        // In case of an error, mark all test cases as "FAILED"
-        let failedOutput = "";
+
+        // Mark all test cases as failed if an error occurs
+        let failedOutput = "Public Test Cases:\n";
         testCases.forEach((_, i) => {
             failedOutput += `Test Case ${i + 1}: FAILED\n\n`;
         });
         failedOutput += "Hidden Test Cases:\n";
         hiddenCases.forEach((test, i) => {
-            failedOutput += `${
-                test.name || "Hidden Test " + (i + 1)
-            }: FAILED\n`;
+            failedOutput += `${test.name || "Hidden Test " + (i + 1)}: FAILED\n`;
         });
         userAnswers[currentQuestionIndex].results = failedOutput;
+        document.getElementById("output").textContent = failedOutput;
     }
 
     answerCount = userAnswers.filter(
         (answer) => answer.code && answer.code.includes("return")
     ).length;
     console.log("count: ", answerCount);
-    document.getElementById("submit").style.display =
-        answerCount === questionData.questions.length ? "inline-block" : "none";
-    submitFlag = 0;
 }
+
 
 // Run code function
 document.getElementById("run").addEventListener("click", async () => {
     await run();
+    var results = displayResults();
+
+    // Display the score in the score container
+    const scoreContainer = document.getElementById("score-container");
+    if (scoreContainer) {
+        scoreContainer.textContent = `Score: ${results}`;
+        scoreContainer.style.display = "block"; // Show the score container
+        const [score, total] = results.split('/').map(Number); // Split score and total (e.g., "4/4")
+        if (score === total) {
+            scoreContainer.style.backgroundColor = "#e8fcd3"; // Green for perfect score
+        } else {
+            scoreContainer.style.backgroundColor = "#ffffff"; // White for other scores
+        }
+    }
 });
 
 // // Change the 'Run' button label
 // document.getElementById('run').textContent = "Run";
 
 function displayResults() {
-    // Clear previous results
-    quizContainer.innerHTML = "";
-    resultContainer.innerHTML = "";
-    const savedResults = localStorage.getItem("savedResults");
+    let totalPasses = 0;
+    let totalTests = 0;
+    let totalScore = 0;
 
-    // Hide other elements on the page
-    const elementsToHide = [
-        document.getElementById("header"),
-        document.getElementById("question"),
-        document.getElementById("output"),
-        document.getElementById("code"),
-        document.getElementById("run"),
-        document.getElementById("prev"),
-        document.getElementById("next"),
-        document.getElementById("submit"),
-    ];
+    // Get the current question and its results
+    const currentQuestion = questionData.questions[currentQuestionIndex];
+    const userResult = userAnswers[currentQuestionIndex].results;
+    totalTests = currentQuestion.testCases.length + currentQuestion.hiddenCases.length;
 
-    elementsToHide.forEach((element) => {
-        if (element) element.style.display = "none";
-    });
+    // Count 'PASSED' occurrences in the user's results
+    totalPasses = (userResult.match(/PASSED/g) || []).length;
+    totalScore = `${totalPasses}/${totalTests}`;
 
-    const codeMirrorElement = document.querySelector(".CodeMirror");
-    if (codeMirrorElement) codeMirrorElement.style.display = "none";
-
-    // Scroll to the top of the page
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    if (savedResults) {
-        // TODO: load user answers from database and run the code against the test cases
-        // Load previously saved results if they exist
-        resultContainer.innerHTML = savedResults;
-    } else {
-        let totalPasses = 0;
-        let tests = 0;
-
-        // Create a string for the summary output
-        let summaryOutput = "<h2>Quiz Results:</h2>"; // Header for total results
-
-        // Iterate over each question to format the results
-        questionData.questions.forEach((question, i) => {
-            const userResult = userAnswers[i].results;
-            const totalTests =
-                question.testCases.length + question.hiddenCases.length;
-            tests += totalTests;
-            const passes = (userResult.match(/PASSED/g) || []).length; // Count 'PASSED' occurrences
-            totalPasses += passes;
-            const totalScore = `${passes}/${totalTests}`;
-
-            // Create the formatted output for each question
-            let output = `<h3>Question ${i + 1}: ${question.prompt}</h3>`;
-            output += `<pre>${userAnswers[i].code}</pre>`;
-            output += `<h4>Total Score: ${totalScore}</h4>`;
-            output += `<h4>Test Results:</h4>`;
-
-            // Split userResult into visible and hidden parts
-            const visibleResults = userResult
-                .split("Hidden Test Cases:")[0]
-                .trim(); // Results before "Hidden Test Cases:"
-            const hiddenResults = userResult
-                .split("Hidden Test Cases:")[1]
-                ?.trim(); // Results after "Hidden Test Cases:"
-
-            // Add the visible results
-            output += visibleResults
-                .replace(/\\n/g, "<br>")
-                .replace(/\n/g, "<br>"); // Handle both escaped and actual newlines
-
-            // Add the bold label for hidden test cases if it exists
-            if (hiddenResults) {
-                output += "<br><h4>Hidden Test Cases:</h4>"; // Bold label
-                output += hiddenResults
-                    .replace(/\\n/g, "<br>")
-                    .replace(/\n/g, "<br>"); // Handle both escaped and actual newlines
-            }
-
-            // Append the question output to the resultContainer
-            resultContainer.innerHTML += output + "<hr>"; // Add a separator between questions
-        });
-
-        // After all questions are processed, add the summary output
-        summaryOutput += `<h4>Total Test Cases: ${tests}</h4>`;
-        summaryOutput += `<h4>Total Passed: ${totalPasses}</h4>`;
-
-        // Insert the summary output at the top of the resultContainer
-        resultContainer.innerHTML = summaryOutput + resultContainer.innerHTML;
-
-        // Save the result content to localStorage
-        localStorage.setItem("savedResults", resultContainer.innerHTML);
-
-        // Save the result to the database
-        saveQuiz(resultContainer.innerHTML);
-    }
-
-    const retakeButton = document.createElement("button");
-    retakeButton.textContent = "Retake Quiz";
-    retakeButton.style.marginTop = "20px"; // Optional styling
-    retakeButton.addEventListener("click", () => {
-        // Remove flags for quiz submission and saved results
-        localStorage.removeItem("quizSubmitted");
-        localStorage.removeItem("savedResults");
-
-        // Refresh the page to reset the quiz view
-        window.location.reload();
-    });
-
-    // Append the button to the result container
-    resultContainer.appendChild(retakeButton);
+    return totalScore;
 }
-
-async function saveQuiz(results) {
-    console.log("saving!!!!");
-    const answerData = questionData.questions.map((questionData, index) => {
-        return {
-            questionID: questionData.questionID,
-            // answer: userAnswers[index].code
-            answer: results,
-        };
-    });
-
-    console.log("answer: ", answerData);
-
-    const url = `https://boilertechtests.com/api/quiz`;
-    try {
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                user_id: userID,
-                quiz_id: quizID,
-                answers: answerData,
-            }),
-        });
-
-        if (!response.ok) {
-            throw new Error("Failed to save quiz");
-        }
-
-        const data = await response.json();
-        console.log("Quiz saved successfully:", data);
-    } catch (error) {
-        console.error("Error saving quiz:", error);
-    }
-}
-
-
-
-

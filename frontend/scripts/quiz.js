@@ -101,7 +101,7 @@ function nextQuestion() {
  * Grades the quiz and stores results in local storage and the MySQL database (if the user is logged in).
  */
 async function storeQuizResults() {
-    
+
     const params = new URLSearchParams(location.search);
     quizID = params.get("quiz-id");
 
@@ -117,7 +117,7 @@ async function storeQuizResults() {
 
     // If there is a user logged in, store the quiz response in the database
     const userID = localStorage.getItem("userId");
-    if (userID) saveQuiz(userID, quizID, results);
+    if (userID) await saveQuiz(userID, quizID, results);
 }
 
 /**
@@ -184,7 +184,7 @@ async function getSubmission(userID, quizID) {
         const data = await response.json();
         console.log("Submission data:", data.submissionData);
 
-        return data.submissionData
+        return data.submissionData;
     } catch (error) {
         console.error("Error retrieving submission:", error);
         return null;

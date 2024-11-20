@@ -27,7 +27,8 @@
         "input": ["madam"],
         "expected": "madam"
       }
-    ]
+    ],
+    "solution": "Solution:\ndef reverse_string(s):\n    return s[::-1]"
   },
   {
     "prompt": "Write a Python function that counts the number of vowels in a string.",
@@ -56,7 +57,151 @@
         "input": ["aeiou"],
         "expected": 5
       }
-    ]
-  }
+    ],
+    "solution": "Solution:\ndef count_vowels(s):\n    vowels = 'aeiouAEIOU'\n    return sum(1 for char in s if char in vowels)"
+  },
+  {
+      "prompt": "Write a Python function that adds two numbers.",
+      "questionID": "eeea902a-66d7-4ad0-9220-9b122762e302",
+      "points": 1,
+      "functionSignature": "def add_numbers(a, b):",
+      "functionName": "add_numbers",
+      "testCases": [
+        {
+          "input": [
+            1.3,
+            2
+          ],
+          "expected": 3.3
+        },
+        {
+          "input": [
+            -1,
+            1
+          ],
+          "expected": 0
+        }
+      ],
+      "hiddenCases": [
+        {
+          "name": "positive positive",
+          "input": [
+            100,
+            3001
+          ],
+          "expected": 3101
+        },
+        {
+          "name": "negative positive",
+          "input": [
+            -3,
+            3
+          ],
+          "expected": 0
+        },
+        {
+          "name": "negative negative",
+          "input": [
+            -60,
+            -5
+          ],
+          "expected": -65
+        }
+      ],
+      "solution": "Solution:\ndef add_numbers(a, b):\n  return a + b"
+    },
+    {
+      "prompt": "Write a Python function that subtracts one number from another.",
+      "questionID": "bff07d81-5db8-4632-aa34-8ca6aff3d076",
+      "points": 1,
+      "functionSignature": "def subtract_numbers(a, b):",
+      "functionName": "subtract_numbers",
+      "testCases": [
+        {
+          "input": [
+            2,
+            1
+          ],
+          "expected": 1
+        },
+        {
+          "input": [
+            -6,
+            1
+          ],
+          "expected": -7
+        }
+      ],
+      "hiddenCases": [
+        {
+          "name": "positive negative",
+          "input": [
+            2,
+            -1
+          ],
+          "expected": 3
+        },
+        {
+          "name": "negative negative",
+          "input": [
+            -6,
+            -1
+          ],
+          "expected": -5
+        }
+      ],
+      "solution": "Solution:\ndef subtract_numbers(a, b):\n  return a - b"
+    },
+    {
+      "prompt": "Write a Python function that removes consecutive duplicate characters from a string.",
+      "questionID": "21d12ea3-f170-44b4-a8ab-ebc654e8cb63",
+      "points": 1,
+      "functionSignature": "def remove_consecutive_duplicates(s):",
+      "functionName": "remove_consecutive_duplicates",
+      "testCases": [
+        {
+          "input": [
+            "aabbcc"
+          ],
+          "expected": "abc"
+        },
+        {
+          "input": [
+            "aaabbbccc"
+          ],
+          "expected": "abc"
+        },
+        {
+          "input": [
+            "abccba"
+          ],
+          "expected": "abcba"
+        }
+      ],
+      "hiddenCases": [
+        {
+          "name": "empty",
+          "input": [
+            ""
+          ],
+          "expected": ""
+        },
+        {
+          "name": "no duplicates",
+          "input": [
+            "abc"
+          ],
+          "expected": "abc"
+        },
+        {
+          "name": "many duplicates",
+          "input": [
+            "aabbccddeeff"
+          ],
+          "expected": "abcdef"
+        }
+      ],
+      "solution": "Solution:\ndef remove_consecutive_duplicates(s):\n  result = []\n  for i, char in enumerate(s):\n    if i == 0 or char != s[i - 1]:\n      result.append(char)\n  return ''.join(result)"
+    }
   ]
 }
