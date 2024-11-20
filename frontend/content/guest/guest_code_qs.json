@@ -1,0 +1,62 @@
+{
+  "questions": [
+  {
+    "prompt": "Write a Python function that returns the reverse of a string.",
+    "questionID": "a9f83e8b-1e5a-4b62-9a68-9cf1b5e5a19c",
+    "points": 1,
+    "functionSignature": "def reverse_string(s):",
+    "functionName": "reverse_string",
+    "testCases": [
+      {
+        "input": ["hello"],
+        "expected": "olleh"
+      },
+      {
+        "input": ["Python"],
+        "expected": "nohtyP"
+      }
+    ],
+    "hiddenCases": [
+      {
+        "name": "empty string",
+        "input": [""],
+        "expected": ""
+      },
+      {
+        "name": "palindrome",
+        "input": ["madam"],
+        "expected": "madam"
+      }
+    ]
+  },
+  {
+    "prompt": "Write a Python function that counts the number of vowels in a string.",
+    "questionID": "5f8b7c5e-9baf-4526-805e-92d26e929f88",
+    "points": 1,
+    "functionSignature": "def count_vowels(s):",
+    "functionName": "count_vowels",
+    "testCases": [
+      {
+        "input": ["hello"],
+        "expected": 2
+      },
+      {
+        "input": ["sky"],
+        "expected": 0
+      }
+    ],
+    "hiddenCases": [
+      {
+        "name": "mixed case",
+        "input": ["ApPle"],
+        "expected": 2
+      },
+      {
+        "name": "only vowels",
+        "input": ["aeiou"],
+        "expected": 5
+      }
+    ]
+  }
+  ]
+}
