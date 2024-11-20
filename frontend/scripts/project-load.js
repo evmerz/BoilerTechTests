@@ -60,6 +60,8 @@ function loadProject(classID, contentPanelName) {
     var fade = document.createElement("div");
     fade.classList.add("fade-in");
 
+    var link = document.createElement("a");
+
     var panel = document.createElement("div");
     panel.classList.add("project-panel");
 
@@ -82,7 +84,11 @@ function loadProject(classID, contentPanelName) {
     // panel.appendChild(img);
     panel.appendChild(text);
 
-    fade.appendChild(panel);
+    link.style = "text-decoration: none;";
+    link.href = "/frontend/pages/cs240.html";
+    link.appendChild(panel);
+
+    fade.appendChild(link);
 
 
     if (classData[classID].name === "CS240") {
