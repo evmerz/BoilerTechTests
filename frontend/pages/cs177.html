@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 
-    <title>CS240 - BoilerTechTests</title>
+    <title>CS177 - BoilerTechTests</title>
 </head>
 
 <body>
@@ -24,7 +24,7 @@
         <div id="spacer"></div>
 
         <div class="sub-container">
-            <h2>CS240</h2>
+            <h2>CS177</h2>
 
             <!-- Exam and topic container where topics will be dynamically loaded -->
             <div id="exam-sections" class="content-panel">
@@ -43,11 +43,17 @@
         const cs240Data = {
             exams: [
                 {
-                    title: "SELECT AN EXAM TO STUDY FOR",
+                    title: "EXAM 1",
                     topics: [
-                        { name: "EXAM 1", id: "cs240-exam1" },
-                        { name: "EXAM 2", id: "cs240-exam2" },
-                        { name: "EXAM 3", id: "cs240-exam3"}
+                        { name: "Topic 1 - if-statements", id: "if-statements" },
+                        { name: "Topic 2 - for-loops", id: "for-loops" }
+                    ]
+                },
+                {
+                    title: "EXAM 2",
+                    topics: [
+                        { name: "Topic 3 - arrays (CODING)", id: "terminal" },
+                        { name: "Topic 4 - linked lists", id: "linked-lists" }
                     ]
                 }
             ]

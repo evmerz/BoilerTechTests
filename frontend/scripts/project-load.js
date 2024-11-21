@@ -98,7 +98,11 @@ function loadProject(classID, contentPanelName) {
     }
 
     link.style = "text-decoration: none;";
-    link.href = "/frontend/pages/cs240.html";
+    if (classID === "cs240") {
+        link.href = "/frontend/pages/cs240.html";
+    } else {  //cs177
+        link.href = "/frontend/pages/cs177.html";
+    }
     link.appendChild(panel);
 
     fade.appendChild(link);
