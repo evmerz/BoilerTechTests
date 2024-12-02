@@ -1,175 +1,180 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz with Scoring</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            max-width: 600px;
-        }
-        .question {
-            margin-bottom: 20px;
-        }
-        .options {
-            list-style-type: none;
-            padding: 0;
-        }
-        .options li {
-            margin-bottom: 10px;
-        }
-        .highlight-correct {
-            background-color: #c8e6c9; /* Light green */
-        }
-        .highlight-incorrect {
-            background-color: #ffcdd2; /* Light red */
-        }
-        .score-box {
-            margin-top: 10px;
-            font-weight: bold;
-        }
-        button {
-            margin: 5px;
-            padding: 10px 20px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Quiz</h1>
-    <div id="quiz-container">
-        <div class="question">
-            <p id="question-text"></p>
-        </div>
-        <ul class="options" id="options-list"></ul>
-        <div class="score-box" id="score-box"></div>
-        <div>
-            <button id="prev-btn">Previous</button>
-            <button id="next-btn">Next</button>
-            <button id="submit-btn">Submit</button>
-        </div>
-    </div>
 
-    <script async>
-        async function getData() {
-            const response = await fetch("/frontend/content/guest/guest_mc_qs.json");
-            if (!response.ok) {
-                console.error(`Failed to fetch quiz data: ${response.status}`);
-                return null;
-            }
-            return await response.json();
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="/frontend/styles/navigation.css">
+  <link rel="stylesheet" href="/frontend/styles/global.css">
+  <link rel="stylesheet" href="/frontend/styles/guest_mc.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+    rel="stylesheet">
+
+  <title>BoilerTechTests</title>
+</head>
+
+<body>
+  
+  <div id="navbar-load"></div>
+
+  <!-- ================================ MAIN CONTAINER FOR WEBSITE ================================ -->
+  <div class="container">
+    <!-- Include spacers wherever you deem necessary -->
+    <!-- <div id="spacer"></div> -->
+
+    <!-- ======== Always use sub-containers for the actual content to maintain proper spacing ======== -->
+    <div class="sub-container">
+      <div class="header-panel" style="margin-top: 0; margin-bottom: 0;"></div>
+
+      <h1 id="header" class="fade-in">Practice</h1>
+      <div id="quiz-container">
+          <div class="question">
+              <p id="question-text"></p>
+          </div>
+          <ul class="options" id="options-list"></ul>
+          <div>
+              <button class="button fade-in" style="--delay: 0.2s; margin-top: 10px;" id="prev-btn">Previous</button>
+              <button class="button fade-in" style="--delay: 0.2s; margin-top: 10px;" id="next-btn">Next</button>
+              <button class="button fade-in" style="--delay: 0.2s; margin-top: 10px;" id="submit-btn">Submit</button>
+          </div>
+          <div class="score-box" id="score-box"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
+    crossorigin="anonymous"></script>
+  <script src="/frontend/scripts/navigation.js"></script>
+  <script src="/frontend/scripts/scrollbar.js" defer></script>
+
+  <script async>
+    async function getData() {
+        const response = await fetch("/frontend/content/guest/guest_mc_qs.json");
+        if (!response.ok) {
+            console.error(`Failed to fetch quiz data: ${response.status}`);
+            return null;
         }
-    
-        async function initializeQuiz() {
-            const quizData = await getData();
-            if (!quizData) {
-                alert("Failed to load quiz data. Please try again later.");
+        return await response.json();
+    }
+
+    async function initializeQuiz() {
+        const quizData = await getData();
+        if (!quizData) {
+            alert("Failed to load quiz data. Please try again later.");
+            return;
+        }
+
+        let currentQuestionIndex = 0;
+        let selectedAnswer = null;
+
+        const questionTextElement = document.getElementById('question-text');
+        const optionsListElement = document.getElementById('options-list');
+        const scoreBoxElement = document.getElementById('score-box');
+        const prevButton = document.getElementById('prev-btn');
+        const nextButton = document.getElementById('next-btn');
+        const submitButton = document.getElementById('submit-btn');
+
+        // Initialize scores and answers from sessionStorage or set to defaults
+        const scores = JSON.parse(sessionStorage.getItem('quizScores')) || 
+            Array(quizData.questions.length).fill(null);
+        const userAnswers = JSON.parse(sessionStorage.getItem('userAnswers')) || 
+            Array(quizData.questions.length).fill(null);
+
+        function saveState() {
+            sessionStorage.setItem('quizScores', JSON.stringify(scores));
+            sessionStorage.setItem('userAnswers', JSON.stringify(userAnswers));
+        }
+
+        function highlightAnswer(selected, correctAnswerID) {
+            const options = document.querySelectorAll('input[name="option"]');
+            options.forEach(option => {
+                const parent = option.parentElement.parentElement;
+                parent.classList.remove('highlight-correct', 'highlight-incorrect');
+
+                if (option.value === selected) {
+                    parent.classList.add(selected === correctAnswerID ? 'highlight-correct' : 'highlight-incorrect');
+                }
+                if (option.value === correctAnswerID && selected !== correctAnswerID) {
+                    parent.classList.add('highlight-correct');
+                }
+            });
+        }
+
+        function loadQuestion(index) {
+            const question = quizData.questions[index];
+            questionTextElement.textContent = question.question;
+            optionsListElement.innerHTML = '';
+            scoreBoxElement.textContent = scores[index] !== null 
+                ? `Score: ${scores[index]}/${question.points}` 
+                : 'Score: Not Attempted';
+
+            selectedAnswer = userAnswers[index];
+
+            question.options.forEach(option => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <label>
+                        <input type="radio" name="option" value="${option.optionID}" ${
+                    selectedAnswer === option.optionID ? 'checked' : ''
+                }>
+                        ${option.text}
+                    </label>
+                `;
+                listItem.querySelector('input').addEventListener('change', () => {
+                    selectedAnswer = option.optionID;
+                });
+                optionsListElement.appendChild(listItem);
+            });
+
+            // Highlight answers if the question has already been attempted
+            if (userAnswers[index] !== null) {
+                highlightAnswer(userAnswers[index], question.answerID);
+            }
+            document.getElementById("header").textContent = "Question " + (currentQuestionIndex + 1);
+        }
+
+        submitButton.addEventListener('click', () => {
+            if (!selectedAnswer) {
+                alert('Please select an answer before submitting.');
                 return;
             }
-    
-            let currentQuestionIndex = 0;
-            let selectedAnswer = null;
-    
-            const questionTextElement = document.getElementById('question-text');
-            const optionsListElement = document.getElementById('options-list');
-            const scoreBoxElement = document.getElementById('score-box');
-            const prevButton = document.getElementById('prev-btn');
-            const nextButton = document.getElementById('next-btn');
-            const submitButton = document.getElementById('submit-btn');
-    
-            // Initialize scores and answers from sessionStorage or set to defaults
-            const scores = JSON.parse(sessionStorage.getItem('quizScores')) || 
-                Array(quizData.questions.length).fill(null);
-            const userAnswers = JSON.parse(sessionStorage.getItem('userAnswers')) || 
-                Array(quizData.questions.length).fill(null);
-    
-            function saveState() {
-                sessionStorage.setItem('quizScores', JSON.stringify(scores));
-                sessionStorage.setItem('userAnswers', JSON.stringify(userAnswers));
-            }
-    
-            function highlightAnswer(selected, correctAnswerID) {
-                const options = document.querySelectorAll('input[name="option"]');
-                options.forEach(option => {
-                    const parent = option.parentElement.parentElement;
-                    parent.classList.remove('highlight-correct', 'highlight-incorrect');
-    
-                    if (option.value === selected) {
-                        parent.classList.add(selected === correctAnswerID ? 'highlight-correct' : 'highlight-incorrect');
-                    }
-                    if (option.value === correctAnswerID && selected !== correctAnswerID) {
-                        parent.classList.add('highlight-correct');
-                    }
-                });
-            }
-    
-            function loadQuestion(index) {
-                const question = quizData.questions[index];
-                questionTextElement.textContent = question.question;
-                optionsListElement.innerHTML = '';
-                scoreBoxElement.textContent = scores[index] !== null 
-                    ? `Score: ${scores[index]}/${question.points}` 
-                    : 'Score: Not Attempted';
-    
-                selectedAnswer = userAnswers[index];
-    
-                question.options.forEach(option => {
-                    const listItem = document.createElement('li');
-                    listItem.innerHTML = `
-                        <label>
-                            <input type="radio" name="option" value="${option.optionID}" ${
-                        selectedAnswer === option.optionID ? 'checked' : ''
-                    }>
-                            ${option.text}
-                        </label>
-                    `;
-                    listItem.querySelector('input').addEventListener('change', () => {
-                        selectedAnswer = option.optionID;
-                    });
-                    optionsListElement.appendChild(listItem);
-                });
-    
-                // Highlight answers if the question has already been attempted
-                if (userAnswers[index] !== null) {
-                    highlightAnswer(userAnswers[index], question.answerID);
-                }
-            }
-    
-            submitButton.addEventListener('click', () => {
-                if (!selectedAnswer) {
-                    alert('Please select an answer before submitting.');
-                    return;
-                }
-    
-                const currentQuestion = quizData.questions[currentQuestionIndex];
-                const isCorrect = selectedAnswer === currentQuestion.answerID;
-                scores[currentQuestionIndex] = isCorrect ? currentQuestion.points : 0;
-                userAnswers[currentQuestionIndex] = selectedAnswer;
-    
-                saveState();
-                scoreBoxElement.textContent = `Score: ${scores[currentQuestionIndex]}/${currentQuestion.points}`;
-                highlightAnswer(selectedAnswer, currentQuestion.answerID);
-            });
-    
-            prevButton.addEventListener('click', () => {
-                currentQuestionIndex = (currentQuestionIndex - 1 + quizData.questions.length) % quizData.questions.length;
-                loadQuestion(currentQuestionIndex);
-            });
-    
-            nextButton.addEventListener('click', () => {
-                currentQuestionIndex = (currentQuestionIndex + 1) % quizData.questions.length;
-                loadQuestion(currentQuestionIndex);
-            });
-    
-            // Load the first question
+
+            const currentQuestion = quizData.questions[currentQuestionIndex];
+            const isCorrect = selectedAnswer === currentQuestion.answerID;
+            scores[currentQuestionIndex] = isCorrect ? currentQuestion.points : 0;
+            userAnswers[currentQuestionIndex] = selectedAnswer;
+
+            saveState();
+            scoreBoxElement.textContent = `Score: ${scores[currentQuestionIndex]}/${currentQuestion.points}`;
+            highlightAnswer(selectedAnswer, currentQuestion.answerID);
+        });
+
+        prevButton.addEventListener('click', () => {
+            currentQuestionIndex = (currentQuestionIndex - 1 + quizData.questions.length) % quizData.questions.length;
             loadQuestion(currentQuestionIndex);
-        }
-    
-        // Run the initialize function
-        initializeQuiz();
-    </script>
-    
-    
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentQuestionIndex = (currentQuestionIndex + 1) % quizData.questions.length;
+            loadQuestion(currentQuestionIndex);
+        });
+
+        // Load the first question
+        loadQuestion(currentQuestionIndex);
+    }
+
+    // Run the initialize function
+    initializeQuiz();
+  </script>
 </body>
+
 </html>
