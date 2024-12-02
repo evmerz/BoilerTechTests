@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            max-width: 600px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            margin-bottom: 10px;
+        }
+        .highlight-correct {
+            background-color: #c8e6c9; /* Light green */
+        }
+        .highlight-incorrect {
+            background-color: #ffcdd2; /* Light red */
+        }
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Quiz</h1>
+    <div id="quiz-container">
+        <div class="question">
+            <p id="question-text"></p>
+        </div>
+        <ul class="options" id="options-list"></ul>
+        <div>
+            <button id="prev-btn">Previous</button>
+            <button id="next-btn">Next</button>
+            <button id="submit-btn">Submit</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = {
+            "questions": [
+                {
+                    "question": "What does the len() function do in Python?",
+                    "questionID": "Q-002",
+                    "answerID": "A-001",
+                    "points": 1,
+                    "options": [
+                        {"optionID": "A-001", "text": "Returns the number of elements in an iterable"},
+                        {"optionID": "A-002", "text": "Returns the largest number in a list"},
+                        {"optionID": "A-003", "text": "Converts an integer to a string"},
+                        {"optionID": "A-004", "text": "Calculates the length of a string only"}
+                    ]
+                },
+                {
+                    "question": "Which of the following is NOT a valid keyword in Python?",
+                    "questionID": "Q-003",
+                    "answerID": "A-004",
+                    "points": 1,
+                    "options": [
+                        {"optionID": "A-001", "text": "pass"},
+                        {"optionID": "A-002", "text": "yield"},
+                        {"optionID": "A-003", "text": "assert"},
+                        {"optionID": "A-004", "text": "includes"}
+                    ]
+                },
+                {
+                    "question": "What is the output of the following code?\n\nx = [1, 2, 3]\nprint(x[1])",
+                    "questionID": "Q-004",
+                    "answerID": "A-002",
+                    "points": 1,
+                    "options": [
+                        {"optionID": "A-001", "text": "1"},
+                        {"optionID": "A-002", "text": "2"},
+                        {"optionID": "A-003", "text": "[2]"},
+                        {"optionID": "A-004", "text": "IndexError"}
+                    ]
+                }
+                // Add more questions here as needed
+            ]
+        };
+
+        let currentQuestionIndex = 0;
+        let selectedAnswer = null;
+
+        const questionTextElement = document.getElementById('question-text');
+        const optionsListElement = document.getElementById('options-list');
+        const prevButton = document.getElementById('prev-btn');
+        const nextButton = document.getElementById('next-btn');
+        const submitButton = document.getElementById('submit-btn');
+
+        function loadQuestion(index) {
+            const question = quizData.questions[index];
+            questionTextElement.textContent = question.question;
+            optionsListElement.innerHTML = '';
+            selectedAnswer = null;
+
+            question.options.forEach(option => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <label>
+                        <input type="radio" name="option" value="${option.optionID}">
+                        ${option.text}
+                    </label>
+                `;
+                listItem.querySelector('input').addEventListener('change', () => {
+                    selectedAnswer = option.optionID;
+                });
+                optionsListElement.appendChild(listItem);
+            });
+        }
+
+        function highlightAnswer(isCorrect, correctAnswerID) {
+            const options = document.querySelectorAll('input[name="option"]');
+            options.forEach(option => {
+                const parent = option.parentElement.parentElement;
+                parent.classList.remove('highlight-correct', 'highlight-incorrect');
+
+                if (option.value === selectedAnswer) {
+                    parent.classList.add(isCorrect ? 'highlight-correct' : 'highlight-incorrect');
+                }
+                if (option.value === correctAnswerID && !isCorrect) {
+                    parent.classList.add('highlight-correct');
+                }
+            });
+        }
+
+        prevButton.addEventListener('click', () => {
+            currentQuestionIndex = (currentQuestionIndex - 1 + quizData.questions.length) % quizData.questions.length;
+            loadQuestion(currentQuestionIndex);
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentQuestionIndex = (currentQuestionIndex + 1) % quizData.questions.length;
+            loadQuestion(currentQuestionIndex);
+        });
+
+        submitButton.addEventListener('click', () => {
+            if (!selectedAnswer) {
+                alert('Please select an answer before submitting.');
+                return;
+            }
+
+            const currentQuestion = quizData.questions[currentQuestionIndex];
+            const isCorrect = selectedAnswer === currentQuestion.answerID;
+            highlightAnswer(isCorrect, currentQuestion.answerID);
+        });
+
+        // Load the first question
+        loadQuestion(currentQuestionIndex);
+    </script>
+</body>
+</html>

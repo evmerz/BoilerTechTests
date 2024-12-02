@@ -1,24 +1,73 @@
-// have an entire new page for guests to practice individual questions
-
-function loadQuestions() {
-    // load questions from guest-qs file
-    // display to page, for each question call submitQuestion
+async function loadQuizData() {
+    var quizData = await fetch("/frontend/content/guest/guest_mc_qs.json");
+    return quizData;
 }
 
-function gradeQuestion() {
-    // grade the question against quiz answers
-    // save to session storage
-    // take them to a "results" page or display results somehow
+let currentQuestionIndex = 0;
+let selectedAnswer = null;
+
+const questionTextElement = document.getElementById('question-text');
+const optionsListElement = document.getElementById('options-list');
+const prevButton = document.getElementById('prev-btn');
+const nextButton = document.getElementById('next-btn');
+const submitButton = document.getElementById('submit-btn');
+
+function loadQuestion(index) {
+    const question = quizData.questions[index];
+    questionTextElement.textContent = question.question;
+    optionsListElement.innerHTML = '';
+    selectedAnswer = null;
+
+    question.options.forEach(option => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+            <label>
+                <input type="radio" name="option" value="${option.optionID}">
+                ${option.text}
+            </label>
+        `;
+        listItem.querySelector('input').addEventListener('change', () => {
+            selectedAnswer = option.optionID;
+        });
+        optionsListElement.appendChild(listItem);
+    });
 }
 
-// loadMCQs()
-    // load in each question, allow them to answer one at a time
-    // they can immediately see their results, and can only retake the question or go back to the page
-    // they can see correct/incorrect answers
-    // mc questions only
+function highlightAnswer(isCorrect, correctAnswerID) {
+    const options = document.querySelectorAll('input[name="option"]');
+    options.forEach(option => {
+        const parent = option.parentElement.parentElement;
+        parent.classList.remove('highlight-correct', 'highlight-incorrect');
 
-// loadCodingQs()
-    // load in coding questions, same thing as above
-    // only allow them to run/submit one at a time
+        if (option.value === selectedAnswer) {
+            parent.classList.add(isCorrect ? 'highlight-correct' : 'highlight-incorrect');
+        }
+        if (option.value === correctAnswerID && !isCorrect) {
+            parent.classList.add('highlight-correct');
+        }
+    });
+}
 
-// only save to session storage -> item('guest-mc') or item('guest-code')
+prevButton.addEventListener('click', () => {
+    currentQuestionIndex = (currentQuestionIndex - 1 + quizData.questions.length) % quizData.questions.length;
+    loadQuestion(currentQuestionIndex);
+});
+
+nextButton.addEventListener('click', () => {
+    currentQuestionIndex = (currentQuestionIndex + 1) % quizData.questions.length;
+    loadQuestion(currentQuestionIndex);
+});
+
+submitButton.addEventListener('click', () => {
+    if (!selectedAnswer) {
+        alert('Please select an answer before submitting.');
+        return;
+    }
+
+    const currentQuestion = quizData.questions[currentQuestionIndex];
+    const isCorrect = selectedAnswer === currentQuestion.answerID;
+    highlightAnswer(isCorrect, currentQuestion.answerID);
+});
+
+// Load the first question
+loadQuestion(currentQuestionIndex);
