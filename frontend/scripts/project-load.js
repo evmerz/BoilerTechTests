@@ -89,7 +89,6 @@ function loadProject(classID, contentPanelName) {
 
     panel.appendChild(text);
 
-    userID = 5;
     if (userID) {
         document.getElementById("pinned-classes").style.display = "block";
         panel.appendChild(pinButton);
