@@ -8,9 +8,9 @@ let selectedAnswer = null;
 
 const questionTextElement = document.getElementById('question-text');
 const optionsListElement = document.getElementById('options-list');
-const prevButton = document.getElementById('prev-btn');
-const nextButton = document.getElementById('next-btn');
-const submitButton = document.getElementById('submit-btn');
+const prevButton = document.getElementById('prev');
+const nextButton = document.getElementById('next');
+const submitButton = document.getElementById('submit');
 
 function loadQuestion(index) {
     const question = quizData.questions[index];

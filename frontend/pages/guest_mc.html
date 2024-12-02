@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz</title>
+    <title>Quiz with Scoring</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -26,6 +26,10 @@
         .highlight-incorrect {
             background-color: #ffcdd2; /* Light red */
         }
+        .score-box {
+            margin-top: 10px;
+            font-weight: bold;
+        }
         button {
             margin: 5px;
             padding: 10px 20px;
@@ -39,6 +43,7 @@
             <p id="question-text"></p>
         </div>
         <ul class="options" id="options-list"></ul>
+        <div class="score-box" id="score-box"></div>
         <div>
             <button id="prev-btn">Previous</button>
             <button id="next-btn">Next</button>
@@ -46,117 +51,125 @@
         </div>
     </div>
 
-    <script>
-        const quizData = {
-            "questions": [
-                {
-                    "question": "What does the len() function do in Python?",
-                    "questionID": "Q-002",
-                    "answerID": "A-001",
-                    "points": 1,
-                    "options": [
-                        {"optionID": "A-001", "text": "Returns the number of elements in an iterable"},
-                        {"optionID": "A-002", "text": "Returns the largest number in a list"},
-                        {"optionID": "A-003", "text": "Converts an integer to a string"},
-                        {"optionID": "A-004", "text": "Calculates the length of a string only"}
-                    ]
-                },
-                {
-                    "question": "Which of the following is NOT a valid keyword in Python?",
-                    "questionID": "Q-003",
-                    "answerID": "A-004",
-                    "points": 1,
-                    "options": [
-                        {"optionID": "A-001", "text": "pass"},
-                        {"optionID": "A-002", "text": "yield"},
-                        {"optionID": "A-003", "text": "assert"},
-                        {"optionID": "A-004", "text": "includes"}
-                    ]
-                },
-                {
-                    "question": "What is the output of the following code?\n\nx = [1, 2, 3]\nprint(x[1])",
-                    "questionID": "Q-004",
-                    "answerID": "A-002",
-                    "points": 1,
-                    "options": [
-                        {"optionID": "A-001", "text": "1"},
-                        {"optionID": "A-002", "text": "2"},
-                        {"optionID": "A-003", "text": "[2]"},
-                        {"optionID": "A-004", "text": "IndexError"}
-                    ]
-                }
-                // Add more questions here as needed
-            ]
-        };
-
-        let currentQuestionIndex = 0;
-        let selectedAnswer = null;
-
-        const questionTextElement = document.getElementById('question-text');
-        const optionsListElement = document.getElementById('options-list');
-        const prevButton = document.getElementById('prev-btn');
-        const nextButton = document.getElementById('next-btn');
-        const submitButton = document.getElementById('submit-btn');
-
-        function loadQuestion(index) {
-            const question = quizData.questions[index];
-            questionTextElement.textContent = question.question;
-            optionsListElement.innerHTML = '';
-            selectedAnswer = null;
-
-            question.options.forEach(option => {
-                const listItem = document.createElement('li');
-                listItem.innerHTML = `
-                    <label>
-                        <input type="radio" name="option" value="${option.optionID}">
-                        ${option.text}
-                    </label>
-                `;
-                listItem.querySelector('input').addEventListener('change', () => {
-                    selectedAnswer = option.optionID;
-                });
-                optionsListElement.appendChild(listItem);
-            });
+    <script async>
+        async function getData() {
+            const response = await fetch("/frontend/content/guest/guest_mc_qs.json");
+            if (!response.ok) {
+                console.error(`Failed to fetch quiz data: ${response.status}`);
+                return null;
+            }
+            return await response.json();
         }
-
-        function highlightAnswer(isCorrect, correctAnswerID) {
-            const options = document.querySelectorAll('input[name="option"]');
-            options.forEach(option => {
-                const parent = option.parentElement.parentElement;
-                parent.classList.remove('highlight-correct', 'highlight-incorrect');
-
-                if (option.value === selectedAnswer) {
-                    parent.classList.add(isCorrect ? 'highlight-correct' : 'highlight-incorrect');
-                }
-                if (option.value === correctAnswerID && !isCorrect) {
-                    parent.classList.add('highlight-correct');
-                }
-            });
-        }
-
-        prevButton.addEventListener('click', () => {
-            currentQuestionIndex = (currentQuestionIndex - 1 + quizData.questions.length) % quizData.questions.length;
-            loadQuestion(currentQuestionIndex);
-        });
-
-        nextButton.addEventListener('click', () => {
-            currentQuestionIndex = (currentQuestionIndex + 1) % quizData.questions.length;
-            loadQuestion(currentQuestionIndex);
-        });
-
-        submitButton.addEventListener('click', () => {
-            if (!selectedAnswer) {
-                alert('Please select an answer before submitting.');
+    
+        async function initializeQuiz() {
+            const quizData = await getData();
+            if (!quizData) {
+                alert("Failed to load quiz data. Please try again later.");
                 return;
             }
-
-            const currentQuestion = quizData.questions[currentQuestionIndex];
-            const isCorrect = selectedAnswer === currentQuestion.answerID;
-            highlightAnswer(isCorrect, currentQuestion.answerID);
-        });
-
-        // Load the first question
-        loadQuestion(currentQuestionIndex);
+    
+            let currentQuestionIndex = 0;
+            let selectedAnswer = null;
+    
+            const questionTextElement = document.getElementById('question-text');
+            const optionsListElement = document.getElementById('options-list');
+            const scoreBoxElement = document.getElementById('score-box');
+            const prevButton = document.getElementById('prev-btn');
+            const nextButton = document.getElementById('next-btn');
+            const submitButton = document.getElementById('submit-btn');
+    
+            // Initialize scores and answers from sessionStorage or set to defaults
+            const scores = JSON.parse(sessionStorage.getItem('quizScores')) || 
+                Array(quizData.questions.length).fill(null);
+            const userAnswers = JSON.parse(sessionStorage.getItem('userAnswers')) || 
+                Array(quizData.questions.length).fill(null);
+    
+            function saveState() {
+                sessionStorage.setItem('quizScores', JSON.stringify(scores));
+                sessionStorage.setItem('userAnswers', JSON.stringify(userAnswers));
+            }
+    
+            function highlightAnswer(selected, correctAnswerID) {
+                const options = document.querySelectorAll('input[name="option"]');
+                options.forEach(option => {
+                    const parent = option.parentElement.parentElement;
+                    parent.classList.remove('highlight-correct', 'highlight-incorrect');
+    
+                    if (option.value === selected) {
+                        parent.classList.add(selected === correctAnswerID ? 'highlight-correct' : 'highlight-incorrect');
+                    }
+                    if (option.value === correctAnswerID && selected !== correctAnswerID) {
+                        parent.classList.add('highlight-correct');
+                    }
+                });
+            }
+    
+            function loadQuestion(index) {
+                const question = quizData.questions[index];
+                questionTextElement.textContent = question.question;
+                optionsListElement.innerHTML = '';
+                scoreBoxElement.textContent = scores[index] !== null 
+                    ? `Score: ${scores[index]}/${question.points}` 
+                    : 'Score: Not Attempted';
+    
+                selectedAnswer = userAnswers[index];
+    
+                question.options.forEach(option => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `
+                        <label>
+                            <input type="radio" name="option" value="${option.optionID}" ${
+                        selectedAnswer === option.optionID ? 'checked' : ''
+                    }>
+                            ${option.text}
+                        </label>
+                    `;
+                    listItem.querySelector('input').addEventListener('change', () => {
+                        selectedAnswer = option.optionID;
+                    });
+                    optionsListElement.appendChild(listItem);
+                });
+    
+                // Highlight answers if the question has already been attempted
+                if (userAnswers[index] !== null) {
+                    highlightAnswer(userAnswers[index], question.answerID);
+                }
+            }
+    
+            submitButton.addEventListener('click', () => {
+                if (!selectedAnswer) {
+                    alert('Please select an answer before submitting.');
+                    return;
+                }
+    
+                const currentQuestion = quizData.questions[currentQuestionIndex];
+                const isCorrect = selectedAnswer === currentQuestion.answerID;
+                scores[currentQuestionIndex] = isCorrect ? currentQuestion.points : 0;
+                userAnswers[currentQuestionIndex] = selectedAnswer;
+    
+                saveState();
+                scoreBoxElement.textContent = `Score: ${scores[currentQuestionIndex]}/${currentQuestion.points}`;
+                highlightAnswer(selectedAnswer, currentQuestion.answerID);
+            });
+    
+            prevButton.addEventListener('click', () => {
+                currentQuestionIndex = (currentQuestionIndex - 1 + quizData.questions.length) % quizData.questions.length;
+                loadQuestion(currentQuestionIndex);
+            });
+    
+            nextButton.addEventListener('click', () => {
+                currentQuestionIndex = (currentQuestionIndex + 1) % quizData.questions.length;
+                loadQuestion(currentQuestionIndex);
+            });
+    
+            // Load the first question
+            loadQuestion(currentQuestionIndex);
+        }
+    
+        // Run the initialize function
+        initializeQuiz();
     </script>
+    
+    
 </body>
 </html>
