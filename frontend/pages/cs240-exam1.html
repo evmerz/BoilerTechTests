@@ -86,6 +86,7 @@
                     button.addEventListener('click', async function() {
                         const topicKey = topic.id;
                         const quizID = await getQuizID(topic.id);
+                        console.log("DEBUG quizID:", quizID);
                         const userID = localStorage.getItem('userId');
 
                         // If the user is logged in
