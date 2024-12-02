@@ -15,6 +15,10 @@
     {
       "quizID": "9adbe2e4-5b4b-4a1b-8a75-8d91e51a6af4",
       "filePath": "/frontend/content/quizzes/quiz_for-loops.json"
+    },
+    {
+      "quizID": "1b2d1fc0-d4e8-461c-8c01-10fea7a0e453",
+      "filePath": "/frontend/content/quizzes/quiz_for-loops.json"
     }
   ]
 }

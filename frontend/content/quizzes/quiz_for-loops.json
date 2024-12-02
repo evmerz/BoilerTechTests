@@ -9,7 +9,7 @@
   "questions": [
     {
       "question": "What will the following code output?\nfor (int i = 0; i < 3; i++) { printf(\"%d \", i); }",
-      "questionID": "1a3f573a-32a9-45b2-8511-cf32d6aef7f7",
+      "questionID": "c116af9c-7bac-4dbc-a906-e10e970ffdf5",
       "answerID": "A-001",
       "points": 1,
       "options": [
@@ -33,7 +33,7 @@
     },
     {
       "question": "How many times will the loop execute?\nfor (int i = 0; i < 5; i++) { /* code */ }",
-      "questionID": "987b83c4-d56b-4ae2-8f1b-7a91e18babc3",
+      "questionID": "439a2e4a-858b-4942-a83f-8d72f3d40aa2",
       "answerID": "A-002",
       "points": 1,
       "options": [
@@ -57,7 +57,7 @@
     },
     {
       "question": "Which of the following is true about a for loop?",
-      "questionID": "c1b67d81-cfb2-4293-9d2f-257c9f3d7c21",
+      "questionID": "dbbcfa86-d129-4118-be1f-c531f8e742e7",
       "answerID": "A-003",
       "points": 1,
       "options": [
@@ -81,7 +81,7 @@
     },
     {
       "question": "What will the following code output?\nfor (int i = 0; i < 5; i += 2) { printf(\"%d \", i); }",
-      "questionID": "58b2d7e4-8344-4de5-b56a-e199aa67ef7d",
+      "questionID": "11af4d25-3d52-4c40-a050-800f1a1b9430",
       "answerID": "A-002",
       "points": 1,
       "options": [
@@ -105,7 +105,7 @@
     },
     {
       "question": "Which part of the for loop is executed first?",
-      "questionID": "07ef23db-5092-4d68-b57b-40e98e024948",
+      "questionID": "df292852-a843-4bde-8492-ae6de096eb10",
       "answerID": "A-004",
       "points": 1,
       "options": [
