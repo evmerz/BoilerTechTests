@@ -34,36 +34,6 @@ async function loadQuestionData() {
     return;
 }
 
-// async function loadQuizData(quiz_id) {
-//     const json_directory = await (
-//         await fetch("/frontend/content/quiz_data.json")
-//     ).json();
-
-//     console.log(JSON.stringify(json_directory));
-
-//     // Serve the quiz data that corresponds to the quiz ID
-//     for (let i = 0; i < json_directory.quizzes.length; i++) {
-//         if (json_directory.quizzes[i].quizID == quiz_id) {
-//             console.log("ID: " + json_directory.quizzes[i].quizID);
-
-//             console.log("filepath: " + json_directory.quizzes[i].filePath);
-
-//             quizData = await (
-//                 await fetch(json_directory.quizzes[i].filePath)
-//             ).json();
-
-//             if (quizData.quizInfo.type != "python") continue;
-
-//             console.log(JSON.stringify(quizData));
-
-//             return;
-//         }
-//     }
-
-//     console.log('No quiz found with ID "' + quiz_id + '"');
-// }
-
-
 window.addEventListener("DOMContentLoaded", async function () {
     
     await loadQuestionData();
@@ -73,15 +43,56 @@ window.addEventListener("DOMContentLoaded", async function () {
         results: null,
     }));
 
+    initializeSessionData();
+    await loadFromSessionStorage();
     // Initially display the first question
     displayQuestion();
 });
+
+
+// Initialize sessionStorage for user answers
+function initializeSessionData() {
+    const storedData = sessionStorage.getItem("userAnswers");
+    if (!storedData) {
+        const initialData = questionData.questions.map(() => ({
+            code: null,
+            results: null,
+        }));
+        sessionStorage.setItem("userAnswers", JSON.stringify(initialData));
+    } else {
+        userAnswers = JSON.parse(storedData);
+    }
+}
+
+// Save current state to sessionStorage
+async function saveToSessionStorage() {
+    const storedData = JSON.parse(sessionStorage.getItem("userAnswers"));
+    storedData[currentQuestionIndex] = {
+        code: userAnswers[currentQuestionIndex].code,
+        results: userAnswers[currentQuestionIndex].results,
+    };
+    sessionStorage.setItem("userAnswers", JSON.stringify(storedData));
+}
+
+// Load data for the current question from sessionStorage
+function loadFromSessionStorage() {
+    const storedData = JSON.parse(sessionStorage.getItem("userAnswers"));
+    const savedData = storedData[currentQuestionIndex];
+    if (savedData) {
+        userAnswers[currentQuestionIndex].code = savedData.code;
+        userAnswers[currentQuestionIndex].results = savedData.results;
+    }
+}
 
 //this contains the user answers for each question
 //given that they have used the 'run' button
 //index is null if they have not answered the question, but they can't hit submit without at least having written the word return
 
 function displayQuestion() {
+    // if (this.sessionStorage.get("guestCode") != null) {
+    //     userAnswers = JSON.parse(sessionStorage.get("guestCode"));
+    // }
+
     const currentQuestion = questionData.questions[currentQuestionIndex];
     document.getElementById("question").textContent = currentQuestion.prompt;
     editor.setValue(
@@ -90,7 +101,15 @@ function displayQuestion() {
                 "\n    # Your code here\n    # Click Run to save answer"
     );
     //editor.setValue(currentQuestion.functionSignature + '\n    # Your Python code goes here\n');
-    document.getElementById("output").textContent = "";
+     
+    // Load saved results
+     const outputElement = document.getElementById("output");
+     if (userAnswers[currentQuestionIndex].results) {
+         outputElement.textContent = userAnswers[currentQuestionIndex].results;
+     } else {
+         outputElement.textContent = "";
+     }
+
     document.getElementById("header").textContent =
         "Question " + (currentQuestionIndex + 1);
 
@@ -121,16 +140,6 @@ document.getElementById("next").addEventListener("click", () => {
     }
     displayQuestion();
 });
-
-// document.getElementById("submit").addEventListener("click", async () => {
-//     submitFlag = 1;
-//     //for (let i = 0; i < questions.length; i++) {
-//     //currentQuestionIndex = i;
-//     await run();
-//     //}
-//     displayResults();
-//     localStorage.setItem("quizSubmitted", "true");
-// });
 
 document.getElementById('reveal').addEventListener('click', () => {
     const currentQuestion = questionData.questions[currentQuestionIndex];
@@ -240,6 +249,7 @@ document.getElementById('reveal').addEventListener('click', () => {
 // Run code function
 document.getElementById("run").addEventListener("click", async () => {
     await run();
+    await saveToSessionStorage();
     var results = displayResults();
 
     // Display the score in the score container

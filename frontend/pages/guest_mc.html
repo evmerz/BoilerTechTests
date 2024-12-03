@@ -84,14 +84,14 @@
         const submitButton = document.getElementById('submit-btn');
 
         // Initialize scores and answers from sessionStorage or set to defaults
-        const scores = JSON.parse(sessionStorage.getItem('quizScores')) || 
+        const scores = JSON.parse(sessionStorage.getItem('guestMCScore')) || 
             Array(quizData.questions.length).fill(null);
-        const userAnswers = JSON.parse(sessionStorage.getItem('userAnswers')) || 
+        const userAnswers = JSON.parse(sessionStorage.getItem('guestMCAnswers')) || 
             Array(quizData.questions.length).fill(null);
 
         function saveState() {
-            sessionStorage.setItem('quizScores', JSON.stringify(scores));
-            sessionStorage.setItem('userAnswers', JSON.stringify(userAnswers));
+            sessionStorage.setItem('guestMCScore', JSON.stringify(scores));
+            sessionStorage.setItem('guestMCAnswers', JSON.stringify(userAnswers));
         }
 
         function highlightAnswer(selected, correctAnswerID) {
