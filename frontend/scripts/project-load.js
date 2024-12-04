@@ -29,7 +29,8 @@ function loadPinnedClasses() {
     });
 }
 
-function loadAllClasses(userID) {
+function loadAllClasses() {
+    var userID = localStorage.getItem("userId");
     for (let classID in classData) {
         if (userID == null) {
             loadProject(classID, "homepage"); // Load unpinned classes into "homepage"
