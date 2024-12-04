@@ -13,8 +13,7 @@ function loadProjectData() {
                 console.log(classData[json.classes[i].id].name);
             }
             // After loading class data, load pinned classes
-            loadPinnedClasses();
-            loadAllClasses();
+            
         });
 }
 
@@ -67,7 +66,7 @@ function loadProject(classID, contentPanelName) {
     var panel = document.createElement("div");
     panel.classList.add("project-panel");
 
-    var text = document.createElement("div");
+    var text = document.createElement("a");
     text.classList.add("caption");
 
     var heading = document.createElement("h3");
@@ -80,12 +79,16 @@ function loadProject(classID, contentPanelName) {
     pinButton.classList.add("button");
     pinButton.textContent = pinnedClasses.includes(classID) ? "Unpin" : "Pin";
 
-    var userID = localStorage.getItem("user-id");
+    var userID = localStorage.getItem("userId");
     text.appendChild(heading);
     text.appendChild(cap);
+    console.log(userID);
 
+    text.style = "text-decoration: none;";
+    text.href = "/frontend/pages/cs240.html";
 
     panel.appendChild(text);
+
     if (userID) {
         document.getElementById("pinned-classes").style.display = "block";
         panel.appendChild(pinButton);
@@ -95,6 +98,7 @@ function loadProject(classID, contentPanelName) {
     }
 
     fade.appendChild(panel);
+
     container.appendChild(fade);
 
     return true;
