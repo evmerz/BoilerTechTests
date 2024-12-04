@@ -75,7 +75,8 @@
     <script>
         loadProjectData().then(() => {
             loadPinnedClasses();
-            loadAllClasses();
+            var userID = localStorage.getItem("userId");
+            loadAllClasses(userID);
             //loadProject("cs240", "homepage");
             //loadProject("cs180", "homepage");
         });

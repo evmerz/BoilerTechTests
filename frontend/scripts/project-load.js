@@ -13,7 +13,7 @@ function loadProjectData() {
                 console.log(classData[json.classes[i].id].name);
             }
             // After loading class data, load pinned classes
-            
+
         });
 }
 
@@ -29,10 +29,15 @@ function loadPinnedClasses() {
     });
 }
 
-function loadAllClasses() {
+function loadAllClasses(userID) {
     for (let classID in classData) {
-        if (!pinnedClasses.includes(classID)) {
+        if (userID == null) {
             loadProject(classID, "homepage"); // Load unpinned classes into "homepage"
+        }
+        else {
+            if (!pinnedClasses.includes(classID)) {
+                loadProject(classID, "homepage"); // Load unpinned classes into "homepage"
+            }
         }
     }
 }
