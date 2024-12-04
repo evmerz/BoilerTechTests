@@ -26,6 +26,10 @@
         <div class="sub-container">
             <h2>CS177</h2>
 
+            <div style="margin-bottom: 20px;">
+                <button id="back-to-practice" class="button">Back to Practice</button>
+            </div>
+
             <!-- Exam and topic container where topics will be dynamically loaded -->
             <div id="exam-sections" class="content-panel">
                 <!-- JavaScript will inject exam sections and topic buttons here -->
@@ -39,21 +43,18 @@
     <script src="/frontend/scripts/quiz.js"></script>
 
     <script>
+
+        document.getElementById("back-to-practice").addEventListener("click", function () {
+            window.location.href = "/index.html";
+        });
         // Data for CS240 page
         const cs240Data = {
             exams: [
                 {
-                    title: "EXAM 1",
+                    title: "SELECT AN EXAM TO STUDY FOR",
                     topics: [
-                        { name: "Topic 1 - if-statements", id: "if-statements" },
-                        { name: "Topic 2 - for-loops", id: "for-loops" }
-                    ]
-                },
-                {
-                    title: "EXAM 2",
-                    topics: [
-                        { name: "Topic 3 - arrays (CODING)", id: "terminal" },
-                        { name: "Topic 4 - linked lists", id: "linked-lists" }
+                        { name: "MIDTERM", id: "cs177-exam1" },
+                        { name: "FINAL", id: "cs177-exam2" }
                     ]
                 }
             ]

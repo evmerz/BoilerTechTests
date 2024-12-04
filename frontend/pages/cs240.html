@@ -26,6 +26,10 @@
         <div class="sub-container">
             <h2>CS240</h2>
 
+            <div style="margin-bottom: 20px;">
+                <button id="back-to-practice" class="button">Back to Practice</button>
+            </div>
+
             <!-- Exam and topic container where topics will be dynamically loaded -->
             <div id="exam-sections" class="content-panel">
                 <!-- JavaScript will inject exam sections and topic buttons here -->
@@ -39,6 +43,10 @@
     <script src="/frontend/scripts/quiz.js"></script>
 
     <script>
+
+        document.getElementById("back-to-practice").addEventListener("click", function () {
+            window.location.href = "/index.html";
+        });
         // Data for CS240 page
         const cs240Data = {
             exams: [

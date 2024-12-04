@@ -1,0 +1,133 @@
+{
+  "quizInfo": {
+    "quizName": "Python Floats Quiz",
+    "tags": [
+      "python",
+      "floats",
+      "data-types"
+    ],
+    "type": "mc"
+  },
+  "questions": [
+    {
+      "question": "What is the type of the value `3.14` in Python?",
+      "questionID": "7a82dd54-6bf3-4148-aa6a-e6cc1628e30c",
+      "answerID": "A-002",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "<class 'int'>"
+        },
+        {
+          "optionID": "A-002",
+          "text": "<class 'float'>"
+        },
+        {
+          "optionID": "A-003",
+          "text": "<class 'complex'>"
+        },
+        {
+          "optionID": "A-004",
+          "text": "<class 'str'>"
+        }
+      ]
+    },
+    {
+      "question": "What is the result of `10.0 + 2` in Python?",
+      "questionID": "6196eade-e0fc-40fb-9520-a351345b6457",
+      "answerID": "A-004",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "12"
+        },
+        {
+          "optionID": "A-002",
+          "text": "12.0"
+        },
+        {
+          "optionID": "A-003",
+          "text": "TypeError"
+        },
+        {
+          "optionID": "A-004",
+          "text": "12.0"
+        }
+      ]
+    },
+    {
+      "question": "What will be the result of `7.5 // 2` in Python?",
+      "questionID": "7bf6dfc7-9816-4cbe-acf4-e311b0eaaf04",
+      "answerID": "A-001",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "3.0"
+        },
+        {
+          "optionID": "A-002",
+          "text": "3"
+        },
+        {
+          "optionID": "A-003",
+          "text": "3.5"
+        },
+        {
+          "optionID": "A-004",
+          "text": "4.0"
+        }
+      ]
+    },
+    {
+      "question": "What is the output of `type(0.1 + 0.2)` in Python?",
+      "questionID": "58738d81-8510-4fad-946a-d797ea94647d",
+      "answerID": "A-002",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "<class 'int'>"
+        },
+        {
+          "optionID": "A-002",
+          "text": "<class 'float'>"
+        },
+        {
+          "optionID": "A-003",
+          "text": "<class 'complex'>"
+        },
+        {
+          "optionID": "A-004",
+          "text": "<class 'str'>"
+        }
+      ]
+    },
+    {
+      "question": "Which function converts an integer to a float in Python?",
+      "questionID": "ea7c6a05-160b-48c3-bfd3-85ba22d21dc6",
+      "answerID": "A-003",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "int()"
+        },
+        {
+          "optionID": "A-002",
+          "text": "str()"
+        },
+        {
+          "optionID": "A-003",
+          "text": "float()"
+        },
+        {
+          "optionID": "A-004",
+          "text": "bool()"
+        }
+      ]
+    }
+  ]
+}

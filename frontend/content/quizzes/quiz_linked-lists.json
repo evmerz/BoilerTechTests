@@ -1,0 +1,132 @@
+{
+  "quizInfo": {
+    "quizName": "Linked Lists Quiz",
+    "tags": [
+      "linked-lists",
+      "data-structures"
+    ],
+    "type": "mc"
+  },
+  "questions": [
+    {
+      "question": "What is the primary advantage of a linked list over an array?",
+      "questionID": "24487e2f-14a7-41a6-b1c6-0c01b794fffd",
+      "answerID": "A-002",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "Constant time for accessing elements by index"
+        },
+        {
+          "optionID": "A-002",
+          "text": "Dynamic size adjustment"
+        },
+        {
+          "optionID": "A-003",
+          "text": "Better cache locality"
+        },
+        {
+          "optionID": "A-004",
+          "text": "Faster searching"
+        }
+      ]
+    },
+    {
+      "question": "What does each node in a singly linked list typically contain?",
+      "questionID": "5d5008e5-6539-40df-af32-9b84211a6980",
+      "answerID": "A-003",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "Only a data field"
+        },
+        {
+          "optionID": "A-002",
+          "text": "Two pointers to other nodes"
+        },
+        {
+          "optionID": "A-003",
+          "text": "A data field and a pointer to the next node"
+        },
+        {
+          "optionID": "A-004",
+          "text": "A pointer to the head of the list"
+        }
+      ]
+    },
+    {
+      "question": "What is the time complexity of inserting a new node at the beginning of a singly linked list?",
+      "questionID": "1befcbef-2282-4a26-944b-84b06583342a",
+      "answerID": "A-001",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "O(1)"
+        },
+        {
+          "optionID": "A-002",
+          "text": "O(n)"
+        },
+        {
+          "optionID": "A-003",
+          "text": "O(log n)"
+        },
+        {
+          "optionID": "A-004",
+          "text": "O(n log n)"
+        }
+      ]
+    },
+    {
+      "question": "Which of the following is true about doubly linked lists?",
+      "questionID": "40b285be-0256-4c6f-961f-51f7d0c0249a",
+      "answerID": "A-004",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "Each node has a single pointer"
+        },
+        {
+          "optionID": "A-002",
+          "text": "Insertion at the tail is O(n)"
+        },
+        {
+          "optionID": "A-003",
+          "text": "Traversal is possible only in one direction"
+        },
+        {
+          "optionID": "A-004",
+          "text": "Each node has pointers to both the next and the previous nodes"
+        }
+      ]
+    },
+    {
+      "question": "What happens when a node is deleted in a singly linked list?",
+      "questionID": "02fb1c3f-0ce8-4a09-b8ec-68ba276a2583",
+      "answerID": "A-002",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "The entire list is reorganized"
+        },
+        {
+          "optionID": "A-002",
+          "text": "The next pointer of the previous node is updated"
+        },
+        {
+          "optionID": "A-003",
+          "text": "A new head node is created"
+        },
+        {
+          "optionID": "A-004",
+          "text": "The last node is removed instead"
+        }
+      ]
+    }
+  ]
+}

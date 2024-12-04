@@ -1,0 +1,132 @@
+{
+  "quizInfo": {
+    "quizName": "Arrays Quiz",
+    "tags": [
+      "arrays",
+      "data-structures"
+    ],
+    "type": "mc"
+  },
+  "questions": [
+    {
+      "question": "What is the primary characteristic of an array?",
+      "questionID": "96ac076c-3898-49c6-b7d4-d59380756b6c",
+      "answerID": "A-001",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "Elements are stored in contiguous memory locations"
+        },
+        {
+          "optionID": "A-002",
+          "text": "Elements are dynamically allocated at runtime"
+        },
+        {
+          "optionID": "A-003",
+          "text": "Each element has a unique pointer"
+        },
+        {
+          "optionID": "A-004",
+          "text": "Array size can be changed at runtime"
+        }
+      ]
+    },
+    {
+      "question": "What is the time complexity of accessing an element in an array by index?",
+      "questionID": "1601f425-ed42-472b-a25a-db4308ead7d2",
+      "answerID": "A-002",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "O(n)"
+        },
+        {
+          "optionID": "A-002",
+          "text": "O(1)"
+        },
+        {
+          "optionID": "A-003",
+          "text": "O(log n)"
+        },
+        {
+          "optionID": "A-004",
+          "text": "O(n log n)"
+        }
+      ]
+    },
+    {
+      "question": "Which of the following operations is most expensive in an array?",
+      "questionID": "22670fcb-aeec-479e-93b2-867944f80d2c",
+      "answerID": "A-004",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "Accessing an element by index"
+        },
+        {
+          "optionID": "A-002",
+          "text": "Iterating through all elements"
+        },
+        {
+          "optionID": "A-003",
+          "text": "Replacing an element"
+        },
+        {
+          "optionID": "A-004",
+          "text": "Inserting an element in the middle"
+        }
+      ]
+    },
+    {
+      "question": "What happens if you try to access an array element out of bounds?",
+      "questionID": "1c2546e5-db64-4792-b889-6be58e6e19e8",
+      "answerID": "A-003",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "The element at the last index is returned"
+        },
+        {
+          "optionID": "A-002",
+          "text": "The array is resized to include the new index"
+        },
+        {
+          "optionID": "A-003",
+          "text": "An error or undefined behavior occurs"
+        },
+        {
+          "optionID": "A-004",
+          "text": "A default value is returned"
+        }
+      ]
+    },
+    {
+      "question": "What is the result of accessing a multi-dimensional array at position [0][0]?",
+      "questionID": "4a8b8f42-c57a-45e4-9432-68a792bfa549",
+      "answerID": "A-001",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "The first element of the first row"
+        },
+        {
+          "optionID": "A-002",
+          "text": "The last element of the last row"
+        },
+        {
+          "optionID": "A-003",
+          "text": "The sum of all elements"
+        },
+        {
+          "optionID": "A-004",
+          "text": "An error is thrown"
+        }
+      ]
+    }
+  ]
+}
