@@ -1,0 +1,112 @@
+{
+    "questions": [
+        {
+            "question": "What does the len() function do in Python?",
+            "questionID": "Q-002",
+            "answerID": "A-001",
+            "points": 1,
+            "options": [
+              {"optionID": "A-001", "text": "Returns the number of elements in an iterable"},
+              {"optionID": "A-002", "text": "Returns the largest number in a list"},
+              {"optionID": "A-003", "text": "Converts an integer to a string"},
+              {"optionID": "A-004", "text": "Calculates the length of a string only"}
+            ]
+          },
+          {
+            "question": "Which of the following is NOT a valid keyword in Python?",
+            "questionID": "Q-003",
+            "answerID": "A-004",
+            "points": 1,
+            "options": [
+              {"optionID": "A-001", "text": "pass"},
+              {"optionID": "A-002", "text": "yield"},
+              {"optionID": "A-003", "text": "assert"},
+              {"optionID": "A-004", "text": "includes"}
+            ]
+          },
+          {
+            "question": "What is the output of the following code?\n\nx = [1, 2, 3]\nprint(x[1])",
+            "questionID": "Q-004",
+            "answerID": "A-002",
+            "points": 1,
+            "options": [
+              {"optionID": "A-001", "text": "1"},
+              {"optionID": "A-002", "text": "2"},
+              {"optionID": "A-003", "text": "[2]"},
+              {"optionID": "A-004", "text": "IndexError"}
+            ]
+          },
+          {
+            "question": "What is the purpose of the def keyword in Python?",
+            "questionID": "Q-005",
+            "answerID": "A-002",
+            "points": 1,
+            "options": [
+              {"optionID": "A-001", "text": "To define a variable"},
+              {"optionID": "A-002", "text": "To define a function"},
+              {"optionID": "A-003", "text": "To delete a variable"},
+              {"optionID": "A-004", "text": "To define a loop"}
+            ]
+          },
+          {
+            "question": "Which of the following methods can be used to add an item to a list?",
+            "questionID": "Q-006",
+            "answerID": "A-001",
+            "points": 1,
+            "options": [
+              {"optionID": "A-001", "text": "append()"},
+              {"optionID": "A-002", "text": "add()"},
+              {"optionID": "A-003", "text": "insert()"},
+              {"optionID": "A-004", "text": "extend()"}
+            ]
+          },
+          {
+            "question": "What will the following code output?\n\nprint(\"Hello\" * 3)",
+            "questionID": "Q-007",
+            "answerID": "A-003",
+            "points": 1,
+            "options": [
+              {"optionID": "A-001", "text": "Hello Hello Hello"},
+              {"optionID": "A-002", "text": "Hello3"},
+              {"optionID": "A-003", "text": "HelloHelloHello"},
+              {"optionID": "A-004", "text": "Error"}
+            ]
+          },
+          {
+            "question": "What is the output of the following code snippet?\n\nx = 10\ny = 3\nprint(x // y)",
+            "questionID": "Q-008",
+            "answerID": "A-002",
+            "points": 1,
+            "options": [
+              {"optionID": "A-001", "text": "3.333"},
+              {"optionID": "A-002", "text": "3"},
+              {"optionID": "A-003", "text": "4"},
+              {"optionID": "A-004", "text": "Error"}
+            ]
+          },
+          {
+            "question": "How do you start a comment in Python?",
+            "questionID": "Q-009",
+            "answerID": "A-003",
+            "points": 1,
+            "options": [
+              {"optionID": "A-001", "text": "//"},
+              {"optionID": "A-002", "text": "/*"},
+              {"optionID": "A-003", "text": "#"},
+              {"optionID": "A-004", "text": "<!--"}
+            ]
+          },
+          {
+            "question": "What is the data type of the variable x in the following code?\n\nx = 5.0",
+            "questionID": "Q-010",
+            "answerID": "A-002",
+            "points": 1,
+            "options": [
+              {"optionID": "A-001", "text": "int"},
+              {"optionID": "A-002", "text": "float"},
+              {"optionID": "A-003", "text": "double"},
+              {"optionID": "A-004", "text": "complex"}
+            ]
+          }
+  ]
+}

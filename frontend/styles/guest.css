@@ -1,0 +1,20 @@
+.button {
+    color: var(--site-background);
+    background-color: var(--site-foreground);
+    font-family: 'Josefin Sans';
+    font-size: 1.2em;
+    padding: 10px;
+    border: none;
+    border-radius: 2px;
+    text-decoration: none;
+}
+.column {
+        float: left;
+        width: 50%;
+}
+.row:after {
+        content: "";
+        display: table;
+        clear: both;
+}
+      
