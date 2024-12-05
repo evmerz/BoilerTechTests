@@ -17,6 +17,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
         rel="stylesheet">
 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
+        crossorigin="anonymous"></script>
+    <script src="/frontend/scripts/quiz-load.js"></script>
+
     <title>Coding Quiz Results - BoilerTechTests</title>
 </head>
 
@@ -50,13 +55,35 @@
 
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
-        crossorigin="anonymous"></script>
     <script src="/frontend/scripts/navigation.js"></script>
 
-    <script>
-        // TODO: Add quiz data loading
+    <script async>
+        window.addEventListener("DOMContentLoaded", async function () {
+            const params = new URLSearchParams(location.search);
+            const quizID = params.get("quiz-id");
+            const userID = localStorage.getItem("userId");
+
+            // if (!quizID) window.location.href = "/404";
+
+            const quizData = await loadQuizData(quizID, "python");
+
+            if (quizData.quizInfo.type != "python") {
+                throw 404; // idk if this works
+                return;
+            }
+
+            var submissionData = localStorage.getItem(`quiz_${quizID}`);
+
+            if (!submissionData) {
+                if (!userID) {
+                    window.location.href = `/frontend/pages/terminal.html?quiz-id=${quizID}`;
+                } else {
+                    submissionData = getSubmission(userID, quizID);
+                }
+            }
+
+
+        });
     </script>
 
 </body>

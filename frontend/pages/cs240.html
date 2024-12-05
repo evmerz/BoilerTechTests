@@ -15,6 +15,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+    <script src="/frontend/scripts/quiz-load.js"></script>
+
     <title>CS240 - BoilerTechTests</title>
 </head>
 
@@ -34,7 +37,7 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+    
     <script src="/frontend/scripts/navigation.js"></script>
     <script src="/frontend/scripts/project-load.js"></script>
     <script src="/frontend/scripts/quiz.js"></script>
@@ -111,9 +114,16 @@
                             if (submissionData) {
                                 // Store the submission data in local storage and go to results page
                                 localStorage.setItem(`quiz_${quizID}`, submissionData);
-                                window.location.href = `/frontend/pages/results.html?quiz-id=${quizID}`;
+
+                                // TODO: make it not dependent on topic key
+                                if (topicKey == "terminal") {
+                                    window.location.href = `/frontend/pages/coding-results.html?quiz-id=${quizID}`;
+                                } else {
+                                    window.location.href = `/frontend/pages/results.html?quiz-id=${quizID}`;
+                                }
 
                             } else {
+                                // TODO: Please change this
                                 // No previous submission, so proceed to the quiz page
                                 window.location.href = `./${topic.id}.html?quiz-id=${quizID}`;
                             }

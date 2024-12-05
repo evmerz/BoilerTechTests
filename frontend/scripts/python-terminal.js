@@ -26,44 +26,10 @@ const editor = CodeMirror.fromTextArea(document.getElementById("code"), {
     theme: "eclipse",
 });
 
-/**
- * Loads the appropriate multiple choice quiz based on the quiz id from the URL query string parameter.
- *
- * @param {string} quiz_id
- */
-async function loadQuizData(quiz_id) {
-    const json_directory = await (
-        await fetch("/frontend/content/quiz_data.json")
-    ).json();
-
-    console.log(JSON.stringify(json_directory));
-
-    // Serve the quiz data that corresponds to the quiz ID
-    for (let i = 0; i < json_directory.quizzes.length; i++) {
-        if (json_directory.quizzes[i].quizID == quiz_id) {
-            console.log("ID: " + json_directory.quizzes[i].quizID);
-
-            console.log("filepath: " + json_directory.quizzes[i].filePath);
-
-            quizData = await (
-                await fetch(json_directory.quizzes[i].filePath)
-            ).json();
-
-            if (quizData.quizInfo.type != "python") continue;
-
-            console.log(JSON.stringify(quizData));
-
-            return;
-        }
-    }
-
-    console.log('No quiz found with ID "' + quiz_id + '"');
-}
-
 window.addEventListener("DOMContentLoaded", async function () {
     const params = new URLSearchParams(location.search);
     quizID = params.get("quiz-id");
-    await loadQuizData(quizID);
+    quizData = await loadQuizData(quizID, "python");
 
     userAnswers = new Array(quizData.questions.length).fill(null).map(() => ({
         code: null,
@@ -151,7 +117,13 @@ document.getElementById("submit").addEventListener("click", async () => {
         });
     }
 
-    await saveQuiz(submissionData);
+    const userID = localStorage.getItem("userId");
+    // If logged in, store in database
+    if (userID) {
+        await saveQuiz(userID, quizID, submissionData);
+    }
+
+    localStorage.setItem(`quiz_${quizID}`, JSON.stringify(submissionData));
 
     // //for (let i = 0; i < questions.length; i++) {
     // //currentQuestionIndex = i;
@@ -159,7 +131,7 @@ document.getElementById("submit").addEventListener("click", async () => {
     // //}
     // displayResults();
     // localStorage.setItem("quizSubmitted", "true");
-    window.location.href = `/frontend/pages/code-results.html?quiz-id=${quizID}`;
+    // window.location.href = `/frontend/pages/coding-results.html?quiz-id=${quizID}`;
 });
 
 /**
@@ -397,38 +369,39 @@ async function run() {
 //     resultContainer.appendChild(retakeButton);
 // }
 
-/**
- * Saves the quiz results to the database (if logged in) and local storage.
- * @param {JSON} results 
- */
-async function saveQuiz(results) {
-    console.log("answer: ", results);
+// /**
+//  * Saves the quiz results to the database (if logged in) and local storage.
+//  * @param {JSON} results 
+//  */
+// async function saveQuiz(results) {
+//     console.log("answer: ", results);
 
-    localStorage.setItem(`quiz_${quizID}`, JSON.stringify(results));
     
-    if (!localStorage.getItem("userId")) return; // If not logged in, don't store in database
+    
+//     const userID = localStorage.getItem("userId");
+//     if (!userID) return; // If not logged in, don't store in database
 
-    const url = `https://boilertechtests.com/api/quiz`;
-    try {
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                user_id: userID,
-                quiz_id: quizID,
-                answers: results,
-            }),
-        });
+//     const url = `https://boilertechtests.com/api/quiz`;
+//     try {
+//         const response = await fetch(url, {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/json",
+//             },
+//             body: JSON.stringify({
+//                 user_id: userID,
+//                 quiz_id: quizID,
+//                 answers: results,
+//             }),
+//         });
 
-        if (!response.ok) {
-            throw new Error("Failed to save quiz");
-        }
+//         if (!response.ok) {
+//             throw new Error("Failed to save quiz");
+//         }
 
-        const data = await response.json();
-        console.log("Quiz saved successfully:", data);
-    } catch (error) {
-        console.error("Error saving quiz:", error);
-    }
-}
+//         const data = await response.json();
+//         console.log("Quiz saved successfully:", data);
+//     } catch (error) {
+//         console.error("Error saving quiz:", error);
+//     }
+// }

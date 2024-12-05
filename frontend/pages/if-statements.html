@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="/frontend/styles/navigation.css">
     <link rel="stylesheet" href="/frontend/styles/global.css">
     <link rel="stylesheet" href="/frontend/styles/quiz.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+    <script src="/frontend/scripts/quiz-load.js"></script>
+
     <title>CS240 Quiz</title>
     <style>
         .correct {
@@ -22,7 +26,7 @@
             color: #87cf8b; /* Light green for the correct answer line */
             font-weight: bold;
         }
-    </style> 
+    </style>
 </head>
 <body>
     <div id="navbar-load"></div>
@@ -36,29 +40,27 @@
             </div>
         </div>
     </div>
-    <script src="/frontend/scripts/quiz.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+    
     <script src="/frontend/scripts/navigation.js"></script>
+    <script src="/frontend/scripts/quiz.js"></script>
+    <script>
+        // Initialize the quiz upon load
+        window.addEventListener("DOMContentLoaded", async function () {
+            const params = new URLSearchParams(location.search);
+            quizID = params.get("quiz-id");
+            console.log(quizID);
+    
+            quizData = await loadQuizData(quizID, "mc");
+    
+            userAnswers = new Array(quizData.questions.length).fill(null);
+            quizContainer = document.getElementById("quiz-contents");
+    
+            renderQuestion();
+        });
+
+        document.getElementById('back-button').addEventListener('click', function() {
+            window.location.href = '/frontend/pages/cs240.html'; // Update the path if needed
+        });
+    </script>
 </body>
-<script>
-    document.getElementById('back-button').addEventListener('click', function() {
-        window.location.href = '/frontend/pages/cs240.html'; // Update the path if needed
-    });
-</script>
-<script src="/frontend/scripts/quiz.js"></script>
-<script>
-    // Initialize the quiz upon load
-    window.addEventListener("DOMContentLoaded", async function () {
-        const params = new URLSearchParams(location.search);
-        quizID = params.get("quiz-id");
-        console.log(quizID);
-
-        quizData = await loadQuizData(quizID);
-
-        userAnswers = new Array(quizData.questions.length).fill(null);
-        quizContainer = document.getElementById("quiz-contents");
-
-        renderQuestion();
-    });
-</script>
 </html>
