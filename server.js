@@ -201,16 +201,6 @@ app.post('/quiz', async (req, res) => {
     const {user_id, quiz_id, answers } = req.body;
     // console.log("id:", user_id)
     console.log("body:", req.body);
-    // console.log("string answers", JSON.stringify(answers));
-
-    // for (let i = 0; i < answers.length; i++) {
-    //     answerData.append(
-    //         {
-    //             "questionID": answers[i].questionID,
-    //             "answerID": answers[i].userAnswer
-    //         }
-    //     );
-    // } 
 
     var submitted = false;
     const checkQuery = 'SELECT * from quiz_submissions WHERE (user_id, quiz_id) = (?, ?)';
@@ -229,42 +219,6 @@ app.post('/quiz', async (req, res) => {
         }
       })()
 
-
-
-
-    // const checkQuery = 'SELECT * from quiz_submissions WHERE (user_id, quiz_id) = (?, ?)';
-    // var submitted = false;
-
-    // var meh = db.promise.query(checkQuery, [user_id, quiz_id])
-    //     .then(result => {
-    //         return result;
-    //     })
-    //     .catch(err => {
-    //         throw err;
-    // });
-
-    // if (meh.length > 0) {
-    //     console.log("yes?");
-    //     submitted = true;
-    // }
-    
-    // db.query(checkQuery, [user_id, quiz_id], (err, result) =>{
-    //     if (err) {
-    //         console.log("BAD");
-    //         // return reject(err);
-    //         // return res.status(500).json({ message: 'Error retrieving data from the database' });
-    //     }
-    //     console.log("something happened");
-    //     if (result.length > 0) {
-    //         console.log("checkQuery worked");
-    //         console.log("result:", result);
-    //         submitted = true;
-    //         // resolve(result);
-    //         // return res.status(201);
-    //     }
-    //     // resolve(result);
-    // });
-    
     console.log("submitted:", submitted);
     
     if (!submitted) {
@@ -291,63 +245,6 @@ app.post('/quiz', async (req, res) => {
     }
     
 });
-
-// app.get('/get-submit', async (req, res) => {
-//     const userID = req.query.userID;
-//     const quizID = req.query.quizID;
-//     console.log("userid", userID);
-//     console.log("quizid", quizID);
-//     var submission = "";
-
-//     //help
-//     if (userID == null | quizID == null) {
-//         return res.status(400).json({ message: 'Missing required query parameter' });
-//     }
-
-//     var submitted = false;
-//     const checkQuery = 'SELECT * from quiz_submissions WHERE user_id = ? AND quiz_id = ?';
-//     const query = util.promisify(db.query).bind(db);
-//     await (async () => {
-//         try {
-//           const rows = await query(checkQuery, [userID, quizID]);
-//           if (rows.length > 0) {
-//             console.log("get submit yes");
-//             submission = JSON.stringify(rows[0].answers);
-//             submitted = true;
-//             // resolve();
-//           }
-//           console.log("get submit rows:", rows);
-//         } finally {
-//         //   db.end();
-//             console.log("end");
-//         }
-//       })()
-
-//       if (submitted){
-//         res.status(201).json({ message: 'Quiz submission retrieved!',
-//             submitted: submitted,
-//             submission: submission
-//         });
-//       } else {
-//         res.status(201).json({ message: 'No previous submission!',
-//             submitted: submitted,
-//             submission: submission
-//         });
-//       }
-
-
-//     // const query = "SELECT answers FROM quiz_submissions WHERE (user_id, quiz_id) = (?, ?)";
-//     // db.query(query, [userID, quizID], (err, result) => {
-//     //     if (err) {
-//     //         return res.status(500).json({ message: 'Error retrieving data from the database' });
-//     //     }
-//     //     console.log("server result:", result);
-//     //     res.status(201).json({
-//     //         message: 'Quiz submission retrieved!',
-//     //         result
-//     //     });
-//     // });
-// });
 
 app.get('/get-submit', async (req, res) => {
     const userID = req.query.userID;
