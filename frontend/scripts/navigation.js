@@ -48,17 +48,15 @@ function delay(URL, time) {
  * @returns {boolean} Whether el is viewable (in viewport).
  */
 function isElementInViewport (el) {
-  var rect = el.getBoundingClientRect();
+  const rect = el.getBoundingClientRect();
 
-  var tolerance = 30;
+  const vertTolerance = (rect.bottom - rect.top) / 2;
 
   return (
       // not including first line so that if you have scrolled already then everything above where you are will have appeared
       // rect.top + tolerance >= 0 &&
 
-      rect.left  + tolerance >= 0 &&
-      rect.bottom  - tolerance <= (window.innerHeight || document.documentElement.clientHeight) && /* or $(window).height() */
-      rect.right  - tolerance <= (window.innerWidth || document.documentElement.clientWidth) /* or $(window).width() */
+      rect.bottom - vertTolerance <= (window.innerHeight || document.documentElement.clientHeight) /* or $(window).height() */
   );
 }
 

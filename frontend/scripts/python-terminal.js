@@ -26,54 +26,22 @@ const editor = CodeMirror.fromTextArea(document.getElementById("code"), {
     theme: "eclipse",
 });
 
-/**
- * Loads the appropriate multiple choice quiz based on the quiz id from the URL query string parameter.
- *
- * @param {string} quiz_id
- */
-async function loadQuizData(quiz_id) {
-    const json_directory = await (
-        await fetch("/frontend/content/quiz_data.json")
-    ).json();
-
-    console.log(JSON.stringify(json_directory));
-
-    // Serve the quiz data that corresponds to the quiz ID
-    for (let i = 0; i < json_directory.quizzes.length; i++) {
-        if (json_directory.quizzes[i].quizID == quiz_id) {
-            console.log("ID: " + json_directory.quizzes[i].quizID);
-
-            console.log("filepath: " + json_directory.quizzes[i].filePath);
-
-            quizData = await (
-                await fetch(json_directory.quizzes[i].filePath)
-            ).json();
-
-            if (quizData.quizInfo.type != "python") continue;
-
-            console.log(JSON.stringify(quizData));
-
-            return;
-        }
-    }
-
-    console.log('No quiz found with ID "' + quiz_id + '"');
-}
-
-
 window.addEventListener("DOMContentLoaded", async function () {
     const params = new URLSearchParams(location.search);
     quizID = params.get("quiz-id");
-    await loadQuizData(quizID);
+    quizData = await loadQuizData(quizID, "python");
 
     userAnswers = new Array(quizData.questions.length).fill(null).map(() => ({
         code: null,
         results: null,
     }));
 
+    // TODO: Rework this function so it matches flowchart design
+
     // Initially display the first question
     displayQuestion();
 
+    // TODO: get rid of this section
     const quizSubmitted = localStorage.getItem("quizSubmitted");
     if (quizSubmitted === "true") {
         displayResults();
@@ -84,6 +52,9 @@ window.addEventListener("DOMContentLoaded", async function () {
 //given that they have used the 'run' button
 //index is null if they have not answered the question, but they can't hit submit without at least having written the word return
 
+/**
+ * Displays the question based on `currentQuestionIndex`.
+ */
 function displayQuestion() {
     const currentQuestion = quizData.questions[currentQuestionIndex];
     document.getElementById("question").textContent = currentQuestion.prompt;
@@ -98,6 +69,9 @@ function displayQuestion() {
         "Question " + (currentQuestionIndex + 1);
 }
 
+/**
+ * Displays the previous question of the quiz.
+ */
 document.getElementById("prev").addEventListener("click", () => {
     // If we're at the first question, wrap around to the last question
     if (currentQuestionIndex === 0) {
@@ -109,6 +83,10 @@ document.getElementById("prev").addEventListener("click", () => {
     displayQuestion();
 });
 
+
+/**
+ * Displays the next question of the quiz.
+ */
 document.getElementById("next").addEventListener("click", () => {
     // If we're at the last question, wrap around to the first question
     if (currentQuestionIndex === quizData.questions.length - 1) {
@@ -120,21 +98,60 @@ document.getElementById("next").addEventListener("click", () => {
     displayQuestion();
 });
 
+/**
+ * Submits the quiz and navigates to results page.
+ */
 document.getElementById("submit").addEventListener("click", async () => {
     submitFlag = 1;
-    //for (let i = 0; i < questions.length; i++) {
-    //currentQuestionIndex = i;
+
     await run();
-    //}
-    displayResults();
-    localStorage.setItem("quizSubmitted", "true");
+
+    let submissionData = {
+        submissions: []
+    };
+
+    for (let i = 0; i < quizData.questions.length; i++) {
+        submissionData.submissions.push({
+            "questionID" : quizData.questions[i].questionID,
+            "answer": userAnswers[i].code
+        });
+    }
+
+    const userID = localStorage.getItem("userId");
+    // If logged in, store in database
+    if (userID) {
+        await saveQuiz(userID, quizID, submissionData);
+    }
+
+    localStorage.setItem(`quiz_${quizID}`, JSON.stringify(submissionData));
+
+    // //for (let i = 0; i < questions.length; i++) {
+    // //currentQuestionIndex = i;
+    // await run();
+    // //}
+    // displayResults();
+    // localStorage.setItem("quizSubmitted", "true");
+    // window.location.href = `/frontend/pages/coding-results.html?quiz-id=${quizID}`;
 });
 
+/**
+ * Runs the users code when pressed.
+ */
+document.getElementById("run").addEventListener("click", async () => {
+    await run();
+});
+
+/**
+ * Reveals the solution to the current question.
+ */
 document.getElementById('reveal').addEventListener('click', () => {
   const currentQuestion = quizData.questions[currentQuestionIndex];
   document.getElementById('output').textContent = currentQuestion.solution;
 });
 
+/**
+ * Runs the user's code against the test cases for the current question.
+ */
 async function run() {
     const code = editor.getValue().trim();
     userAnswers[currentQuestionIndex].code = code;
@@ -211,7 +228,6 @@ async function run() {
     `);
 
         userAnswers[currentQuestionIndex].results = output;
-        // console.log("output: " + output);
 
         document.getElementById("output").textContent =
             output.split("Hidden Test Cases:")[0] || "";
@@ -223,6 +239,7 @@ async function run() {
         testCases.forEach((_, i) => {
             failedOutput += `Test Case ${i + 1}: FAILED\n\n`;
         });
+
         failedOutput += "Hidden Test Cases:\n";
         hiddenCases.forEach((test, i) => {
             failedOutput += `${
@@ -236,162 +253,155 @@ async function run() {
         (answer) => answer.code && answer.code.includes("return")
     ).length;
     console.log("count: ", answerCount);
-    document.getElementById("submit").style.display =
-        answerCount === quizData.questions.length ? "inline-block" : "none";
+    document.getElementById("submit").style.display = answerCount === quizData.questions.length ? "inline-block" : "none";
     submitFlag = 0;
 }
 
-// Run code function
-document.getElementById("run").addEventListener("click", async () => {
-    await run();
-});
 
-// // Change the 'Run' button label
-// document.getElementById('run').textContent = "Run";
+// // TODO: get rid of this function/change it a lot
+// function displayResults() {
+//     // Clear previous results
+//     quizContainer.innerHTML = "";
+//     resultContainer.innerHTML = "";
+//     const savedResults = localStorage.getItem("savedResults");
 
-function displayResults() {
-    // Clear previous results
-    quizContainer.innerHTML = "";
-    resultContainer.innerHTML = "";
-    const savedResults = localStorage.getItem("savedResults");
+//     // Hide other elements on the page
+//     const elementsToHide = [
+//         document.getElementById("header"),
+//         document.getElementById("question"),
+//         document.getElementById("output"),
+//         document.getElementById("code"),
+//         document.getElementById("run"),
+//         document.getElementById("prev"),
+//         document.getElementById("next"),
+//         document.getElementById("submit"),
+//     ];
 
-    // Hide other elements on the page
-    const elementsToHide = [
-        document.getElementById("header"),
-        document.getElementById("question"),
-        document.getElementById("output"),
-        document.getElementById("code"),
-        document.getElementById("run"),
-        document.getElementById("prev"),
-        document.getElementById("next"),
-        document.getElementById("submit"),
-    ];
+//     elementsToHide.forEach((element) => {
+//         if (element) element.style.display = "none";
+//     });
 
-    elementsToHide.forEach((element) => {
-        if (element) element.style.display = "none";
-    });
+//     const codeMirrorElement = document.querySelector(".CodeMirror");
+//     if (codeMirrorElement) codeMirrorElement.style.display = "none";
 
-    const codeMirrorElement = document.querySelector(".CodeMirror");
-    if (codeMirrorElement) codeMirrorElement.style.display = "none";
+//     // Scroll to the top of the page
+//     window.scrollTo({ top: 0, behavior: "smooth" });
 
-    // Scroll to the top of the page
-    window.scrollTo({ top: 0, behavior: "smooth" });
+//     if (savedResults) {
+//         // TODO: load user answers from database and run the code against the test cases
+//         // Load previously saved results if they exist
+//         resultContainer.innerHTML = savedResults;
+//     } else {
+//         let totalPasses = 0;
+//         let tests = 0;
 
-    if (savedResults) {
-        // TODO: load user answers from database and run the code against the test cases
-        // Load previously saved results if they exist
-        resultContainer.innerHTML = savedResults;
-    } else {
-        let totalPasses = 0;
-        let tests = 0;
+//         // Create a string for the summary output
+//         let summaryOutput = "<h2>Quiz Results:</h2>"; // Header for total results
 
-        // Create a string for the summary output
-        let summaryOutput = "<h2>Quiz Results:</h2>"; // Header for total results
+//         // Iterate over each question to format the results
+//         quizData.questions.forEach((question, i) => {
+//             const userResult = userAnswers[i].results;
+//             const totalTests =
+//                 question.testCases.length + question.hiddenCases.length;
+//             tests += totalTests;
+//             const passes = (userResult.match(/PASSED/g) || []).length; // Count 'PASSED' occurrences
+//             totalPasses += passes;
+//             const totalScore = `${passes}/${totalTests}`;
 
-        // Iterate over each question to format the results
-        quizData.questions.forEach((question, i) => {
-            const userResult = userAnswers[i].results;
-            const totalTests =
-                question.testCases.length + question.hiddenCases.length;
-            tests += totalTests;
-            const passes = (userResult.match(/PASSED/g) || []).length; // Count 'PASSED' occurrences
-            totalPasses += passes;
-            const totalScore = `${passes}/${totalTests}`;
+//             // Create the formatted output for each question
+//             let output = `<h3>Question ${i + 1}: ${question.prompt}</h3>`;
+//             output += `<pre>${userAnswers[i].code}</pre>`;
+//             output += `<h4>Total Score: ${totalScore}</h4>`;
+//             output += `<h4>Test Results:</h4>`;
 
-            // Create the formatted output for each question
-            let output = `<h3>Question ${i + 1}: ${question.prompt}</h3>`;
-            output += `<pre>${userAnswers[i].code}</pre>`;
-            output += `<h4>Total Score: ${totalScore}</h4>`;
-            output += `<h4>Test Results:</h4>`;
+//             // Split userResult into visible and hidden parts
+//             const visibleResults = userResult
+//                 .split("Hidden Test Cases:")[0]
+//                 .trim(); // Results before "Hidden Test Cases:"
+//             const hiddenResults = userResult
+//                 .split("Hidden Test Cases:")[1]
+//                 ?.trim(); // Results after "Hidden Test Cases:"
 
-            // Split userResult into visible and hidden parts
-            const visibleResults = userResult
-                .split("Hidden Test Cases:")[0]
-                .trim(); // Results before "Hidden Test Cases:"
-            const hiddenResults = userResult
-                .split("Hidden Test Cases:")[1]
-                ?.trim(); // Results after "Hidden Test Cases:"
+//             // Add the visible results
+//             output += visibleResults
+//                 .replace(/\\n/g, "<br>")
+//                 .replace(/\n/g, "<br>"); // Handle both escaped and actual newlines
 
-            // Add the visible results
-            output += visibleResults
-                .replace(/\\n/g, "<br>")
-                .replace(/\n/g, "<br>"); // Handle both escaped and actual newlines
+//             // Add the bold label for hidden test cases if it exists
+//             if (hiddenResults) {
+//                 output += "<br><h4>Hidden Test Cases:</h4>"; // Bold label
+//                 output += hiddenResults
+//                     .replace(/\\n/g, "<br>")
+//                     .replace(/\n/g, "<br>"); // Handle both escaped and actual newlines
+//             }
 
-            // Add the bold label for hidden test cases if it exists
-            if (hiddenResults) {
-                output += "<br><h4>Hidden Test Cases:</h4>"; // Bold label
-                output += hiddenResults
-                    .replace(/\\n/g, "<br>")
-                    .replace(/\n/g, "<br>"); // Handle both escaped and actual newlines
-            }
+//             // Append the question output to the resultContainer
+//             resultContainer.innerHTML += output + "<hr>"; // Add a separator between questions
+//         });
 
-            // Append the question output to the resultContainer
-            resultContainer.innerHTML += output + "<hr>"; // Add a separator between questions
-        });
+//         // After all questions are processed, add the summary output
+//         summaryOutput += `<h4>Total Test Cases: ${tests}</h4>`;
+//         summaryOutput += `<h4>Total Passed: ${totalPasses}</h4>`;
 
-        // After all questions are processed, add the summary output
-        summaryOutput += `<h4>Total Test Cases: ${tests}</h4>`;
-        summaryOutput += `<h4>Total Passed: ${totalPasses}</h4>`;
+//         // Insert the summary output at the top of the resultContainer
+//         resultContainer.innerHTML = summaryOutput + resultContainer.innerHTML;
 
-        // Insert the summary output at the top of the resultContainer
-        resultContainer.innerHTML = summaryOutput + resultContainer.innerHTML;
+//         // Save the result content to localStorage
+//         localStorage.setItem("savedResults", resultContainer.innerHTML);
 
-        // Save the result content to localStorage
-        localStorage.setItem("savedResults", resultContainer.innerHTML);
+//         // Save the result to the database
+//         saveQuiz(resultContainer.innerHTML);
+//     }
 
-        // Save the result to the database
-        saveQuiz(resultContainer.innerHTML);
-    }
+//     const retakeButton = document.createElement("button");
+//     retakeButton.textContent = "Retake Quiz";
+//     retakeButton.style.marginTop = "20px"; // Optional styling
+//     retakeButton.addEventListener("click", () => {
+//         // Remove flags for quiz submission and saved results
+//         localStorage.removeItem("quizSubmitted");
+//         localStorage.removeItem("savedResults");
 
-    const retakeButton = document.createElement("button");
-    retakeButton.textContent = "Retake Quiz";
-    retakeButton.style.marginTop = "20px"; // Optional styling
-    retakeButton.addEventListener("click", () => {
-        // Remove flags for quiz submission and saved results
-        localStorage.removeItem("quizSubmitted");
-        localStorage.removeItem("savedResults");
+//         // Refresh the page to reset the quiz view
+//         window.location.reload();
+//     });
 
-        // Refresh the page to reset the quiz view
-        window.location.reload();
-    });
+//     // Append the button to the result container
+//     resultContainer.appendChild(retakeButton);
+// }
 
-    // Append the button to the result container
-    resultContainer.appendChild(retakeButton);
-}
+// /**
+//  * Saves the quiz results to the database (if logged in) and local storage.
+//  * @param {JSON} results 
+//  */
+// async function saveQuiz(results) {
+//     console.log("answer: ", results);
 
-async function saveQuiz(results) {
-    console.log("saving!!!!");
-    const answerData = quizData.questions.map((questionData, index) => {
-        return {
-            questionID: questionData.questionID,
-            // answer: userAnswers[index].code
-            answer: results,
-        };
-    });
+    
+    
+//     const userID = localStorage.getItem("userId");
+//     if (!userID) return; // If not logged in, don't store in database
 
-    console.log("answer: ", answerData);
+//     const url = `https://boilertechtests.com/api/quiz`;
+//     try {
+//         const response = await fetch(url, {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/json",
+//             },
+//             body: JSON.stringify({
+//                 user_id: userID,
+//                 quiz_id: quizID,
+//                 answers: results,
+//             }),
+//         });
 
-    const url = `https://boilertechtests.com/api/quiz`;
-    try {
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                user_id: userID,
-                quiz_id: quizID,
-                answers: answerData,
-            }),
-        });
+//         if (!response.ok) {
+//             throw new Error("Failed to save quiz");
+//         }
 
-        if (!response.ok) {
-            throw new Error("Failed to save quiz");
-        }
-
-        const data = await response.json();
-        console.log("Quiz saved successfully:", data);
-    } catch (error) {
-        console.error("Error saving quiz:", error);
-    }
-}
+//         const data = await response.json();
+//         console.log("Quiz saved successfully:", data);
+//     } catch (error) {
+//         console.error("Error saving quiz:", error);
+//     }
+// }
