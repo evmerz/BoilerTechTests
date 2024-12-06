@@ -13,7 +13,7 @@ function loadProjectData() {
                 console.log(classData[json.classes[i].id].name);
             }
             // After loading class data, load pinned classes
-            loadAllClasses();
+            // loadAllClasses();
             loadPinnedClasses();
         });
 }
@@ -186,7 +186,6 @@ async function getPinnedClasses(userID) {
 
         const data = await response.json();
         console.log("Class data:", data.classes);
-
         return data.classes;
     } catch (error) {
         console.error("Error retrieving submission:", error);

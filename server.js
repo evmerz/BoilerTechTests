@@ -248,26 +248,29 @@ app.post('/quiz', async (req, res) => {
 
 app.post('/pin', async (req, res) => {
     const {user_id, classes} = req.body;
-    console.log("user_id:", user_id);
-    console.log("classes:", classes);
+    // console.log("user_id:", user_id);
+    // console.log("classes:", classes);
     if (user_id) {
-        console.log("yes user_id")
+        // console.log("yes user_id")
         const updateQuery = 'UPDATE users SET classes = ? WHERE id = (?)';
         db.query(updateQuery, [JSON.stringify(classes), user_id], (err, result) => {
             if (err) {
                 return res.status(500).json({ message: 'Error updating classes in the database' });
             }
-            console.log("updated");
+            // console.log("updated");
             res.status(201).json({ message: 'Pinned classes saved!'});
         });
     }
 });
 
 app.post('/get-pin', async (req, res) => {
+    console.log("in get/pin");
     const user_id = req.query.user_id;
+    console.log("userid:", user_id);
     const query = 'SELECT classes FROM users WHERE id = ?';
     try {
         db.query(query, [user_id], (err, result) => {
+            console.log("result", result);
             if (err) {
                 return res.status(500).json({ message: 'Error fetching classes from the database!' });
             }
