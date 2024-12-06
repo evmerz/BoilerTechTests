@@ -6,11 +6,8 @@
     <link rel="stylesheet" href="/frontend/styles/navigation.css">
     <link rel="stylesheet" href="/frontend/styles/global.css">
     <link rel="stylesheet" href="/frontend/styles/quiz.css">
-
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
     <script src="/frontend/scripts/quiz-load.js"></script>
-
-    <title>CS240 Quiz - if-statements</title>
+    <title>CS177 Quiz - data types</title>
     <style>
         .correct {
             color: #20b625; /* Light green for correct user answers */
@@ -26,13 +23,13 @@
             color: #87cf8b; /* Light green for the correct answer line */
             font-weight: bold;
         }
-    </style>
+    </style> 
 </head>
 <body>
     <div id="navbar-load"></div>
     <div class="container">
         <div class="sub-container">
-            <h1 id="quiz-title" style="text-align: center;">CS240 Quiz - if statements</h1>
+            <h1 id="quiz-title" style="text-align: center;">CS177 Quiz - data types</h1>
             <div id="quiz-container">
                 <button id="back-button" class="button">Back to Practice</button>
                 <div id="quiz-contents"></div>
@@ -40,34 +37,16 @@
             </div>
         </div>
     </div>
-    
-    <script src="/frontend/scripts/navigation.js"></script>
     <script src="/frontend/scripts/quiz.js"></script>
-    <script>
-        var classID, params;
-        // Initialize the quiz upon load
-        window.addEventListener("DOMContentLoaded", async function () {
-            params = new URLSearchParams(location.search);
-            quizID = params.get("quiz-id");
-            classID = params.get("class-id");
-            console.log("class id: " + classID);
-            console.log(quizID);
-    
-            quizData = await loadQuizData(quizID, "mc");
-
-            document.getElementById("quiz-title").innerHTML = quizData.quizInfo.quizName;
-    
-            userAnswers = new Array(quizData.questions.length).fill(null);
-            quizContainer = document.getElementById("quiz-contents");
-    
-            renderQuestion();
-        });
-        
-        document.getElementById('back-button').addEventListener('click', function() {
-            window.location.href = `/frontend/pages/${classID}.html`;
-        });
-    </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+    <script src="/frontend/scripts/navigation.js"></script>
 </body>
+<script>
+    document.getElementById('back-button').addEventListener('click', function() {
+        window.location.href = '/frontend/pages/cs177-exam1.html';
+    });
+
+</script>
 <script src="/frontend/scripts/quiz.js"></script>
 <script>
     // Initialize the quiz upon load
@@ -76,7 +55,7 @@
         quizID = params.get("quiz-id");
         console.log(quizID);
 
-        quizData = await loadQuizData(quizID, "mc");
+        quizData = await loadQuizData(quizID);
 
         userAnswers = new Array(quizData.questions.length).fill(null);
         quizContainer = document.getElementById("quiz-contents");

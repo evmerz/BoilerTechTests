@@ -1,0 +1,157 @@
+{
+  "quizInfo": {
+    "quizName": "Python Loops Quiz",
+    "tags": [
+      "python",
+      "loops",
+      "programming"
+    ],
+    "type": "mc"
+  },
+  "questions": [
+    {
+      "question": "Which loop is used in Python when the number of iterations is known?",
+      "questionID": "cd311131-c257-4a76-96fe-6ee1e95660d1",
+      "answerID": "A-002",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "while loop"
+        },
+        {
+          "optionID": "A-002",
+          "text": "for loop"
+        },
+        {
+          "optionID": "A-003",
+          "text": "do-while loop"
+        },
+        {
+          "optionID": "A-004",
+          "text": "foreach loop"
+        }
+      ]
+    },
+    {
+      "question": "What is the output of the following code?\n```python\nfor i in range(3):\n    print(i)\n```\n",
+      "questionID": "f7af7f66-eb85-4a21-8167-bb1acdf555b2",
+      "answerID": "A-004",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "1 2 3"
+        },
+        {
+          "optionID": "A-002",
+          "text": "0 1 2 3"
+        },
+        {
+          "optionID": "A-003",
+          "text": "0 1 2 3 4"
+        },
+        {
+          "optionID": "A-004",
+          "text": "0 1 2"
+        }
+      ]
+    },
+    {
+      "question": "Which keyword is used to terminate a loop prematurely in Python?",
+      "questionID": "75660481-0c7b-4be7-b4e1-ad4e4c307384",
+      "answerID": "A-001",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "break"
+        },
+        {
+          "optionID": "A-002",
+          "text": "continue"
+        },
+        {
+          "optionID": "A-003",
+          "text": "pass"
+        },
+        {
+          "optionID": "A-004",
+          "text": "stop"
+        }
+      ]
+    },
+    {
+      "question": "What does the `continue` statement do in a Python loop?",
+      "questionID": "6ab00512-ec38-41b2-a0b6-fc02559a0246",
+      "answerID": "A-003",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "Terminates the loop"
+        },
+        {
+          "optionID": "A-002",
+          "text": "Skips the loop entirely"
+        },
+        {
+          "optionID": "A-003",
+          "text": "Skips the current iteration and continues with the next"
+        },
+        {
+          "optionID": "A-004",
+          "text": "Restarts the loop"
+        }
+      ]
+    },
+    {
+      "question": "Which statement about `else` in loops is true in Python?",
+      "questionID": "ef74339d-c3f2-407c-8f7c-ae0d048fa3d9",
+      "answerID": "A-002",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "It runs only if the loop is terminated by a break statement"
+        },
+        {
+          "optionID": "A-002",
+          "text": "It runs only if the loop finishes all iterations without a break"
+        },
+        {
+          "optionID": "A-003",
+          "text": "It always runs after the loop, regardless of how the loop terminates"
+        },
+        {
+          "optionID": "A-004",
+          "text": "It can only be used with while loops"
+        }
+      ]
+    },
+    {
+      "question": "How can you create an infinite loop in Python?",
+      "questionID": "e459a0ac-3865-438e-b852-305950e189c4",
+      "answerID": "A-001",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "while True:"
+        },
+        {
+          "optionID": "A-002",
+          "text": "for True:"
+        },
+        {
+          "optionID": "A-003",
+          "text": "while False:"
+        },
+        {
+          "optionID": "A-004",
+          "text": "for False:"
+        }
+      ]
+    }
+  ]
+}

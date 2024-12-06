@@ -1,0 +1,131 @@
+{
+  "quizInfo": {
+    "quizName": "For-Loops Quiz",
+    "tags": [
+      "example"
+    ],
+    "type": "mc"
+  },
+  "questions": [
+    {
+      "question": "What will the following code output?\nfor (int i = 0; i < 3; i++) { printf(\"%d \", i); }",
+      "questionID": "c116af9c-7bac-4dbc-a906-e10e970ffdf5",
+      "answerID": "A-001",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "0 1 2"
+        },
+        {
+          "optionID": "A-002",
+          "text": "0 1 2 3"
+        },
+        {
+          "optionID": "A-003",
+          "text": "1 2 3"
+        },
+        {
+          "optionID": "A-004",
+          "text": "Error"
+        }
+      ]
+    },
+    {
+      "question": "How many times will the loop execute?\nfor (int i = 0; i < 5; i++) { /* code */ }",
+      "questionID": "439a2e4a-858b-4942-a83f-8d72f3d40aa2",
+      "answerID": "A-002",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "4"
+        },
+        {
+          "optionID": "A-002",
+          "text": "5"
+        },
+        {
+          "optionID": "A-003",
+          "text": "6"
+        },
+        {
+          "optionID": "A-004",
+          "text": "Infinite"
+        }
+      ]
+    },
+    {
+      "question": "Which of the following is true about a for loop?",
+      "questionID": "dbbcfa86-d129-4118-be1f-c531f8e742e7",
+      "answerID": "A-003",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "The loop must have a condition."
+        },
+        {
+          "optionID": "A-002",
+          "text": "The increment must be +1."
+        },
+        {
+          "optionID": "A-003",
+          "text": "The body may never execute if the condition is false initially."
+        },
+        {
+          "optionID": "A-004",
+          "text": "You cannot break out of a for loop."
+        }
+      ]
+    },
+    {
+      "question": "What will the following code output?\nfor (int i = 0; i < 5; i += 2) { printf(\"%d \", i); }",
+      "questionID": "11af4d25-3d52-4c40-a050-800f1a1b9430",
+      "answerID": "A-002",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "0 1 2 3 4"
+        },
+        {
+          "optionID": "A-002",
+          "text": "0 2 4"
+        },
+        {
+          "optionID": "A-003",
+          "text": "1 3 5"
+        },
+        {
+          "optionID": "A-004",
+          "text": "Infinite loop"
+        }
+      ]
+    },
+    {
+      "question": "Which part of the for loop is executed first?",
+      "questionID": "df292852-a843-4bde-8492-ae6de096eb10",
+      "answerID": "A-004",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "Condition check"
+        },
+        {
+          "optionID": "A-002",
+          "text": "Loop body"
+        },
+        {
+          "optionID": "A-003",
+          "text": "Increment"
+        },
+        {
+          "optionID": "A-004",
+          "text": "Initialization"
+        }
+      ]
+    }
+  ]
+}

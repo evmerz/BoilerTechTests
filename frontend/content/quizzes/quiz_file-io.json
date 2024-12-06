@@ -1,0 +1,157 @@
+{
+  "quizInfo": {
+    "quizName": "Python File I/O Quiz",
+    "tags": [
+      "python",
+      "file-io",
+      "programming"
+    ],
+    "type": "mc"
+  },
+  "questions": [
+    {
+      "question": "Which mode is used to open a file for reading in Python?",
+      "questionID": "5ca0e695-40a0-42fb-a615-eea284ab855f",
+      "answerID": "A-001",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "'r'"
+        },
+        {
+          "optionID": "A-002",
+          "text": "'w'"
+        },
+        {
+          "optionID": "A-003",
+          "text": "'a'"
+        },
+        {
+          "optionID": "A-004",
+          "text": "'x'"
+        }
+      ]
+    },
+    {
+      "question": "What does the `write()` method do in Python?",
+      "questionID": "a118b9ba-1fae-4696-a53a-55f081a7c7b8",
+      "answerID": "A-002",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "Reads a file line by line"
+        },
+        {
+          "optionID": "A-002",
+          "text": "Writes a string to a file"
+        },
+        {
+          "optionID": "A-003",
+          "text": "Appends a string to a file"
+        },
+        {
+          "optionID": "A-004",
+          "text": "Closes a file"
+        }
+      ]
+    },
+    {
+      "question": "What is the proper way to close a file in Python?",
+      "questionID": "c5ac1333-6c41-4788-b80b-25ff8eb8306f",
+      "answerID": "A-003",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "file.end()"
+        },
+        {
+          "optionID": "A-002",
+          "text": "file.stop()"
+        },
+        {
+          "optionID": "A-003",
+          "text": "file.close()"
+        },
+        {
+          "optionID": "A-004",
+          "text": "file.terminate()"
+        }
+      ]
+    },
+    {
+      "question": "Which method reads the entire content of a file into a string?",
+      "questionID": "c520e25d-7a04-4cab-bca2-f32efe2cc9ac",
+      "answerID": "A-002",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "readlines()"
+        },
+        {
+          "optionID": "A-002",
+          "text": "read()"
+        },
+        {
+          "optionID": "A-003",
+          "text": "readfile()"
+        },
+        {
+          "optionID": "A-004",
+          "text": "get()"
+        }
+      ]
+    },
+    {
+      "question": "What happens if you try to open a file that does not exist in 'r' mode?",
+      "questionID": "876d375f-bc98-4e50-a3f1-432f9dd0057b",
+      "answerID": "A-001",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "An error is raised"
+        },
+        {
+          "optionID": "A-002",
+          "text": "A new file is created"
+        },
+        {
+          "optionID": "A-003",
+          "text": "The operation does nothing"
+        },
+        {
+          "optionID": "A-004",
+          "text": "The file is opened in write mode"
+        }
+      ]
+    },
+    {
+      "question": "What is the purpose of the 'with' statement when working with files?",
+      "questionID": "62a0e179-ef1f-4096-b478-8120ef60662f",
+      "answerID": "A-004",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "To open multiple files simultaneously"
+        },
+        {
+          "optionID": "A-002",
+          "text": "To set the file mode automatically"
+        },
+        {
+          "optionID": "A-003",
+          "text": "To write to files without using write()"
+        },
+        {
+          "optionID": "A-004",
+          "text": "To ensure the file is properly closed after its block is executed"
+        }
+      ]
+    }
+  ]
+}

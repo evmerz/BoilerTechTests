@@ -1,0 +1,133 @@
+{
+    "quizInfo": {
+      "quizName": "Doubly Linked Lists Quiz",
+      "tags": [
+        "doubly-linked-lists",
+        "data-structures"
+      ],
+      "type": "mc"
+    },
+    "questions": [
+      {
+        "question": "What is a distinguishing feature of a doubly linked list compared to a singly linked list?",
+        "questionID": "a1b2c3d4-5678-90ef-ghij-klmnopqrstuv",
+        "answerID": "A-002",
+        "points": 1,
+        "options": [
+          {
+            "optionID": "A-001",
+            "text": "Nodes have a pointer to the next node only"
+          },
+          {
+            "optionID": "A-002",
+            "text": "Nodes have pointers to both the next and the previous nodes"
+          },
+          {
+            "optionID": "A-003",
+            "text": "Nodes contain an additional field for data"
+          },
+          {
+            "optionID": "A-004",
+            "text": "Traversal is only forward"
+          }
+        ]
+      },
+      {
+        "question": "What is the time complexity of inserting a node at the beginning of a doubly linked list?",
+        "questionID": "b1c2d3e4-5678-90gh-ijkl-mnopqrstuvwx",
+        "answerID": "A-001",
+        "points": 1,
+        "options": [
+          {
+            "optionID": "A-001",
+            "text": "O(1)"
+          },
+          {
+            "optionID": "A-002",
+            "text": "O(n)"
+          },
+          {
+            "optionID": "A-003",
+            "text": "O(log n)"
+          },
+          {
+            "optionID": "A-004",
+            "text": "O(n log n)"
+          }
+        ]
+      },
+      {
+        "question": "Which operation is easier in a doubly linked list compared to a singly linked list?",
+        "questionID": "c1d2e3f4-5678-90ij-klmn-opqrstuvwxy",
+        "answerID": "A-004",
+        "points": 1,
+        "options": [
+          {
+            "optionID": "A-001",
+            "text": "Traversal from the head to the tail"
+          },
+          {
+            "optionID": "A-002",
+            "text": "Insertion at the head"
+          },
+          {
+            "optionID": "A-003",
+            "text": "Accessing the middle element by index"
+          },
+          {
+            "optionID": "A-004",
+            "text": "Deletion of a node when given a pointer to it"
+          }
+        ]
+      },
+      {
+        "question": "What happens to the pointers when a node is deleted in a doubly linked list?",
+        "questionID": "d1e2f3g4-5678-90kl-mnop-qrstuvwxyz",
+        "answerID": "A-003",
+        "points": 1,
+        "options": [
+          {
+            "optionID": "A-001",
+            "text": "All nodes are shifted to fill the gap"
+          },
+          {
+            "optionID": "A-002",
+            "text": "Only the next pointer of the previous node is updated"
+          },
+          {
+            "optionID": "A-003",
+            "text": "Both the next pointer of the previous node and the previous pointer of the next node are updated"
+          },
+          {
+            "optionID": "A-004",
+            "text": "A new node is created to replace it"
+          }
+        ]
+      },
+      {
+        "question": "What is the time complexity of searching for an element in an unsorted doubly linked list?",
+        "questionID": "e1f2g3h4-5678-90mn-opqr-stuvwxyz1234",
+        "answerID": "A-002",
+        "points": 1,
+        "options": [
+          {
+            "optionID": "A-001",
+            "text": "O(1)"
+          },
+          {
+            "optionID": "A-002",
+            "text": "O(n)"
+          },
+          {
+            "optionID": "A-003",
+            "text": "O(log n)"
+          },
+          {
+            "optionID": "A-004",
+            "text": "O(n log n)"
+          }
+        ]
+      }
+    ]
+  }
+  

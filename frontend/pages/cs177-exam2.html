@@ -8,17 +8,15 @@
     <link rel="stylesheet" href="/frontend/styles/navigation.css">
     <link rel="stylesheet" href="/frontend/styles/home.css">
     <link rel="stylesheet" href="/frontend/styles/global.css">
-    <link rel="stylesheet" href="/frontend/styles/classes.css">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
     <script src="/frontend/scripts/quiz-load.js"></script>
 
-    <title>CS240 - BoilerTechTests</title>
+    <title>CS177 - BoilerTechTests</title>
 </head>
 
 <body>
@@ -28,7 +26,7 @@
         <div id="spacer"></div>
 
         <div class="sub-container">
-            <h2>CS240</h2>
+            <h2>CS177</h2>
 
             <div style="margin-bottom: 20px;">
                 <button id="back-to-practice" class="button">Back to Practice</button>
@@ -41,7 +39,7 @@
         </div>
     </div>
 
-    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
     <script src="/frontend/scripts/navigation.js"></script>
     <script src="/frontend/scripts/project-load.js"></script>
     <script src="/frontend/scripts/quiz.js"></script>
@@ -49,34 +47,27 @@
     <script>
 
         document.getElementById("back-to-practice").addEventListener("click", function () {
-            window.location.href = "/index.html";
+            window.location.href = "/frontend/pages/cs177.html";
         });
-        // pop up modal functions
-        function openModal() {
-            document.getElementById("login-modal").style.display = "block";
-            document.body.classList.add("no-scroll");
-        }
-
-        // Function to close the modal
-        function closeModal() {
-            document.getElementById("login-modal").style.display = "none";
-            document.body.classList.remove("no-scroll");
-        }
-
         // Data for CS240 page
         const cs240Data = {
             exams: [
                 {
-                    title: "SELECT AN EXAM TO STUDY FOR",
+                    title: "SELECT A FINAL TOPIC TO STUDY",
                     topics: [
-                        { name: "EXAM 1", id: "cs240-exam1" },
-                        { name: "EXAM 2", id: "cs240-exam2" },
-                        { name: "EXAM 3", id: "cs240-exam3"}
+                        { name: "Topic 5 - file input and output", id: "file-io" },
+                        { name: "Topic 6 - loops", id: "loops" }
                     ]
                 }
             ]
         };
-        
+
+        function promiseState(p) {
+        const t = {};
+        return Promise.race([p, t])
+            .then(v => (v === t)? "pending" : "fulfilled", () => "rejected");
+        }
+
         // Function to load CS240 exam sections and topics
         function loadCS240Content() {
             const examContainer = document.getElementById("exam-sections");
@@ -105,6 +96,7 @@
                     button.addEventListener('click', async function() {
                         const topicKey = topic.id;
                         const quizID = await getQuizID(topic.id);
+                        console.log("DEBUG quizID:", quizID);
                         const userID = localStorage.getItem('userId');
 
                         // If the user is logged in
@@ -116,24 +108,24 @@
                             if (submissionData) {
                                 // Store the submission data in local storage and go to results page
                                 localStorage.setItem(`quiz_${quizID}`, submissionData);
-
-                                // TODO: make it not dependent on topic key
-                                if (topicKey == "terminal") {
-                                    window.location.href = `/coding-results?quiz-id=${quizID}`;
-                                } else {
-                                    window.location.href = `/frontend/pages/results.html?quiz-id=${quizID}`;
-                                }
+                                window.location.href = `/frontend/pages/results.html?quiz-id=${quizID}`;
 
                             } else {
-                                // TODO: Please change this
                                 // No previous submission, so proceed to the quiz page
-                                window.location.href = `./${topic.id}.html?quiz-id=${quizID}`;
+                                window.location.href = `/frontend/pages/if-statements.html?quiz-id=${quizID}&class-id=cs177-exam2`;
                             }
                         } else {
-                            // if user is not logged in, do not let them take the quiz (guest)
-                            console.log("yes");
-                            openModal();
+                            window.location.href = `/frontend/pages/if-statements.html?quiz-id=${quizID}&class-id=cs177-exam2`;
                         }
+
+                        // if (quizTaken) {
+                        //     // Redirect to results page if quiz was already taken
+                        //     window.location.href = '/frontend/pages/results.html'; // Update the path if needed
+                        // } else {
+                        //     // First time clicking, redirect to quiz page
+                        //     window.location.href = `./${topic.id}.html?quiz-id=${quizID}`; // Link to topic-specific quiz page
+                        // }
+                        // help
                     });
 
                     text.appendChild(button);
@@ -144,27 +136,9 @@
                 });
             });
         }
-    
-        window.onclick = function(event) {
-            const modal = document.getElementById("login-modal");
-            if (event.target === modal) {
-                closeModal();
-            }
-        };
 
         // Load CS240 content on page load
         $(document).ready(loadCS240Content);
-
     </script>
-    <div id="login-modal" class="modal">
-        <div class="fade-in"></div>
-            <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
-                <p>You cannot access this quiz without an account. Please <a href="/login" style="text-decoration: underline; color: #24409e">login</a>
-                or <a href="/create-account" style="text-decoration: underline; color: #24409e">create an account</a> to access this page.
-                </p>
-            </div>
-        </div>
-    </div>    
 </body>
 </html>

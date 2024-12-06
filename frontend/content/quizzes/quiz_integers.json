@@ -1,0 +1,133 @@
+{
+  "quizInfo": {
+    "quizName": "Python Integers Quiz",
+    "tags": [
+      "python",
+      "integers",
+      "data-types"
+    ],
+    "type": "mc"
+  },
+  "questions": [
+    {
+      "question": "What is the type of the value `42` in Python?",
+      "questionID": "583cc1b7-a5e6-418f-863c-0ca0e0527d2a",
+      "answerID": "A-002",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "&lt;class 'float'&gt;"
+        },
+        {
+          "optionID": "A-002",
+          "text": "&lt;class 'int'&gt;"
+        },
+        {
+          "optionID": "A-003",
+          "text": "&lt;class 'complex'&gt;"
+        },
+        {
+          "optionID": "A-004",
+          "text": "&lt;class 'str'&gt;"
+        }
+      ]
+    },
+    {
+      "question": "What will be the result of the operation `7 // 3`?",
+      "questionID": "22eb4da7-6fff-4be5-a6ec-14c6425c8ad1",
+      "answerID": "A-001",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "2"
+        },
+        {
+          "optionID": "A-002",
+          "text": "2.33"
+        },
+        {
+          "optionID": "A-003",
+          "text": "3"
+        },
+        {
+          "optionID": "A-004",
+          "text": "1"
+        }
+      ]
+    },
+    {
+      "question": "What happens if you try to add an integer and a string in Python?",
+      "questionID": "86758d53-41e6-4441-badf-781e798a5015",
+      "answerID": "A-004",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "The string is converted to an integer"
+        },
+        {
+          "optionID": "A-002",
+          "text": "The integer is converted to a string"
+        },
+        {
+          "optionID": "A-003",
+          "text": "The operation returns None"
+        },
+        {
+          "optionID": "A-004",
+          "text": "A TypeError is raised"
+        }
+      ]
+    },
+    {
+      "question": "What is the result of `10 ** 2` in Python?",
+      "questionID": "17881df1-0727-47c0-aa7b-b436584f6316",
+      "answerID": "A-003",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "10"
+        },
+        {
+          "optionID": "A-002",
+          "text": "20"
+        },
+        {
+          "optionID": "A-003",
+          "text": "100"
+        },
+        {
+          "optionID": "A-004",
+          "text": "1000"
+        }
+      ]
+    },
+    {
+      "question": "Which built-in Python function is used to convert a string to an integer?",
+      "questionID": "62839f02-4712-40cd-8f91-48c299d31445",
+      "answerID": "A-002",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "float()"
+        },
+        {
+          "optionID": "A-002",
+          "text": "int()"
+        },
+        {
+          "optionID": "A-003",
+          "text": "str()"
+        },
+        {
+          "optionID": "A-004",
+          "text": "eval()"
+        }
+      ]
+    }
+  ]
+}
