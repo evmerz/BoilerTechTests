@@ -27,7 +27,7 @@ async function loadQuizData(quiz_id, type) {
               await fetch(json_directory.quizzes[i].filePath)
           ).json();
 
-          if (_quizData.quizInfo.type != type) {
+          if ((type != "any") && _quizData.quizInfo.type != type) {
               console.error("Incorrect quiz type! Found " + _quizData.quizInfo.type + " but wanted " + type);
               return null;
           }

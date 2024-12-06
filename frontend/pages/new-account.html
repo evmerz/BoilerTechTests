@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="/frontend/styles/navigation.css">
+    <link rel="stylesheet" href="/frontend/styles/global.css">
+    <link rel="stylesheet" href="/frontend/styles/new-account.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
+        crossorigin="anonymous"></script>
+    <script src="/frontend/scripts/quiz-load.js"></script>
+
+    <title>Account Details - BoilerTechTests</title>
+</head>
+
+<body>
+
+    <div id="navbar-load"></div>
+
+    <!-- ================================ MAIN CONTAINER FOR WEBSITE ================================ -->
+    <div class="container">
+        <!-- Include spacers wherever you deem necessary -->
+        <div id="spacer"></div>
+
+        <!-- ======== Always use sub-containers for the actual content to maintain proper spacing ======== -->
+        <div class="sub-container">
+            <div class="header-panel" style="margin-top: 0; margin-bottom: 0;"></div>
+            <h1 style="margin-bottom: 5px;">Account Details</h1>
+
+            <button id="logout-btn" class="button">Log Out</button>
+
+            <div id="spacer"></div>
+            <div id="split-container">
+                <div id="account-nav">
+                    <button class="page-button hoverable-button" id="progress-button" onclick="selectPage('progress')">
+                        <img src="/frontend/images/school_icon.svg" alt="Graduation cap icon">
+                        <h4>Progress</h4>
+                    </button>
+                    <button class="page-button hoverable-button" id="settings-button" onclick="selectPage('settings')">
+                        <img src="/frontend/images/settings_icon.svg" alt="Settings gear icon">
+                        <h4>Account</h4>
+                    </button>
+                    <button class="page-button hoverable-button" id="appearance-button"
+                        onclick="selectPage('appearance')">
+                        <img src="/frontend/images/palette_icon.svg" alt="Painter's palette icon">
+                        <h4>Appearance</h4>
+                    </button>
+                </div>
+                <div class="vertical-line"></div>
+                <div id="details-panel">
+                    <div id="progress-panel">
+                        <h2 style="margin-top: 0;">Your Classes</h2>
+                        <div id="class-list"></div>
+                    </div>
+
+                    <div id="settings-panel">
+                        <h2 style="margin-top: 0;">Account Settings</h2>
+                        <p><strong>Username:</strong> <span id="username"></span></p>
+                        <p><strong>Password:</strong> <span id="password" class="hidden-password"></span></p>
+                        <p><strong>User ID:</strong> <span id="userId"></span></p>
+                        <div class="column">
+                            <h2>Change Username/Password</h2>
+                            <div id="change-credentials">
+
+                                <p style="margin-bottom: 2px;"><strong>Current Password:</strong></p>
+                                <input type="password" id="currentPassword" placeholder="Current Password" required />
+                                <br><br>
+
+                                <p style="margin-bottom: 2px;"><strong> New Username/Password:</strong></p>
+                                <div id="new-credential-container">
+                                    <input type="text" id="newUsername" placeholder="New Username" />
+                                    <span></span>
+                                    <input type="password" id="newPassword" placeholder="New Password" />
+                                </div>
+                            </div>
+                            <br>
+                            <button id="change-btn" class="button">Change</button>
+                            <p id="response-message"></p>
+                        </div>
+                    </div>
+
+                    <div id="appearance-panel">
+                        <h2 style="margin-top: 0;">Appearance Settings</h2>
+                        <p><strong>Scroll Bar</strong></p>
+                        <label class="switch">
+                            <input type="checkbox" id="scrollbarToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                        <span>Disable/Enable Custom Scrollbar</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/frontend/scripts/navigation.js"></script>
+    <script src="/frontend/scripts/account.js"></script>
+    <script async>
+        let pageButtons = [];
+        let userID = "";
+
+        window.addEventListener("DOMContentLoaded", async function () {
+            userID = localStorage.getItem("userId");
+            if (!userID) window.location.href = "/login";
+
+            selectPage("progress");
+
+            await generateClassBanners();
+
+            pageButtons = document.getElementsByClassName("page-button");
+
+            let classButtons = document.getElementsByClassName("class-button");
+
+            for (let i = 0; i < classButtons.length; i++) {
+                classButtons[i].addEventListener("click", function () {
+                    var classContent = classButtons[i].parentElement.nextElementSibling;
+                    if (classContent.style.display == "flex") {
+                        classButtons[i].children[0].src = "/frontend/images/key_arrow_right.svg";
+                        classContent.style.display = "none";
+
+                    } else {
+                        classButtons[i].children[0].src = "/frontend/images/key_arrow_down.svg";
+                        classContent.style.display = "flex";
+                        for (var child of classContent.children) {
+                            child.style.display = "flex";
+                        }
+                    }
+                });
+            }
+
+        });
+
+
+        function selectPage(page) {
+            for (var button of pageButtons) {
+                button.classList.remove("selected");
+            }
+
+            const detailsPanel = document.getElementById("details-panel");
+            for (let i = 0; i < detailsPanel.children.length; i++) {
+                detailsPanel.children[i].style.display = "none";
+            }
+
+            document.getElementById(`${page}-button`).classList.add("selected");
+
+            document.getElementById(`${page}-panel`).style.display = "block";
+        }
+
+        async function generateClassBanners() {
+            const classList = document.getElementById("class-list");
+
+            const classData = await (
+                await fetch("/frontend/content/class_data.json")
+            ).json();
+
+            for (let i = 0; i < classData.classes.length; i++) {
+                const dropdown = document.createElement("div");
+                dropdown.classList.add("class-dropdown");
+                classList.appendChild(dropdown);
+
+                const banner = document.createElement("div");
+                banner.classList.add("class-banner");
+                dropdown.appendChild(banner);
+
+                const classButton = document.createElement("button");
+                classButton.classList.add("class-button");
+                classButton.classList.add("hoverable-button");
+                banner.appendChild(classButton);
+
+                const imgArrow = document.createElement("img");
+                imgArrow.src = "/frontend/images/key_arrow_right.svg";
+                imgArrow.alt = "Dropdown arrow pointing right (closed)";
+                classButton.appendChild(imgArrow);
+
+                banner.appendChild(document.createElement("h3")).innerHTML = classData.classes[i].name;
+
+                const progressMeter = document.createElement("meter");
+                progressMeter.min = 0;
+                progressMeter.max = classData.classes[i].quizzes.length;
+                banner.appendChild(progressMeter);
+
+                const trophyImage = document.createElement("img");
+                trophyImage.src = `/frontend/images/${classData.classes[i].id}_Trophy.PNG`;
+                trophyImage.style.display = "none";
+                banner.appendChild(trophyImage);
+
+                const content = document.createElement("div");
+                content.classList.add("class-content");
+                dropdown.appendChild(content);
+
+                var quizzesCompleted = 0;
+                for (let quizID of classData.classes[i].quizzes) {
+
+                    const quizData = await loadQuizData(quizID, "any");
+                    if (!quizData) continue;
+
+                    const entry = document.createElement("div");
+                    entry.classList.add("quiz-entry");
+                    entry.innerHTML = quizData.quizInfo.quizName;
+
+                    const submission = await getSubmission(userID, quizID);
+                    console.log("SUBMISSION DATA: " + JSON.stringify(submission));
+                    if (submission) {
+                        quizzesCompleted++;
+                        entry.appendChild(document.createElement("img")).src = "/frontend/images/checkmark.svg";
+                    }
+
+                    content.appendChild(entry);
+                }
+
+                progressMeter.value = quizzesCompleted;
+                if (quizzesCompleted >= progressMeter.max) trophyImage.style.display = "block";
+            }
+
+            // <div class="class-dropdown">
+            //     <div class="class-banner">
+            //         <button class="class-button hoverable-button">
+            //             <img src="/frontend/images/key_arrow_right.svg" alt="Arrow right">
+            //         </button>
+            //         <h3>CS 177</h3>
+            //         <meter min="0" max="100" value="50"></meter>
+            //         <img src="/frontend/images/CS240_Trophy.PNG" alt="Trophy icon">
+            //     </div>
+            //     <div class="class-content">
+            //         <div class="quiz-entry">
+            //             177 quiz
+            //             <img src="/frontend/images/checkmark.svg">
+            //         </div>
+            //     </div>
+            // </div>
+        }
+
+    </script>
+</body>
+
+</html>

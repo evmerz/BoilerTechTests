@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="/frontend/styles/global.css">
     <link rel="stylesheet" href="/frontend/styles/quiz.css">
 
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
     <script src="/frontend/scripts/quiz-load.js"></script>
 
@@ -32,35 +35,19 @@
             font-weight: bold;
         }
 
-        /* Add the button styling from the quiz page */
-        .button {
-            padding: 10px 20px;
-            background-color: #000000;
-            /* Primary color */
-            color: white;
-            /* Text color */
-            text-align: center;
-            text-decoration: none;
-            /* No underline */
-            border: none;
-            /* No border */
+        .question {
+            background-color: var(--site-background-dark);
+            padding: 5px;
             border-radius: 5px;
-            /* Rounded corners */
-            cursor: pointer;
-            /* Pointer on hover */
-            display: inline-block;
-            /* Inline block element */
-            margin-top: 20px;
-            /* Spacing above the button */
-            font-size: 16px;
-            /* Font size */
-            transition: background-color 0.3s;
-            /* Smooth transition for hover */
         }
 
-        .button:hover {
-            background-color: #424242;
-            /* Darker shade on hover */
+        .question p {
+            margin: 10px;
+        }
+
+        .question h3 {
+            margin: 10px;
+            font-weight: 900;
         }
     </style>
 </head>
@@ -69,13 +56,17 @@
     <div id="navbar-load"></div>
     <div class="container">
         <div class="sub-container">
+            <div id="spacer"></div>
+
             <h1 id="results-title" style="text-align: center;">Quiz Results</h1>
             <div id="results-contents"></div>
-            <!-- Updated button structure to match the quiz page -->
+
             <div id="quiz-container">
+                <div id="spacer"></div>
                 <button id="back-button" class="button">Back to Practice</button>
                 <button id="retake-button" class="button">Retake Quiz</button> <!-- New Retake Quiz button -->
             </div>
+            <div id="spacer"></div>
         </div>
     </div>
 
@@ -95,25 +86,30 @@
 
             // If the quiz ID is invalid, redirect to 404 error page
             if (quizData == null) {
-                throw 404; // idk if this actually works lol
+                window.location.href = "/403"; // idk if this actually works lol
+                return;
             }
 
-            var resultsStr = localStorage.getItem(`quiz_${quizID}`);
+            var submissionData = localStorage.getItem(`quiz_${quizID}`);
 
             // If the data isn't stored in local storage
-            if (resultsStr == null) {
+            if (submissionData == null) {
                 const userID = localStorage.getItem('userId');
-                if (userID == null) {
-                    // window.location.href =
+
+                // If user isn't logged in or submission isn't in database, redirect to homepage (bc idk where else)
+                if ((userID == null) || !(submissionData = await getSubmission(userID, quizID))) {
+                    window.location.href = "/home";
                 }
             }
 
-            const results = JSON.parse(resultsStr);
+            document.getElementById("results-title").innerHTML = quizData.quizInfo.quizName + " Results";
+
+            const results = JSON.parse(submissionData);
 
             // Display the results of the quiz
             const resultsContainer = document.getElementById('results-contents');
 
-            var resultContents, userScore, maxScore;
+            var resultContents = "", userScore = 0, maxScore = 0;
 
             results.forEach((result, index) => {
 
@@ -134,17 +130,22 @@
 
                     userScore += correct ? question.points : 0;
                     maxScore += question.points;
+                    console.log("question points: " + question.points);
+                    console.log("max points: " + maxScore);
 
                     const correctnessLabel = correct ? "(Correct)" : "(Incorrect)";
                     resultContents += `
                     <div class="question">
-                        <p>Question ${index + 1}: ${question.question}</p>
-                        <p class="${correct ? 'correct' : 'incorrect'}">
+                        <h3>Question ${index + 1}:</h3>
+                        <p>${question.question}</p>
+                        <p style='margin-left: 20px;' class="${correct ? 'correct' : 'incorrect'}">
                             Your answer: ${userAnswerText || 'No answer selected'} ${correctnessLabel}
                         </p>
-                        <p class="correct-answer">Correct answer: ${correctAnswerText}</p>
-                        <p>Score: ${correct ? question.points : 0}</p>
+                        <p style='margin-left: 20px;' class="correct-answer">Correct answer: ${correctAnswerText}</p>
+                        <br>
+                        <p style="font-weight: 500;">Score: ${correct ? question.points : 0}</p>
                     </div>
+                    <br>
                 `;
 
                     break;

@@ -15,9 +15,12 @@ body.active {
 :root {
   --site-foreground: rgb(38, 38, 38);
   --site-foreground-light: rgb(70, 70, 70);
+  --site-foreground-lighter: rgb(115, 115, 115);
   --site-foreground-dark: rgb(25, 25, 25);
   --site-background: rgb(245, 239, 227);
   --site-background-dark: rgb(239, 230, 211);
+  --site-background-darker: rgb(224, 215, 200);
+  --site-background-darkest: rgb(210, 203, 189);
   --outline-color: rgb(38, 38, 38);
   --old-gold: #dccc96;
   --orange: rgb(191, 115, 95);
@@ -82,7 +85,7 @@ body.active {
   border-style: solid;
   border-radius: 10px;
   border-color: transparent;
-  
+
   transition: transform .15s ease-in-out, border-color .15s ease-in-out, filter .15s ease-in-out;
 }
 
@@ -219,26 +222,27 @@ span {
 
 }
 
-  
-  /* Wrapped custom scrollbar styles */
-  body.custom-scrollbar {
-    overflow-y: scroll; /* Ensures vertical scrollbar is always visible */
+
+/* Wrapped custom scrollbar styles */
+body.custom-scrollbar {
+  overflow-y: scroll;
+  /* Ensures vertical scrollbar is always visible */
 }
 
-  body.custom-scrollbar::-webkit-scrollbar {
-    width: 10px;
-  }
+body.custom-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
 
-  body.custom-scrollbar::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey;
-    border-radius: 10px;
-  }
+body.custom-scrollbar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
 
-  body.custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgb(245, 239, 227);
-    border-radius: 10px;
-  }
+body.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgb(245, 239, 227);
+  border-radius: 10px;
+}
 
-  body.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgb(185, 177, 158);
-  }
+body.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgb(185, 177, 158);
+}
