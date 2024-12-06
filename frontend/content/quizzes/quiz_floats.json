@@ -17,19 +17,19 @@
       "options": [
         {
           "optionID": "A-001",
-          "text": "<class 'int'>"
+          "text": "&lt;class 'int'&gt;"
         },
         {
           "optionID": "A-002",
-          "text": "<class 'float'>"
+          "text": "&lt;class 'float'&gt;"
         },
         {
           "optionID": "A-003",
-          "text": "<class 'complex'>"
+          "text": "&lt;class 'complex'&gt;"
         },
         {
           "optionID": "A-004",
-          "text": "<class 'str'>"
+          "text": "&lt;class 'str'&gt;"
         }
       ]
     },
@@ -89,19 +89,19 @@
       "options": [
         {
           "optionID": "A-001",
-          "text": "<class 'int'>"
+          "text": "&lt;class 'int'&gt;"
         },
         {
           "optionID": "A-002",
-          "text": "<class 'float'>"
+          "text": "&lt;class 'float'&gt;"
         },
         {
           "optionID": "A-003",
-          "text": "<class 'complex'>"
+          "text": "&lt;class 'complex'&gt;"
         },
         {
           "optionID": "A-004",
-          "text": "<class 'str'>"
+          "text": "&lt;class 'str'&gt;"
         }
       ]
     },
