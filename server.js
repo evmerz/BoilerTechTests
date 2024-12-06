@@ -271,9 +271,9 @@ app.get('/get-pin', async (req, res) => {
     const query = util.promisify(db.query).bind(db);
     try {
         const result = await query(checkQuery, [user_id]);
-        if (err) {
-            return res.status(500).json({ message: 'Error fetching classes from the database!' });
-        }
+        // if (err) {
+            // return res.status(500).json({ message: 'Error fetching classes from the database!' });
+        // }
             // // console.log("result", result);
             // if (err) {
             //     return res.status(500).json({ message: 'Error fetching classes from the database!' });
