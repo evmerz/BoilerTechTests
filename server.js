@@ -246,6 +246,20 @@ app.post('/quiz', async (req, res) => {
     
 });
 
+app.post('/pin', async (req, res) => {
+    const {user_id, classes} = req.body;
+    if (user_id) {
+        const updateQuery = 'UPDATE users SET classes = ? WHERE (user_id) = (?)';
+        db.query(updateQuery, [JSON.stringify(classes), user_id], (err, result) => {
+            if (err) {
+                return res.status(500).json({ message: 'Error updating classes in the database' });
+            }
+            console.log("updated");
+            res.status(201).json({ message: 'Pinned classes saved!'});
+        });
+    }
+})
+
 app.get('/get-submit', async (req, res) => {
     const userID = req.query.userID;
     const quizID = req.query.quizID;

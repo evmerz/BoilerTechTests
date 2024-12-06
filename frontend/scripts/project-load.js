@@ -119,7 +119,7 @@ function loadProject(classID, contentPanelName) {
  * @param {HTMLElement} container
  * @param {HTMLElement} pinButton
  */
-function pinClass(classID, fade, container, pinButton) {
+async function pinClass(classID, fade, container, pinButton) {
     if (pinnedClasses.includes(classID)) {
         // Unpin the class
         pinnedClasses = pinnedClasses.filter(id => id !== classID); // Remove classID from pinnedClasses
@@ -140,4 +140,31 @@ function pinClass(classID, fade, container, pinButton) {
 
     // Save the updated pinnedClasses to localStorage
     localStorage.setItem("pinnedClasses", JSON.stringify(pinnedClasses));
+    await sendPinnedClasses(localStorage.getItem("userId"), pinnedClasses);
+}
+
+
+async function sendPinnedClasses(userID, pinnedClasses) {
+    const url = `https://boilertechtests.com/api/pin`;
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                user_id: userID,
+                classes: pinnedClasses
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to save pinned classes.");
+        }
+
+        const data = await response.json();
+        console.log("Pinned classes saved successfully:", data);
+    } catch (error) {
+        console.error("Error saving pinned classes:", error);
+    }
 }
