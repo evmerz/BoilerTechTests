@@ -11,6 +11,42 @@
     {
       "quizID": "212f9faf-6560-4abe-850f-05e590ce755f",
       "filePath": "/frontend/content/quizzes/quiz_terminal.json"
+    },
+    {
+      "quizID": "9adbe2e4-5b4b-4a1b-8a75-8d91e51a6af4",
+      "filePath": "/frontend/content/quizzes/quiz_for-loops.json"
+    },
+    {
+      "quizID": "5ced44c9-505f-433a-b8d0-4b666283a29f",
+      "filePath": "/frontend/content/quizzes/quiz_linked-lists.json"
+    },
+    {
+      "quizID": "133986fc-8bed-4f51-aadd-29b48d3c309e",
+      "filePath": "/frontend/content/quizzes/quiz_doubly-linked-lists.json"
+    },
+    {
+      "quizID": "bebc6fdf-72a5-4fa4-aa40-c7fc5f3da0d8",
+      "filePath": "/frontend/content/quizzes/quiz_arrays.json"
+    },
+    {
+      "quizID": "222374d2-f21e-4666-96f1-95181e8358d1",
+      "filePath": "/frontend/content/quizzes/quiz_data-types.json"
+    },
+    {
+      "quizID": "542f549c-bd4f-48d8-80f7-6bc0c21f57b1",
+      "filePath": "/frontend/content/quizzes/quiz_file-io.json"
+    },
+    {
+      "quizID": "b1317ed3-2c54-4810-b8ec-f3c9c5195c28",
+      "filePath": "/frontend/content/quizzes/quiz_floats.json"
+    },
+    {
+      "quizID": "88ec2ed6-d595-4002-a881-176449b39b08",
+      "filePath": "/frontend/content/quizzes/quiz_integers.json"
+    },
+    {
+      "quizID": "6f436a6f-b02a-4fc1-bc08-0b61337de561",
+      "filePath": "/frontend/content/quizzes/quiz_loops.json"
     }
   ]
 }

@@ -93,7 +93,7 @@ function loadProject(classID, contentPanelName) {
     console.log(userID);
 
     text.style = "text-decoration: none;";
-    text.href = "/frontend/pages/cs240.html";
+    text.href = `/frontend/pages/${classID}.html`;
 
     panel.appendChild(text);
 

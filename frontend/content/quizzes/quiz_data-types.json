@@ -1,0 +1,133 @@
+{
+  "quizInfo": {
+    "quizName": "Python Data Types Quiz",
+    "tags": [
+      "python",
+      "data-types",
+      "programming"
+    ],
+    "type": "mc"
+  },
+  "questions": [
+    {
+      "question": "Which of the following is a mutable data type in Python?",
+      "questionID": "a74d1c77-f71a-4544-a1c5-f2410a0abdec",
+      "answerID": "A-003",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "tuple"
+        },
+        {
+          "optionID": "A-002",
+          "text": "str"
+        },
+        {
+          "optionID": "A-003",
+          "text": "list"
+        },
+        {
+          "optionID": "A-004",
+          "text": "frozenset"
+        }
+      ]
+    },
+    {
+      "question": "What is the output of `type(42)` in Python?",
+      "questionID": "188e5843-ecf9-4b08-bde4-1555635408b5",
+      "answerID": "A-002",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "&lt;class 'float'&gt;"
+        },
+        {
+          "optionID": "A-002",
+          "text": "&lt;class 'int'&gt;"
+        },
+        {
+          "optionID": "A-003",
+          "text": "&lt;class 'complex'&gt;"
+        },
+        {
+          "optionID": "A-004",
+          "text": "&lt;class 'str'&gt;"
+        }
+      ]
+    },
+    {
+      "question": "Which data type is used to store key-value pairs in Python?",
+      "questionID": "1a1004f5-a4fb-4719-9cf0-6439a6ac2066",
+      "answerID": "A-001",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "dict"
+        },
+        {
+          "optionID": "A-002",
+          "text": "set"
+        },
+        {
+          "optionID": "A-003",
+          "text": "list"
+        },
+        {
+          "optionID": "A-004",
+          "text": "tuple"
+        }
+      ]
+    },
+    {
+      "question": "Which of the following is an immutable data type in Python?",
+      "questionID": "389dcea2-3f51-43df-9801-4b03c6f7cd2f",
+      "answerID": "A-004",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "list"
+        },
+        {
+          "optionID": "A-002",
+          "text": "dict"
+        },
+        {
+          "optionID": "A-003",
+          "text": "set"
+        },
+        {
+          "optionID": "A-004",
+          "text": "tuple"
+        }
+      ]
+    },
+    {
+      "question": "What is the result of evaluating the expression `3 + 4j`?",
+      "questionID": "7d72f89e-2167-46da-932b-493bd0bd1a40",
+      "answerID": "A-003",
+      "points": 1,
+      "options": [
+        {
+          "optionID": "A-001",
+          "text": "A float"
+        },
+        {
+          "optionID": "A-002",
+          "text": "An int"
+        },
+        {
+          "optionID": "A-003",
+          "text": "A complex number"
+        },
+        {
+          "optionID": "A-004",
+          "text": "A string"
+        }
+      ]
+    }
+  ]
+}

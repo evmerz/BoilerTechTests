@@ -27,6 +27,7 @@
     <script src="/frontend/scripts/quiz-load.js"></script>
 
     <title>Python Coding Environment - BoilerTechTests</title>
+    
 </head>
 
 <body style="height: 100vh;">
@@ -35,11 +36,14 @@
 
     <!-- ================================ MAIN CONTAINER FOR WEBSITE ================================ -->
     <div class="container">
+
         <!-- Include spacers wherever you deem necessary -->
         <!-- <div id="spacer"></div> -->
 
         <!-- ======== Always use sub-containers for the actual content to maintain proper spacing ======== -->
         <div class="sub-container">
+            <div id="spacer"></div>
+            <a href="" class="button fade-in">Back</a>
             <h1 id="header" class="fade-in">Python Coding Environment</h1>
             <div id="code-contents"></div>
             <div id="result-contents"></div>
@@ -67,6 +71,17 @@
     <script src="/frontend/scripts/navigation.js"></script>
     <script src="/frontend/scripts/python-terminal.js"></script>
     <script src="/frontend/scripts/scrollbar.js" defer></script>
+    <script>
+        window.addEventListener("DOMContentLoaded", function () {
+            const params = new URLSearchParams(location.search);
+            const classID = params.get("class-id");
+            if (!classID) {
+                document.getElementsByClassName("button")[0].href = `/index.html`;
+            } else {
+                document.getElementsByClassName("button")[0].href = `/frontend/pages/${classID}.html`;
+            }
+        });
+    </script>
 
 </body>
 
