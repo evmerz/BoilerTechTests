@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="/frontend/styles/navigation.css">
     <link rel="stylesheet" href="/frontend/styles/global.css">
     <link rel="stylesheet" href="/frontend/styles/quiz.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+    <script src="/frontend/scripts/quiz-load.js"></script>
+
+
     <title>Quiz Results</title>
     <style>
         .correct {
@@ -74,9 +79,6 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
-        crossorigin="anonymous"></script>
     <script src="/frontend/scripts/navigation.js"></script>
     <script src="/frontend/scripts/quiz.js"></script>
 
@@ -89,7 +91,7 @@
             const params = new URLSearchParams(location.search);
             quizID = params.get("quiz-id");
 
-            const quizData = await loadQuizData(quizID);
+            const quizData = await loadQuizData(quizID, "mc");
 
             // If the quiz ID is invalid, redirect to 404 error page
             if (quizData == null) {
