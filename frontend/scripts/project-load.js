@@ -25,6 +25,7 @@ async function loadPinnedClasses() {
     // const savedPinnedClasses = JSON.parse(localStorage.getItem("pinnedClasses")) || [];
     // pinnedClasses = savedPinnedClasses;
     pinnedClasses = await getPinnedClasses(localStorage.getItem('userId'));
+    console.log("pinnedclasses: ", pinnedClasses);
     if (pinnedClasses) {
         pinnedClasses.forEach((classID) => {
             loadProject(classID, "pinned-classes");
