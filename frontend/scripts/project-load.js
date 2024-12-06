@@ -13,6 +13,7 @@ function loadProjectData() {
                 console.log(classData[json.classes[i].id].name);
             }
             // After loading class data, load pinned classes
+            loadAllClasses();
             loadPinnedClasses();
         });
 }
@@ -23,7 +24,7 @@ function loadProjectData() {
 function loadPinnedClasses() {
     // const savedPinnedClasses = JSON.parse(localStorage.getItem("pinnedClasses")) || [];
     // pinnedClasses = savedPinnedClasses;
-    pinnedClasses = getPinnedClasses(localStorage.getItem('userId'));
+    pinnedClasses = JSON.parse(getPinnedClasses(localStorage.getItem('userId')));
     if (pinnedClasses) {
         pinnedClasses.forEach((classID) => {
             loadProject(classID, "pinned-classes");
