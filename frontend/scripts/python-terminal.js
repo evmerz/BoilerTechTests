@@ -124,6 +124,7 @@ document.getElementById("submit").addEventListener("click", async () => {
     }
 
     localStorage.setItem(`quiz_${quizID}`, JSON.stringify(submissionData));
+    window.location.href = `/coding-results?quiz-id=${quizID}`;
 
     // //for (let i = 0; i < questions.length; i++) {
     // //currentQuestionIndex = i;
@@ -131,7 +132,6 @@ document.getElementById("submit").addEventListener("click", async () => {
     // //}
     // displayResults();
     // localStorage.setItem("quizSubmitted", "true");
-    // window.location.href = `/frontend/pages/coding-results.html?quiz-id=${quizID}`;
 });
 
 /**
