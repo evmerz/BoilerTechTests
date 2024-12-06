@@ -22,8 +22,6 @@ function loadProjectData() {
  * Loads pinned classes from localStorage and updates the UI.
  */
 async function loadPinnedClasses() {
-    // const savedPinnedClasses = JSON.parse(localStorage.getItem("pinnedClasses")) || [];
-    // pinnedClasses = savedPinnedClasses;
     pinnedClasses = await getPinnedClasses(localStorage.getItem('userId'));
     console.log("pinnedclasses: ", pinnedClasses);
     if (pinnedClasses) {
@@ -149,8 +147,6 @@ async function pinClass(classID, fade, container, pinButton) {
 
 
 async function sendPinnedClasses(userID, pinnedClasses) {
-    console.log("in function");
-    console.log("PL classes:", pinnedClasses);
     const url = `https://boilertechtests.com/api/pin`;
     try {
         const response = await fetch(url, {
@@ -186,7 +182,6 @@ async function getPinnedClasses(userID) {
         }
 
         const data = await response.json();
-        console.log("Class data:", data);
         return data;
     } catch (error) {
         console.error("Error retrieving classes:", error);
