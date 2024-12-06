@@ -21,10 +21,10 @@ function loadProjectData() {
 /**
  * Loads pinned classes from localStorage and updates the UI.
  */
-function loadPinnedClasses() {
+async function loadPinnedClasses() {
     // const savedPinnedClasses = JSON.parse(localStorage.getItem("pinnedClasses")) || [];
     // pinnedClasses = savedPinnedClasses;
-    pinnedClasses = JSON.parse(getPinnedClasses(localStorage.getItem('userId')));
+    pinnedClasses = JSON.parse(await getPinnedClasses(localStorage.getItem('userId')));
     if (pinnedClasses) {
         pinnedClasses.forEach((classID) => {
             loadProject(classID, "pinned-classes");
