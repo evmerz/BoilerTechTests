@@ -186,8 +186,8 @@ async function getPinnedClasses(userID) {
         }
 
         const data = await response.json();
-        console.log("Class data:", data.classes);
-        return data.classes;
+        console.log("Class data:", data);
+        return data;
     } catch (error) {
         console.error("Error retrieving classes:", error);
         return null;
