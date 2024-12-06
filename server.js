@@ -264,7 +264,6 @@ app.post('/pin', async (req, res) => {
 });
 
 app.get('/get-pin', async (req, res) => {
-
     console.log("in get/pin");
     const user_id = req.query.user_id;
     console.log("userid:", user_id);
@@ -280,7 +279,7 @@ app.get('/get-pin', async (req, res) => {
             //     return res.status(500).json({ message: 'Error fetching classes from the database!' });
             // }
         console.log("gotten");
-        res.status(200).json(result[0].classes);
+        res.status(200).json(JSON.parse(result[0].classes));
     } catch (error) {
         console.error("Error retrieving classes:", error);
         res.status(500).json({ message: 'Database query error' });
