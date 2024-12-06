@@ -13,7 +13,7 @@ function loadProjectData() {
                 console.log(classData[json.classes[i].id].name);
             }
             // After loading class data, load pinned classes
-
+            loadPinnedClasses();
         });
 }
 
@@ -21,12 +21,14 @@ function loadProjectData() {
  * Loads pinned classes from localStorage and updates the UI.
  */
 function loadPinnedClasses() {
-    const savedPinnedClasses = JSON.parse(localStorage.getItem("pinnedClasses")) || [];
-    pinnedClasses = savedPinnedClasses;
-
-    pinnedClasses.forEach((classID) => {
-        loadProject(classID, "pinned-classes");
-    });
+    // const savedPinnedClasses = JSON.parse(localStorage.getItem("pinnedClasses")) || [];
+    // pinnedClasses = savedPinnedClasses;
+    pinnedClasses = getPinnedClasses(localStorage.getItem('userId'));
+    if (pinnedClasses) {
+        pinnedClasses.forEach((classID) => {
+            loadProject(classID, "pinned-classes");
+        });
+    }
 }
 
 function loadAllClasses() {
@@ -168,5 +170,25 @@ async function sendPinnedClasses(userID, pinnedClasses) {
         console.log("Pinned classes saved successfully:", data);
     } catch (error) {
         console.error("Error saving pinned classes:", error);
+    }
+}
+
+async function getPinnedClasses(userID) {
+    const url = `https://www.boilertechtests.com/api/get-pin?userID=${encodeURIComponent(userID)}`;
+
+    try {
+        const response = await fetch(url, { method: 'GET' });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message);
+        }
+
+        const data = await response.json();
+        console.log("Class data:", data.classes);
+
+        return data.classes;
+    } catch (error) {
+        console.error("Error retrieving submission:", error);
+        return null;
     }
 }

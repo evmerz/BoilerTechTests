@@ -263,6 +263,20 @@ app.post('/pin', async (req, res) => {
     }
 });
 
+app.post('/get-pin', async (req, res) => {
+    const user_id = req.query.user_id;
+    const query = 'SELECT classes FROM users WHERE id = ?';
+    try {
+        db.query(query, [user_id], (err, result) => {
+            if (err) {
+                return res.status(500).json({ message: 'Error fetching classes from the database!' });
+            }
+            console.log("gotten");
+            res.status(200).json(result[0].classes);
+        }); 
+    }
+});
+
 app.get('/get-submit', async (req, res) => {
     const userID = req.query.userID;
     const quizID = req.query.quizID;
