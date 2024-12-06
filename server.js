@@ -279,6 +279,7 @@ app.get('/get-pin', async (req, res) => {
             //     return res.status(500).json({ message: 'Error fetching classes from the database!' });
             // }
         console.log("gotten");
+        console.log("result", result);
         res.status(200).json((result));
     } catch (error) {
         console.error("Error retrieving classes:", error);
