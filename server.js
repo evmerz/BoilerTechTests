@@ -264,23 +264,30 @@ app.post('/pin', async (req, res) => {
 });
 
 app.post('/get-pin', async (req, res) => {
+
     console.log("in get/pin");
     const user_id = req.query.user_id;
     console.log("userid:", user_id);
-    const query = 'SELECT classes FROM users WHERE id = ?';
+    const checkQuery = 'SELECT classes FROM users WHERE id = ?';
+    const query = util.promisify(db.query).bind(db);
     try {
-        db.query(query, [user_id], (err, result) => {
-            console.log("result", result);
-            if (err) {
-                return res.status(500).json({ message: 'Error fetching classes from the database!' });
-            }
-            console.log("gotten");
-            res.status(200).json(result[0].classes);
-        }); 
+        const result = await query(checkQuery, [user_id]);
+        if (err) {
+            return res.status(500).json({ message: 'Error fetching classes from the database!' });
+        }
+            // // console.log("result", result);
+            // if (err) {
+            //     return res.status(500).json({ message: 'Error fetching classes from the database!' });
+            // }
+        console.log("gotten");
+        res.status(200).json(result[0].classes);
     } catch (error) {
         console.error("Error retrieving classes:", error);
         res.status(500).json({ message: 'Database query error' });
     }
+
+
+
 });
 
 app.get('/get-submit', async (req, res) => {
