@@ -246,6 +246,35 @@ app.post('/quiz', async (req, res) => {
     
 });
 
+app.post('/pin', async (req, res) => {
+    const {user_id, classes} = req.body;
+    if (user_id) {
+        const updateQuery = 'UPDATE users SET classes = ? WHERE id = (?)';
+        db.query(updateQuery, [JSON.stringify(classes), user_id], (err, result) => {
+            if (err) {
+                return res.status(500).json({ message: 'Error updating classes in the database' });
+            }
+            res.status(201).json({ message: 'Pinned classes saved!'});
+        });
+    }
+});
+
+app.get('/get-pin', async (req, res) => {
+    const user_id = req.query.userID;
+    const checkQuery = 'SELECT classes FROM users WHERE id = ?';
+    const query = util.promisify(db.query).bind(db);
+    try {
+        const result = await query(checkQuery, [user_id]);
+        res.status(200).json((result[0].classes));
+    } catch (error) {
+        console.error("Error retrieving classes:", error);
+        res.status(500).json({ message: 'Database query error' });
+    }
+
+
+
+});
+
 app.get('/get-submit', async (req, res) => {
     const userID = req.query.userID;
     const quizID = req.query.quizID;
