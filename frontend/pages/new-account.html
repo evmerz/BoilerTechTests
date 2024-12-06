@@ -195,6 +195,7 @@
                 const trophyImage = document.createElement("img");
                 trophyImage.src = `/frontend/images/${classData.classes[i].id}_Trophy.PNG`;
                 trophyImage.style.display = "none";
+                trophyImage.title = `Class completion trophy for ${classData.classes[i].name}`;
                 banner.appendChild(trophyImage);
 
                 const content = document.createElement("div");
@@ -223,6 +224,7 @@
 
                 progressMeter.value = quizzesCompleted;
                 if (quizzesCompleted >= progressMeter.max) trophyImage.style.display = "block";
+                progressMeter.title = `${quizzesCompleted}/${progressMeter.max} Quizzes Completed`;
             }
 
             // <div class="class-dropdown">

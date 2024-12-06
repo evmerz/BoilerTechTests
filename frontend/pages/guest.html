@@ -2,73 +2,81 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <link rel="stylesheet" href="/frontend/styles/navigation.css">
-  <link rel="stylesheet" href="/frontend/styles/guest.css">
-  <link rel="stylesheet" href="/frontend/styles/global.css">
+    <link rel="stylesheet" href="/frontend/styles/navigation.css">
+    <link rel="stylesheet" href="/frontend/styles/guest.css">
+    <link rel="stylesheet" href="/frontend/styles/global.css">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
-    rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
-    rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
 
-  <title>BoilerTechTests</title>
+    <title>BoilerTechTests</title>
 </head>
 
 <body>
-  
-  <div id="navbar-load"></div>
 
-  <!-- ================================ MAIN CONTAINER FOR WEBSITE ================================ -->
-  <div class="container">
-    <!-- Include spacers wherever you deem necessary -->
-    <!-- <div id="spacer"></div> -->
+    <div id="navbar-load"></div>
 
-    <!-- ======== Always use sub-containers for the actual content to maintain proper spacing ======== -->
-    <div class="sub-container">
-      <div class="header-panel" style="margin-top: 0; margin-bottom: 0;"></div>
-      <h2 class="fade-in">Practice as Guest</h2>
-      <p class="fade-in" style="--delay: 0.1s">Select a question format to practice!</p>
-      <h4 class="fade-in" style="--delay: 0.1s">As a guest, your answers will not be saved when the browser or tab is closed.</h4>
+    <!-- ================================ MAIN CONTAINER FOR WEBSITE ================================ -->
+    <div class="container">
+        <!-- Include spacers wherever you deem necessary -->
+        <div id="spacer"></div>
 
-    <div class="row">
-        <p class="fade-in" style="--delay: 0.1s; margin-bottom: 7px;">Practice coding in Python with a responsive in-site terminal.</p>
-        <button class="button fade-in" style="--delay: 0.2s; margin-bottom: 10px;" id="code-btn">Practice Coding</button>
+        <!-- ======== Always use sub-containers for the actual content to maintain proper spacing ======== -->
+        <div style="min-height: 100vh" class="sub-container">
+            <div class="header-panel" style="margin-top: 0; margin-bottom: 0;"></div>
+            <h2 class="fade-in">Practice as Guest</h2>
+            <p class="fade-in">Select a question format to practice!</p>
+            <h4 class="fade-in">
+                As a guest, your answers will not be saved when the browser or tab is closed.
+            </h4>
+
+            <div class="row">
+                <p class="fade-in" style="--delay: 0.1s; margin-bottom: 7px;">Practice coding in Python with a
+                    responsive
+                    in-site terminal.</p>
+                <button class="button fade-in" style="--delay: 0.1s; margin-bottom: 10px;" id="code-btn">Practice
+                    Coding</button>
+            </div>
+            <div class="row">
+                <p class="fade-in" style="--delay: 0.2s; margin-bottom: 7px;">Practice answering multiple-choice
+                    questions
+                    regarding various coding topics.</p>
+                <button class="button fade-in" style="--delay: 0.2s; margin-bottom: 20px;;" id="mc-btn">Practice Multiple
+                    Choice</button>
+            </div>
+            <div>
+                <!-- <button class="button fade-in" style="--delay: 0.2s; margin-top: 10px;" id="submit-btn">Return to Home</button> -->
+            </div>
+
+
+
+        </div>
     </div>
-    <div class="row">
-        <p class="fade-in" style="--delay: 0.1s; margin-bottom: 7px;">Practice answering multiple-choice questions regarding various coding topics.</p>
-        <button class="button fade-in" style="--delay: 0.2s margin-bottom: 20px;;" id="mc-btn">Practice Multiple Choice</button>
-    </div>
-    <div>
-        <!-- <button class="button fade-in" style="--delay: 0.2s; margin-top: 10px;" id="submit-btn">Return to Home</button> -->
-    </div>
 
-
-
-    </div>
-  </div>
-
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
-    crossorigin="anonymous"></script>
-  <script src="/frontend/scripts/navigation.js"></script>
-  <script src="/frontend/scripts/scrollbar.js" defer></script>
-  <script>
-    document.getElementById('code-btn').addEventListener('click', () => {
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
+        crossorigin="anonymous"></script>
+    <script src="/frontend/scripts/navigation.js"></script>
+    <script src="/frontend/scripts/scrollbar.js" defer></script>
+    <script>
+        document.getElementById('code-btn').addEventListener('click', () => {
             window.location.href = '/frontend/pages/guest_code.html';
         }
-    )
+        )
 
-    document.getElementById('mc-btn').addEventListener('click', () => {
+        document.getElementById('mc-btn').addEventListener('click', () => {
             window.location.href = '/frontend/pages/guest_mc.html';
         }
-    )
-  </script>
+        )
+    </script>
 
 </body>
 

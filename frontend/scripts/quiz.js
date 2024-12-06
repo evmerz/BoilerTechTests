@@ -21,7 +21,7 @@ function renderQuestion() {
             }
         </div>
         <div>
-            <button id="next-button">Next</button>
+            <button id="next-button" class="button">Next</button>
         </div>
     `;
     document.getElementById("next-button").addEventListener("click", nextQuestion);
@@ -45,7 +45,7 @@ function nextQuestion() {
             // All questions answered, show submit button
             quizContainer.innerHTML = `
                 <p>All questions answered. Click below to submit your answers.</p>
-                <button id="submit-quiz">Submit</button>
+                <button id="submit-quiz" class="button">Submit</button>
             `;
             document.getElementById("submit-quiz").addEventListener("click", async () => {
                 await storeQuizResults();
