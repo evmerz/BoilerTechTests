@@ -265,7 +265,7 @@ app.post('/pin', async (req, res) => {
 
 app.get('/get-pin', async (req, res) => {
     console.log("in get/pin");
-    const user_id = req.query.user_id;
+    const user_id = req.query.userID;
     console.log("userid:", user_id);
     const checkQuery = 'SELECT classes FROM users WHERE id = ?';
     const query = util.promisify(db.query).bind(db);
