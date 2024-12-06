@@ -103,7 +103,6 @@ function loadProject(classID, contentPanelName) {
         });
     }
 
-<<<<<<< HEAD
     link.style = "text-decoration: none;";
     if (classID === "cs240") {
         link.href = "/frontend/pages/cs240.html";
@@ -113,9 +112,6 @@ function loadProject(classID, contentPanelName) {
     link.appendChild(panel);
 
     fade.appendChild(link);
-=======
-    fade.appendChild(panel);
->>>>>>> c6d6e2c15469a18d1d278ca80f680a05f4a8f9d1
 
     container.appendChild(fade);
 
