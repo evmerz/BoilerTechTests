@@ -14,6 +14,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 
+    <script src="/frontend/scripts/quiz-load.js"></script>
+
     <title>CS177 - BoilerTechTests</title>
 </head>
 
@@ -110,10 +112,10 @@
 
                             } else {
                                 // No previous submission, so proceed to the quiz page
-                                window.location.href = `./${topic.id}.html?quiz-id=${quizID}`;
+                                window.location.href = `/frontend/pages/if-statements.html?quiz-id=${quizID}&class-id=cs177-exam2`;
                             }
                         } else {
-                            window.location.href = `./${topic.id}.html?quiz-id=${quizID}`;
+                            window.location.href = `/frontend/pages/if-statements.html?quiz-id=${quizID}&class-id=cs177-exam2`;
                         }
 
                         // if (quizTaken) {

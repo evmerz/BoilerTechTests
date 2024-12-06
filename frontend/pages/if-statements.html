@@ -44,31 +44,30 @@
     <script src="/frontend/scripts/navigation.js"></script>
     <script src="/frontend/scripts/quiz.js"></script>
     <script>
+        var classID, params;
         // Initialize the quiz upon load
         window.addEventListener("DOMContentLoaded", async function () {
-            const params = new URLSearchParams(location.search);
+            params = new URLSearchParams(location.search);
             quizID = params.get("quiz-id");
+            classID = params.get("class-id");
+            console.log("class id: " + classID);
             console.log(quizID);
     
             quizData = await loadQuizData(quizID, "mc");
+
+            document.getElementById("quiz-title").innerHTML = quizData.quizInfo.quizName;
     
             userAnswers = new Array(quizData.questions.length).fill(null);
             quizContainer = document.getElementById("quiz-contents");
     
             renderQuestion();
         });
-
+        
         document.getElementById('back-button').addEventListener('click', function() {
-            window.location.href = '/frontend/pages/cs240.html'; // Update the path if needed
+            window.location.href = `/frontend/pages/${classID}.html`;
         });
     </script>
 </body>
-<script>
-    document.getElementById('back-button').addEventListener('click', function() {
-        window.location.href = '/frontend/pages/cs240-exam1.html';
-    });
-
-</script>
 <script src="/frontend/scripts/quiz.js"></script>
 <script>
     // Initialize the quiz upon load
@@ -77,7 +76,7 @@
         quizID = params.get("quiz-id");
         console.log(quizID);
 
-        quizData = await loadQuizData(quizID);
+        quizData = await loadQuizData(quizID, "mc");
 
         userAnswers = new Array(quizData.questions.length).fill(null);
         quizContainer = document.getElementById("quiz-contents");
