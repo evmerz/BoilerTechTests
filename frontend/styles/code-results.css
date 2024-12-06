@@ -1,3 +1,7 @@
+#results-title {
+  text-align: center;
+}
+
 .code-results-box {
   display: flex;
   flex-direction: column;
@@ -6,6 +10,7 @@
   padding: 10px;
   margin: 0;
   margin-top: 20px;
+  border-radius: 5px;
 }
 
 .code-results-box h3 {
@@ -15,6 +20,7 @@
 
 .code-results-box h4 {
   margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .code-display-box {

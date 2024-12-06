@@ -39,10 +39,7 @@
         <!-- ======== Always use sub-containers for the actual content to maintain proper spacing ======== -->
         <div class="sub-container">
             <div class="header-panel" style="margin-top: 0; margin-bottom: 0;"></div>
-            <h2 class="fade-in">Coding Quiz Results</h2>
-
-
-
+            <h1 id="results-title" class="fade-in">Coding Quiz Results</h1>
         </div>
 
         <script src="/frontend/scripts/navigation.js"></script>
@@ -74,8 +71,9 @@
                 var submissionData = localStorage.getItem(`quiz_${quizID}`);
 
                 if (!submissionData) {
-                    if (!userID || !(submissionData = getSubmission(userID, quizID))) {
-                        window.location.href = `/frontend/pages/terminal.html?quiz-id=${quizID}`;
+                    if (!userID || !(submissionData = await getSubmission(userID, quizID))) {
+                        // window.location.href = `/frontend/pages/terminal.html?quiz-id=${quizID}`;
+                        window.location.href = "/home";
                         return;
                     }
                 }
@@ -84,6 +82,9 @@
 
                 submissionData = JSON.parse(submissionData);
 
+                document.getElementById("results-title").innerHTML = quizData.quizInfo.quizName + " Results";
+
+                let index = 0;
                 for (const submission of submissionData.submissions) {
                     console.log("ahhhh");
                     for (const question of quizData.questions) {
@@ -112,8 +113,8 @@
                         outerBox.classList.add("fade-in");
                         outerBox.style = "--delay: 0.1s";
 
-                        outerBox.appendChild(document.createElement("h3")).textContent = `Question: ${question.prompt}`;
-                        outerBox.appendChild(document.createElement("h4")).textContent = `Score: THIS NEEDS WORK`;
+                        outerBox.appendChild(document.createElement("h3")).textContent = `Question ${index + 1}: ${question.prompt}`;
+                        // outerBox.appendChild(document.createElement("h4")).textContent = `Score: THIS NEEDS WORK`;
 
                         const displayBox = document.createElement("div");
                         displayBox.classList.add("code-display-box");
@@ -123,7 +124,7 @@
                         codePanel.classList.add("code-panel");
                         displayBox.appendChild(codePanel);
 
-                        codePanel.appendChild(document.createElement("span")).textContent = "Code:";
+                        codePanel.appendChild(document.createElement("h4")).textContent = "Code:";
 
                         const codeTextArea = document.createElement("div");
                         codeTextArea.classList.add("code-text-area");
@@ -134,7 +135,7 @@
                         testPanel.classList.add("code-panel");
                         displayBox.appendChild(testPanel);
 
-                        testPanel.appendChild(document.createElement("span")).textContent = "Tests:";
+                        testPanel.appendChild(document.createElement("h4")).textContent = "Tests:";
 
                         const testTextArea = document.createElement("div");
                         testTextArea.classList.add("code-text-area");
@@ -153,6 +154,7 @@
                            "answer": submission.answer
                         });
 
+                        index++;
                         break;
                     }
                 }
@@ -168,6 +170,8 @@
                 }
             });
         </script>
+
+        <div id="spacer"></div>
 
 </body>
 
