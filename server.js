@@ -252,7 +252,7 @@ app.post('/pin', async (req, res) => {
     console.log("classes:", classes);
     if (user_id) {
         console.log("yes user_id")
-        const updateQuery = 'UPDATE users SET classes = ? WHERE (user_id) = (?)';
+        const updateQuery = 'UPDATE users SET classes = ? WHERE id = (?)';
         db.query(updateQuery, [JSON.stringify(classes), user_id], (err, result) => {
             if (err) {
                 return res.status(500).json({ message: 'Error updating classes in the database' });
