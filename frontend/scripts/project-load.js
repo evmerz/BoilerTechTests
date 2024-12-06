@@ -145,6 +145,7 @@ async function pinClass(classID, fade, container, pinButton) {
 
 
 async function sendPinnedClasses(userID, pinnedClasses) {
+    console.log("yes");
     const url = `https://boilertechtests.com/api/pin`;
     try {
         const response = await fetch(url, {
