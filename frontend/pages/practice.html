@@ -65,7 +65,7 @@
         // Data for classes and their corresponding pages
         const classesData = [
             { name: "CS240", id: "cs240.html" },
-            { name: "CS177", id: "cs240.html"}
+            { name: "CS177", id: "cs177.html"}
         ];
 
         // Function to create class buttons
@@ -83,7 +83,7 @@
                 text.classList.add("caption");
 
                 const button = document.createElement("a");
-                button.classList.add("class-button");
+                button.classList.add("button");
                 button.href = `/frontend/pages/${cls.id}`;
                 button.textContent = cls.name;
 
