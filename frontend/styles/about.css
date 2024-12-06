@@ -1,0 +1,28 @@
+.column {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns by default */
+    gap: 20px; /* Space between grid items */
+    justify-items: center; /* Center-align content horizontally */
+    margin: auto;
+    max-width: 800px; /* Optional: limit the grid's width */
+  }
+  
+  .column img {
+    max-width: 100%; /* Ensure images fit their container */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px; /* Optional: rounded corners for images */
+  }
+  
+  .column > div {
+    text-align: center; /* Center-align content within each grid item */
+    padding: 10px; /* Add some padding around each team member's card */
+    box-sizing: border-box;
+  }
+  
+  /* Stack items vertically on small screens */
+  @media (max-width: 768px) {
+    .column {
+      grid-template-columns: 1fr; /* One column for smaller screens */
+    }
+  }
+  

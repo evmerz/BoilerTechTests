@@ -1,7 +1,21 @@
-img {
-  padding: 0;
-  display: block;
-  margin: 0 auto;
-  max-height: 100%;
-  max-width: 100%;
+.column img {
+  max-width: 100%; /* Ensure images never overflow their container */
+  height: auto; /* Maintain aspect ratio */
+  display: block; /* Avoid inline-block alignment issues */
+  margin: 0 auto; /* Center-align images */
+  border-radius: 10px; /* Optional: rounded corners for images */
+}
+
+.column > div {
+  flex: 1 1 calc(50% - 20px); /* Two cards per row */
+  max-width: 500px; /* Limit width of cards */
+  box-sizing: border-box;
+  text-align: center; /* Center-align content within the cards */
+}
+
+/* Adjust layout for smaller screens */
+@media (max-width: 768px) {
+  .column > div {
+    flex: 1 1 100%; /* Stack cards vertically */
+  }
 }
