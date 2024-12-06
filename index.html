@@ -73,10 +73,11 @@
     <script src="/frontend/scripts/navigation.js"></script>
     <script src="/frontend/scripts/project-load.js"></script>
 
-    <script>
-        loadProjectData().then(() => {
-            loadPinnedClasses();
-            loadAllClasses();
+    <script async>
+        window.addEventListener("DOMContentLoaded", async function() {
+            await loadProjectData();
+            await loadPinnedClasses();
+            await loadAllClasses();
             //loadProject("cs240", "homepage");
             //loadProject("cs180", "homepage");
         });
