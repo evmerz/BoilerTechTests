@@ -4,8 +4,8 @@ var pinnedClasses = [];
 /**
  * Loads all project data into memory on the load of the website.
  */
-function loadProjectData() {
-    return fetch("/frontend/content/class_data.json")
+async function loadProjectData() {
+    return await fetch("/frontend/content/class_data.json")
         .then((response) => response.json())
         .then((json) => {
             for (let i = 0; i < json.classes.length; i++) {
@@ -28,16 +28,17 @@ async function loadPinnedClasses() {
         pinnedClasses.forEach((classID) => {
             loadProject(classID, "pinned-classes");
         });
+    } else {
+        pinnedClasses = [];
     }
 }
 
-function loadAllClasses() {
+async function loadAllClasses() {
     var userID = localStorage.getItem("userId");
     for (let classID in classData) {
         if (userID == null) {
             loadProject(classID, "homepage"); // Load unpinned classes into "homepage"
-        }
-        else {
+        } else {
             if (!pinnedClasses.includes(classID)) {
                 loadProject(classID, "homepage"); // Load unpinned classes into "homepage"
             }
@@ -53,7 +54,7 @@ function loadAllClasses() {
  * @param {string} contentPanelName
  * @returns
  */
-function loadProject(classID, contentPanelName) {
+async function loadProject(classID, contentPanelName) {
     var container;
     var galleries = document.querySelectorAll("div[panel-id]");
     for (var i = 0; i < galleries.length; i++) {
