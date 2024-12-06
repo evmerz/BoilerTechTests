@@ -6,7 +6,15 @@
     <link rel="stylesheet" href="/frontend/styles/navigation.css">
     <link rel="stylesheet" href="/frontend/styles/global.css">
     <link rel="stylesheet" href="/frontend/styles/quiz.css">
+<<<<<<< HEAD
     <title>CS240 Quiz - if-statements</title>
+=======
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+    <script src="/frontend/scripts/quiz-load.js"></script>
+
+    <title>CS240 Quiz</title>
+>>>>>>> c6d6e2c15469a18d1d278ca80f680a05f4a8f9d1
     <style>
         .correct {
             color: #20b625; /* Light green for correct user answers */
@@ -22,7 +30,7 @@
             color: #87cf8b; /* Light green for the correct answer line */
             font-weight: bold;
         }
-    </style> 
+    </style>
 </head>
 <body>
     <div id="navbar-load"></div>
@@ -36,10 +44,30 @@
             </div>
         </div>
     </div>
-    <script src="/frontend/scripts/quiz.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+    
     <script src="/frontend/scripts/navigation.js"></script>
+    <script src="/frontend/scripts/quiz.js"></script>
+    <script>
+        // Initialize the quiz upon load
+        window.addEventListener("DOMContentLoaded", async function () {
+            const params = new URLSearchParams(location.search);
+            quizID = params.get("quiz-id");
+            console.log(quizID);
+    
+            quizData = await loadQuizData(quizID, "mc");
+    
+            userAnswers = new Array(quizData.questions.length).fill(null);
+            quizContainer = document.getElementById("quiz-contents");
+    
+            renderQuestion();
+        });
+
+        document.getElementById('back-button').addEventListener('click', function() {
+            window.location.href = '/frontend/pages/cs240.html'; // Update the path if needed
+        });
+    </script>
 </body>
+<<<<<<< HEAD
 <script>
     document.getElementById('back-button').addEventListener('click', function() {
         window.location.href = '/frontend/pages/cs240-exam1.html';
@@ -63,3 +91,6 @@
     });
 </script>
 </html>
+=======
+</html>
+>>>>>>> c6d6e2c15469a18d1d278ca80f680a05f4a8f9d1

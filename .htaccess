@@ -9,6 +9,9 @@ RewriteRule ^practice$ /frontend/pages/practice.html [L]
 RewriteRule ^quiz$ /frontend/pages/quiz.html [L]
 RewriteRule ^account$ /frontend/pages/account.html [L] 
 RewriteRule ^create-account$ /frontend/pages/create.html [L]
+RewriteRule ^tutoring$ /frontend/pages/tutoring.html [L]
+RewriteRule ^guest$ /frontend/pages/guest.html [L]
+RewriteRule ^coding-results$ /frontend/pages/coding-results.html [L]
 
 ErrorDocument 404 /frontend/pages/404.html
 RewriteRule ^404$ /frontend/pages/404.html [L]

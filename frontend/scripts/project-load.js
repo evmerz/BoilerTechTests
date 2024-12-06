@@ -13,7 +13,7 @@ function loadProjectData() {
                 console.log(classData[json.classes[i].id].name);
             }
             // After loading class data, load pinned classes
-            
+
         });
 }
 
@@ -30,9 +30,15 @@ function loadPinnedClasses() {
 }
 
 function loadAllClasses() {
+    var userID = localStorage.getItem("userId");
     for (let classID in classData) {
-        if (!pinnedClasses.includes(classID)) {
+        if (userID == null) {
             loadProject(classID, "homepage"); // Load unpinned classes into "homepage"
+        }
+        else {
+            if (!pinnedClasses.includes(classID)) {
+                loadProject(classID, "homepage"); // Load unpinned classes into "homepage"
+            }
         }
     }
 }
@@ -63,12 +69,10 @@ function loadProject(classID, contentPanelName) {
     var fade = document.createElement("div");
     fade.classList.add("fade-in");
 
-    var link = document.createElement("a");
-
     var panel = document.createElement("div");
     panel.classList.add("project-panel");
 
-    var text = document.createElement("div");
+    var text = document.createElement("a");
     text.classList.add("caption");
 
     var heading = document.createElement("h3");
@@ -86,6 +90,8 @@ function loadProject(classID, contentPanelName) {
     text.appendChild(cap);
     console.log(userID);
 
+    text.style = "text-decoration: none;";
+    text.href = "/frontend/pages/cs240.html";
 
     panel.appendChild(text);
 
@@ -97,6 +103,7 @@ function loadProject(classID, contentPanelName) {
         });
     }
 
+<<<<<<< HEAD
     link.style = "text-decoration: none;";
     if (classID === "cs240") {
         link.href = "/frontend/pages/cs240.html";
@@ -106,6 +113,9 @@ function loadProject(classID, contentPanelName) {
     link.appendChild(panel);
 
     fade.appendChild(link);
+=======
+    fade.appendChild(panel);
+>>>>>>> c6d6e2c15469a18d1d278ca80f680a05f4a8f9d1
 
     container.appendChild(fade);
 

@@ -1,0 +1,52 @@
+.code-results-box {
+  display: flex;
+  flex-direction: column;
+  /* width: 100%; */
+  background-color: var(--site-background-dark);
+  padding: 10px;
+  margin: 0;
+  margin-top: 20px;
+}
+
+.code-results-box h3 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.code-results-box h4 {
+  margin-top: 0px;
+}
+
+.code-display-box {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.code-panel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.code-text-area {
+  /* margin-top: 20px; */
+  background-color: #ffffff;
+  padding: 5px;
+  border: 1px solid #ccc;
+  white-space: pre-wrap;
+  color: #333;
+  font-family: 'Consolas';
+}
+
+/* Desktop Styling Stuff */
+@media screen and (min-width: 1100px) {
+  .code-display-box {
+    flex-direction: row;
+  }
+
+  .code-panel {
+    width: 50%;
+  }
+}

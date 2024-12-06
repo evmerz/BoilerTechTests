@@ -9,6 +9,7 @@ body.active {
   z-index: 0;
   top: var(--st);
   overflow-y: scroll;
+  width: 97%;
 }
 
 :root {

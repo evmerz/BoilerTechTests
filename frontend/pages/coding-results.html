@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="/frontend/styles/navigation.css">
+    <link rel="stylesheet" href="/frontend/styles/global.css">
+    <link rel="stylesheet" href="/frontend/styles/code-results.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.18.1/full/pyodide.js"></script>
+    <script src="/frontend/scripts/quiz-load.js"></script>
+
+    <title>Coding Quiz Results - BoilerTechTests</title>
+</head>
+
+<body>
+    <div id="navbar-load"></div>
+
+    <!-- ================================ MAIN CONTAINER FOR WEBSITE ================================ -->
+    <div class="container">
+        <!-- Include spacers wherever you deem necessary -->
+        <div id="spacer"></div>
+
+        <!-- ======== Always use sub-containers for the actual content to maintain proper spacing ======== -->
+        <div class="sub-container">
+            <div class="header-panel" style="margin-top: 0; margin-bottom: 0;"></div>
+            <h2 class="fade-in">Coding Quiz Results</h2>
+
+
+
+        </div>
+
+        <script src="/frontend/scripts/navigation.js"></script>
+
+        <script async>
+            window.addEventListener("DOMContentLoaded", async function () {
+
+                let questionPanelData = [];
+
+                // for (let i = 0; i < quizData.questions.length; i++) {
+                //     submissionData.submissions.push({
+                //         "questionID": quizData.questions[i].questionID,
+                //         "answer": userAnswers[i].code
+                //     });
+                // }
+
+                const params = new URLSearchParams(location.search);
+                const quizID = params.get("quiz-id");
+                const userID = localStorage.getItem("userId");
+
+                // if (!quizID) window.location.href = "/403";
+
+                const quizData = await loadQuizData(quizID, "python");
+
+                if (quizData.quizInfo.type != "python") {
+                    window.location.href = "/403";
+                }
+
+                var submissionData = localStorage.getItem(`quiz_${quizID}`);
+
+                if (!submissionData) {
+                    if (!userID || !(submissionData = getSubmission(userID, quizID))) {
+                        window.location.href = `/frontend/pages/terminal.html?quiz-id=${quizID}`;
+                        return;
+                    }
+                }
+
+                console.log("submission: " + submissionData);
+
+                submissionData = JSON.parse(submissionData);
+
+                for (const submission of submissionData.submissions) {
+                    console.log("ahhhh");
+                    for (const question of quizData.questions) {
+
+                        // <div class="code-results-box fade-in" style="--delay: 0.1s">
+                        //     <h3>Question: text</h3>
+                        //     <h4>Score: text</h4>
+                        //     <div class="code-display-box">
+                        //         <div class="code-panel">
+                        //             <span>Code:</span>
+                        //             <div class="code-text-area"></div>
+                        //         </div>
+                        //         <div class="code-panel">
+                        //             <span>Tests:</span>
+                        //             <div class="code-text-area">Loading...</div>
+                        //         </div>
+                        //     </div>
+                        // </div>
+
+                        if (question.questionID != submission.questionID) continue;
+
+                        console.log("question:        " + question.questionID);
+
+                        const outerBox = document.createElement("div");
+                        outerBox.classList.add("code-results-box");
+                        outerBox.classList.add("fade-in");
+                        outerBox.style = "--delay: 0.1s";
+
+                        outerBox.appendChild(document.createElement("h3")).textContent = `Question: ${question.prompt}`;
+                        outerBox.appendChild(document.createElement("h4")).textContent = `Score: THIS NEEDS WORK`;
+
+                        const displayBox = document.createElement("div");
+                        displayBox.classList.add("code-display-box");
+                        outerBox.appendChild(displayBox);
+
+                        const codePanel = document.createElement("div");
+                        codePanel.classList.add("code-panel");
+                        displayBox.appendChild(codePanel);
+
+                        codePanel.appendChild(document.createElement("span")).textContent = "Code:";
+
+                        const codeTextArea = document.createElement("div");
+                        codeTextArea.classList.add("code-text-area");
+                        codeTextArea.innerHTML = submission.answer;
+                        codePanel.appendChild(codeTextArea);
+
+                        const testPanel = document.createElement("div");
+                        testPanel.classList.add("code-panel");
+                        displayBox.appendChild(testPanel);
+
+                        testPanel.appendChild(document.createElement("span")).textContent = "Tests:";
+
+                        const testTextArea = document.createElement("div");
+                        testTextArea.classList.add("code-text-area");
+                        testTextArea.innerHTML = "Loading...";
+                        testPanel.appendChild(testTextArea);
+
+                        const subContainer = document.getElementsByClassName("sub-container")[0];
+                        subContainer.appendChild(outerBox);
+
+                        subContainer.appendChild(document.createElement("div")).classList.add("spacer");
+                        subContainer.appendChild(document.createElement("div")).classList.add("spacer");
+
+                        questionPanelData.push({
+                           "testTextArea": testTextArea,
+                           "questionData": question,
+                           "answer": submission.answer
+                        });
+
+                        break;
+                    }
+                }
+
+                fadeScroll();
+
+                const pyodide = await loadPyodide({
+                    indexURL: "https://cdn.jsdelivr.net/pyodide/v0.18.1/full/",
+                });
+
+                for (const data of questionPanelData) {
+                    data.testTextArea.innerHTML = await runCodeQuestion(pyodide, data.questionData, data.answer);
+                }
+            });
+        </script>
+
+</body>
+
+</html>

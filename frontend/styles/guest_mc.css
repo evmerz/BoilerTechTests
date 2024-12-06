@@ -1,0 +1,32 @@
+.question {
+    margin-bottom: 20px;
+}
+.options {
+    list-style-type: none;
+    display: block;
+    margin: 10px 0;
+    font-family: 'Josefin Sans';
+    padding: 0;
+}
+.options li {
+    margin-bottom: 10px;
+}
+.highlight-correct {
+    background-color: #c8e6c9; /* Light green */
+}
+.highlight-incorrect {
+    background-color: #ffcdd2; /* Light red */
+}
+.score-box {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
+    background-color: #ffffff; /* Soft background color to make it stand out */
+    padding: 15px; /* Add padding for spacing */
+    border-radius: 8px; /* Rounded corners */
+    border: 1px solid #ccc; /* Light border to match other sections */
+    display: inline-block; /* Make it fit its content */
+    max-width: 150px; /* Optional: limit the width */
+    text-align: left; /* Center the score */
+    font-family: 'Consolas'
+}
