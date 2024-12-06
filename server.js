@@ -248,6 +248,8 @@ app.post('/quiz', async (req, res) => {
 
 app.post('/pin', async (req, res) => {
     const {user_id, classes} = req.body;
+    console.log("user_id:", user_id);
+    console.log("classes:", classes);
     if (user_id) {
         console.log("yes user_id")
         const updateQuery = 'UPDATE users SET classes = ? WHERE (user_id) = (?)';
