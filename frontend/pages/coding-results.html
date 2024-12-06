@@ -40,6 +40,14 @@
         <div class="sub-container">
             <div class="header-panel" style="margin-top: 0; margin-bottom: 0;"></div>
             <h1 id="results-title" class="fade-in">Coding Quiz Results</h1>
+            <div id="quiz-results-container"></div>
+
+            <div id="spacer"></div>
+
+            <div class="fade-in" style="display: flex; justify-content: center; align-items: center;">
+                <button class="button" id="retake-button">Retake Quiz</button>
+            </div>
+
         </div>
 
         <script src="/frontend/scripts/navigation.js"></script>
@@ -49,18 +57,16 @@
 
                 let questionPanelData = [];
 
-                // for (let i = 0; i < quizData.questions.length; i++) {
-                //     submissionData.submissions.push({
-                //         "questionID": quizData.questions[i].questionID,
-                //         "answer": userAnswers[i].code
-                //     });
-                // }
-
                 const params = new URLSearchParams(location.search);
                 const quizID = params.get("quiz-id");
                 const userID = localStorage.getItem("userId");
 
-                // if (!quizID) window.location.href = "/403";
+                if (!quizID) window.location.href = "/403";
+
+                const retakeButton = document.getElementById("retake-button");
+                retakeButton.addEventListener("click", function () {
+                    window.location.href = `/code?quiz-id=${quizID}`;
+                });
 
                 const quizData = await loadQuizData(quizID, "python");
 
@@ -142,16 +148,16 @@
                         testTextArea.innerHTML = "Loading...";
                         testPanel.appendChild(testTextArea);
 
-                        const subContainer = document.getElementsByClassName("sub-container")[0];
-                        subContainer.appendChild(outerBox);
+                        const quizResultsContainer = document.getElementById("quiz-results-container");
+                        quizResultsContainer.appendChild(outerBox);
 
-                        subContainer.appendChild(document.createElement("div")).classList.add("spacer");
-                        subContainer.appendChild(document.createElement("div")).classList.add("spacer");
+                        quizResultsContainer.appendChild(document.createElement("div")).classList.add("spacer");
+                        quizResultsContainer.appendChild(document.createElement("div")).classList.add("spacer");
 
                         questionPanelData.push({
-                           "testTextArea": testTextArea,
-                           "questionData": question,
-                           "answer": submission.answer
+                            "testTextArea": testTextArea,
+                            "questionData": question,
+                            "answer": submission.answer
                         });
 
                         index++;
