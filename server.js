@@ -263,7 +263,7 @@ app.post('/pin', async (req, res) => {
     }
 });
 
-app.post('/get-pin', async (req, res) => {
+app.get('/get-pin', async (req, res) => {
 
     console.log("in get/pin");
     const user_id = req.query.user_id;
