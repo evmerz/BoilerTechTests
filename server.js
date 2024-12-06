@@ -280,7 +280,7 @@ app.get('/get-pin', async (req, res) => {
             // }
         console.log("gotten");
         console.log("result", result[0].classes);
-        res.status(200).json((result));
+        res.status(200).json((result[0].classes));
     } catch (error) {
         console.error("Error retrieving classes:", error);
         res.status(500).json({ message: 'Database query error' });
